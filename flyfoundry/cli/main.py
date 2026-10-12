@@ -1,0 +1,245 @@
+"""Command line interface: smoke | fresh | resume | run | report | validate | export | schedule-guard."""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import tempfile
+import traceback
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+from ..config import ExperimentConfig
+from ..reporting import html_report, summary
+from ..research import analysis
+from ..research.experiment import Experiment
+from ..research.opportunities import build_hypotheses
+from ..storage.checkpoint import CheckpointError, CheckpointMissing, CheckpointStore
+from ..storage.serialize import state_hash
+
+DEFAULT_CONFIG = Path(__file__).resolve().parents[2] / "configs" / "default.json"
+
+
+def _cfg(args) -> ExperimentConfig:
+    path = Path(args.config) if getattr(args, "config", None) else DEFAULT_CONFIG
+    cfg = ExperimentConfig.from_file(path) if path.exists() else ExperimentConfig()
+    return cfg.with_overrides(gens_per_run=getattr(args, "generations", None), n_seeds=getattr(args, "seeds", None),
+                              pop_size=getattr(args, "pop_size", None))
+
+
+def _info(entry, problems=None):
+    return {"version": entry.get("version"), "sha256": entry.get("sha256"), "file": entry.get("file"),
+            "bytes": entry.get("bytes"), "problems": list(problems or [])}
+
+
+def _write_outputs(exp, out: Path, ckpt_info: dict, resume_test: dict) -> dict:
+    out.mkdir(parents=True, exist_ok=True)
+    res = analysis.analyze(exp)
+    hyps = build_hypotheses(exp)
+    (out / "index.html").write_text(html_report.render(exp, res, ckpt_info, hyps), encoding="utf-8")
+    (out / "summary.md").write_text(summary.markdown_summary(exp, res, ckpt_info, resume_test, hyps), encoding="utf-8")
+    (out / "results.json").write_text(summary.results_json(exp, res, ckpt_info, resume_test), encoding="utf-8")
+    (out / "history.csv").write_text(summary.history_csv(exp), encoding="utf-8")
+    (out / "hypotheses.json").write_text(json.dumps(hyps, indent=1, default=float), encoding="utf-8")
+    return res
+
+
+def _advance_save_report(exp, store, args, ckpt_load_info=None, run_note=None) -> int:
+    gens_before = exp.generation
+    run = exp.advance(args.generations or exp.cfg.gens_per_run,
+                      time_budget_s=getattr(args, "time_budget_s", None), run_note=run_note)
+    print(f"advanced {gens_before} -> {exp.generation} generations in {run['wall_s']}s (cpu {run['cpu_s']}s)")
+    payload = exp.payload()
+    extra = {}
+    if getattr(args, "scheduled", False):
+        extra["last_scheduled_local_date"] = datetime.now(ZoneInfo("Europe/Riga")).date().isoformat()
+    entry = store.save(payload, {"generation": exp.generation, "total_evals": exp.total_evals,
+                                 "config_hash": exp.cfg.identity_hash(), "code_revision": payload["meta"]["code_revision"]}, extra)
+    # resume test: reload what was written and verify it is bit-identical to the in-memory state
+    reloaded = store.load_latest()
+    exp2 = Experiment.from_payload(reloaded.payload, exp.cfg)
+    equal = state_hash(exp2.payload()["runners"]) == state_hash(payload["runners"])
+    resume_test = {"loaded_from_version": (ckpt_load_info or {}).get("version"), "gens_before": gens_before,
+                   "saved_version": entry["version"], "reload_roundtrip_identical": equal, "generation_after_reload": exp2.generation}
+    if not equal:
+        print("ERROR: checkpoint round trip is not identical", file=sys.stderr)
+        return 6
+    info = _info(entry, (ckpt_load_info or {}).get("problems"))
+    _write_outputs(exp, Path(args.out), info, resume_test)
+    print(f"checkpoint v{entry['version']} saved ({entry['bytes']:,} bytes); report written to {args.out}")
+    return 0
+
+
+def cmd_fresh(args) -> int:
+    cfg = _cfg(args)
+    store = CheckpointStore(args.state_dir, cfg.checkpoints_keep)
+    if store.exists() and not args.overwrite:
+        print("state directory already holds a checkpoint; use `resume`, or pass --overwrite to start a new experiment", file=sys.stderr)
+        return 2
+    return _advance_save_report(Experiment(cfg), store, args, run_note={"mode": "fresh"})
+
+
+def cmd_resume(args, allow_fresh=False) -> int:
+    cfg = _cfg(args)
+    store = CheckpointStore(args.state_dir, cfg.checkpoints_keep)
+    try:
+        loaded = store.load_latest()
+    except CheckpointMissing as e:
+        if not allow_fresh:
+            raise
+        print(f"NOTICE: {e}; --allow-fresh given, starting experiment from generation 0")
+        return _advance_save_report(Experiment(cfg), store, args, run_note={"mode": "fresh (explicitly allowed)"})
+    if loaded.recovered:
+        print("WARNING: newest checkpoint(s) invalid, recovered from older one:", *loaded.problems, sep="\n  ")
+    exp = Experiment.from_payload(loaded.payload, cfg)
+    print(f"restored checkpoint v{loaded.entry['version']} at generation {exp.generation} ({exp.total_evals:,} evals)")
+    if exp.generation >= exp.cfg.max_total_generations:
+        print("experiment already at max_total_generations; regenerating report only")
+        info = _info(loaded.entry, loaded.problems)
+        _write_outputs(exp, Path(args.out), info, {"note": "no new generations (experiment complete)"})
+        return 0
+    return _advance_save_report(exp, store, args, _info(loaded.entry, loaded.problems), {"mode": "resume"})
+
+
+def cmd_run(args) -> int:
+    if args.overwrite_state:
+        if not args.allow_fresh:
+            print("--overwrite-state requires --allow-fresh", file=sys.stderr)
+            return 2
+        for f in Path(args.state_dir).glob("ckpt_*.json.gz"):
+            f.unlink()
+        mp = Path(args.state_dir) / "manifest.json"
+        if mp.exists():
+            mp.unlink()
+        print("NOTICE: previous state removed by explicit --overwrite-state; starting a NEW experiment")
+    return cmd_resume(args, allow_fresh=args.allow_fresh)
+
+
+def cmd_report(args) -> int:
+    cfg = _cfg(args)
+    store = CheckpointStore(args.state_dir, cfg.checkpoints_keep)
+    loaded = store.load_latest()
+    exp = Experiment.from_payload(loaded.payload)
+    _write_outputs(exp, Path(args.out), _info(loaded.entry, loaded.problems), {"note": "report regenerated from checkpoint"})
+    print(f"report written to {args.out}")
+    return 0
+
+
+def cmd_validate(args) -> int:
+    rep = CheckpointStore(args.state_dir).validate()
+    print(json.dumps(rep.to_dict(), indent=1))
+    return 0 if rep.ok else 3
+
+
+def cmd_export(args) -> int:
+    store = CheckpointStore(args.state_dir)
+    loaded = store.load_latest()
+    exp = Experiment.from_payload(loaded.payload)
+    _write_outputs(exp, Path(args.out), _info(loaded.entry, loaded.problems), {"note": "export"})
+    print(f"exported results.json, history.csv, hypotheses.json, summary.md, index.html to {args.out}")
+    return 0
+
+
+def cmd_guard(args) -> int:
+    """For scheduled runs: allow only 01:00-03:59 Europe/Riga and only once per local date."""
+    now = datetime.now(ZoneInfo(args.tz))
+    lo, hi = (int(x) for x in args.window.split("-"))
+    if not (lo <= now.hour <= hi):
+        print(f"skip: local time {now:%H:%M} outside window {lo}-{hi}h")
+        return 10
+    last = CheckpointStore(args.state_dir).read_manifest_extra().get("last_scheduled_local_date")
+    if last == now.date().isoformat():
+        print(f"skip: scheduled run already completed for local date {last}")
+        return 10
+    print(f"run: local time {now:%Y-%m-%d %H:%M} ({args.tz})")
+    return 0
+
+
+def cmd_smoke(args) -> int:
+    """Fast end-to-end self-check: tiny experiment, checkpoint round trip, resume determinism, report."""
+    base = ExperimentConfig().with_overrides(n_seeds=2, pop_size=20, survivors=6, elites=2, gens_per_run=4)
+    cfg = ExperimentConfig.from_dict({**base.to_dict(), "pop_size": 20, "survivors": 6, "elites": 2})
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        a = Experiment(cfg); a.advance(4, log=lambda *_: None); a.advance(4, log=lambda *_: None)
+        b = Experiment(cfg); b.advance(8, log=lambda *_: None)
+        h_a = state_hash({k: r.get_state()["arm"] for k, r in a.runners.items()})
+        h_b = state_hash({k: r.get_state()["arm"] for k, r in b.runners.items()})
+        store = CheckpointStore(td / "state")
+        store.save(a.payload(), {"generation": a.generation, "total_evals": a.total_evals})
+        c = Experiment.from_payload(store.load_latest().payload, cfg); c.advance(4, log=lambda *_: None)
+        d = Experiment(cfg); d.advance(12, log=lambda *_: None)
+        h_c = state_hash({k: r.get_state()["arm"] for k, r in c.runners.items()})
+        h_d = state_hash({k: r.get_state()["arm"] for k, r in d.runners.items()})
+        checks = {"deterministic_rerun": h_a == h_b, "resume_equals_uninterrupted": h_c == h_d,
+                  "budget_matched": len({r.evaluator.n_evals for r in c.runners.values()}) == 1,
+                  "validate_ok": store.validate().ok}
+        _write_outputs(c, td / "report", {"version": 1, "sha256": "smoke"}, {"note": "smoke"})
+        checks["report_written"] = (td / "report" / "index.html").stat().st_size > 10_000
+    print(json.dumps(checks, indent=1))
+    return 0 if all(checks.values()) else 6
+
+
+def build_parser():
+    p = argparse.ArgumentParser(prog="flyfoundry")
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    def common(sp, state=True, out=True, run=False):
+        sp.add_argument("--config")
+        if state:
+            sp.add_argument("--state-dir", default="state")
+        if out:
+            sp.add_argument("--out", default="reports/latest")
+        if run:
+            sp.add_argument("--generations", type=int)
+            sp.add_argument("--seeds", type=int)
+            sp.add_argument("--pop-size", type=int)
+            sp.add_argument("--time-budget-s", type=float)
+            sp.add_argument("--scheduled", action="store_true")
+    sp = sub.add_parser("smoke"); sp.set_defaults(fn=cmd_smoke)
+    sp = sub.add_parser("fresh", help="start a new benchmark experiment"); common(sp, run=True)
+    sp.add_argument("--overwrite", action="store_true"); sp.set_defaults(fn=cmd_fresh)
+    sp = sub.add_parser("resume", help="continue from the latest valid checkpoint (fails if none)"); common(sp, run=True); sp.set_defaults(fn=cmd_resume)
+    sp = sub.add_parser("run", help="resume; start fresh only with --allow-fresh"); common(sp, run=True)
+    sp.add_argument("--allow-fresh", action="store_true")
+    sp.add_argument("--overwrite-state", action="store_true", help="discard existing state first (needs --allow-fresh)")
+    sp.set_defaults(fn=cmd_run)
+    sp = sub.add_parser("report", help="regenerate the HTML dashboard from the latest checkpoint"); common(sp); sp.set_defaults(fn=cmd_report)
+    sp = sub.add_parser("validate", help="validate checkpoint integrity"); sp.add_argument("--state-dir", default="state"); sp.set_defaults(fn=cmd_validate)
+    sp = sub.add_parser("export", help="export results.json/history.csv/hypotheses.json"); common(sp); sp.set_defaults(fn=cmd_export)
+    sp = sub.add_parser("schedule-guard"); sp.add_argument("--state-dir", default="state")
+    sp.add_argument("--tz", default="Europe/Riga"); sp.add_argument("--window", default="1-3"); sp.set_defaults(fn=cmd_guard)
+    return p
+
+
+def main(argv=None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        return args.fn(args)
+    except CheckpointError as e:
+        print(f"CHECKPOINT ERROR ({type(e).__name__}): {e}", file=sys.stderr)
+        _error_report(args, e)
+        return e.exit_code
+    except Exception as e:  # noqa: BLE001
+        traceback.print_exc()
+        _error_report(args, e)
+        return 6
+
+
+def _error_report(args, e) -> None:
+    out = getattr(args, "out", None)
+    if not out:
+        return
+    try:
+        Path(out).mkdir(parents=True, exist_ok=True)
+        (Path(out) / "error.md").write_text(
+            f"# FlyFoundry run FAILED\n\n- Error: `{type(e).__name__}: {e}`\n- No experiment state was modified after the error "
+            f"(checkpoints are written atomically).\n- Recovery: run `flyfoundry validate --state-dir <dir>`; a missing state "
+            f"is never silently replaced by a fresh start.\n", encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        pass
+
+
+if __name__ == "__main__":
+    sys.exit(main())

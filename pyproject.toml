@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flyfoundry"
+version = "0.1.0"
+description = "FlyFoundry: evolutionary venture discovery lab (experimental, EUR 0 budget)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["numpy==2.5.3", "tzdata==2026.1"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[project.scripts]
+flyfoundry = "flyfoundry.cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["flyfoundry*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

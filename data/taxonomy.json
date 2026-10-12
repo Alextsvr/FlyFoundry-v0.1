@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "notice": "SYNTHETIC TAXONOMY. These labels name bins of the benchmark genome so candidates are readable. They carry NO market information and are not claims about real demand, customers, or revenue.",
+  "customer": ["independent accountants", "small clinic managers", "regional logistics dispatchers", "indie game studios", "municipal procurement officers", "freelance translators", "local restaurant owners", "university lab managers"],
+  "problem": ["manual reconciliation of data", "late or missed deadlines", "unclear regulatory requirements", "fragmented supplier information", "slow support triage", "hard-to-compare pricing", "error-prone document handling", "poor demand forecasting"],
+  "solution": ["automated checker / validator", "curated public-data digest", "template + workflow kit", "alerting / monitoring service", "comparison / benchmark tool", "document extraction pipeline", "scheduling / optimisation helper", "audit-trail dashboard"],
+  "revenue": ["one-off paid report", "monthly subscription", "usage-based fee", "marketplace commission", "license / royalty", "referral fee", "paid data feed", "managed-service retainer"],
+  "channel": ["direct outreach (not performed by this system)", "search / content", "partner referral", "marketplace listing"]
+}
