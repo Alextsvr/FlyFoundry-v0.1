@@ -109,6 +109,13 @@ jobs:
         if: steps.guard.outputs.run == 'true'
         run: python -m flyfoundry validate --state-dir "$STATE_DIR"
 
+      - name: Publish latest report + run log into the state branch
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          mkdir -p "$STATE_DIR/latest-report"
+          cp "$OUT_DIR/summary.md" "$OUT_DIR/results.json" "$OUT_DIR/history.csv" "$OUT_DIR/hypotheses.json" "$OUT_DIR/index.html" "$STATE_DIR/latest-report/"
+          python scripts/append_run_log.py "$OUT_DIR/results.json" "$STATE_DIR/runs.csv"
+
       - name: Persist state (single-commit orphan branch)
         if: steps.guard.outputs.run == 'true'
         run: bash scripts/state_save.sh origin "$STATE_DIR" "state after run ${{ github.run_id }} (${{ github.sha }})"

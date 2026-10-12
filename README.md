@@ -90,6 +90,17 @@ Outputs in `--out`: `index.html` (self-contained dashboard, no external requests
 `flyfoundry/{agents,biology,evolution,environments,evaluation,research,storage,reporting,cli}`, `tests/`, `configs/`, `data/`, `docs/`,
 `scripts/` (state sync + local workflow simulation), `.github/workflows/`, `reports/`.
 
+## Where results live
+
+1. **Run summary** — GitHub → Actions → the run → "Summary" (tables, conclusions, resume test).
+2. **Artifact** `flyfoundry-report-<run id>` (full dashboard `index.html`; kept 14 days).
+3. **Branch `flyfoundry-state`** (permanent, overwritten each run): `latest-report/` (`summary.md`, `results.json`, `history.csv`,
+   `hypotheses.json`, `index.html` of the most recent run), `runs.csv` (one row per run: generations, evaluations, CPU, held-out score per arm,
+   run URL) and the checkpoints. Raw view: `https://raw.githubusercontent.com/<owner>/<repo>/flyfoundry-state/runs.csv`.
+4. `docs/RESULTS.md` — hand-written interpretation; update it after meaningful runs.
+
+Note: GitHub disables scheduled workflows after 60 days without repository activity; if the nightly runs stop, re-enable the workflow in the Actions tab.
+
 ## Results
 
 See `docs/RESULTS.md` (kept in sync with the latest verified run) and the dashboard artifact of the latest workflow run.
