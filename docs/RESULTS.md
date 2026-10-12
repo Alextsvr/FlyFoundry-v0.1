@@ -1,9 +1,22 @@
 # Results log
 
-> **Status: LOCAL run only.** At the time of writing the repository could not be created on GitHub from the build session
-> (HTTP 403 from the session's GitHub proxy: "sessions are bound to their configured repositories"), so **no GitHub Actions run has happened yet**.
-> Everything below was produced on the build sandbox (Python 3.13.16, numpy 2.5.3; the 19 tests also pass on Python 3.12.3 with `requirements.lock`) with the same code and `configs/nightly.json`.
-> Update this file with the Actions run URL once the first workflow run has completed.
+> **Status: verified on GitHub Actions** (repository `Alextsvr/FlyFoundry-v0.1`, public).
+> The sections below the GitHub block were produced locally with the same code and `configs/nightly.json`.
+
+## GitHub Actions runs (verified via the GitHub API, 2026-10-12)
+
+| Run | Result | Notes |
+|---|---|---|
+| [38224993495](https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38224993495) `experiment` (commit 5a318a6) | success, 34 s | fresh start: generations 0→20, 60,000 evaluations, checkpoint v1 (11.3 MB) written to branch `flyfoundry-state` |
+| [38225423603](https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38225423603) `experiment` (commit da24c99) | success, 37 s | independent run, **resumed from v1**: generations 20→40, 120,000 evaluations cumulative, checkpoint v2 |
+| ci on da24c99 | success | tests + smoke experiment |
+
+Earlier failures, for the record: runs 38224844942 / 38224907079 failed (state scripts lost their exec bit when the project was unpacked on Windows; fixed by calling them via `bash`);
+ci on 5a318a6 failed (a test forbade `https://` in the report, but on Actions the report legitimately links to the run; fixed by cleaning CI env vars in tests).
+
+First GitHub run (20 generations, 5 seeds, mean of last 5 generations): held-out QD — C genetic 0.353, D random 0.298, B evolved ANN 0.293, A fly-inspired 0.186–0.200.
+CPU 10.8 s, peak RSS 89.5 MB. Same qualitative picture as the longer local run below; n = 5 seeds, no significance claims.
+Nightly schedule (01:30 Europe/Riga) is configured; `experiment` workflow state is `active`; the first scheduled run has not happened yet at the time of writing.
 
 ## Local first run (3 consecutive resumes x 20 generations = 60 generations)
 

@@ -1,0 +1,1138 @@
+{
+ "generation": 20,
+ "total_evals": 60000,
+ "config": {
+  "name": "flyfoundry-v0.1-nightly",
+  "world_seed": 20261012,
+  "seed_base": 1000,
+  "n_seeds": 5,
+  "pop_size": 100,
+  "gens_per_run": 20,
+  "max_total_generations": 300,
+  "arms": [
+   "A_fly_plastic",
+   "A_fly_noplast",
+   "A_fly_shuffled",
+   "B_evolved_ann",
+   "C_genetic",
+   "D_random"
+  ],
+  "n_dims": 12,
+  "n_ctx": 4,
+  "n_peaks": 8,
+  "n_decoys": 2,
+  "n_train_scenarios": 16,
+  "n_heldout_scenarios": 16,
+  "shift_scale": 0.2,
+  "peak_length_scale": 0.5,
+  "discovery_radius": 0.35,
+  "obs_noise": 0.03,
+  "capital_penalty": 2.0,
+  "effort_penalty": 1.0,
+  "unsupported_penalty": 1.0,
+  "archive_bins": 4,
+  "archive_dims": [
+   0,
+   1,
+   3
+  ],
+  "viable_threshold": 0.2,
+  "share_sigma": 0.35,
+  "survivors": 30,
+  "elites": 5,
+  "tournament": 3,
+  "p_archive_parent": 0.3,
+  "p_crossover": 0.5,
+  "mut_rate": 0.1,
+  "mut_sigma_rel": 0.3,
+  "ga_mut_rate": 0.2,
+  "ga_mut_sigma": 0.1,
+  "ga_immigrants": 0.05,
+  "explore_sigma": 0.4,
+  "pn_per_dim": 5,
+  "pn_width": 0.15,
+  "n_kc": 64,
+  "kc_active": 4,
+  "kc_claws": 4,
+  "kc_same_modality": 2,
+  "w_init_std": 0.5,
+  "eta": 0.5,
+  "eta_bias": 0.1,
+  "weight_decay": 0.01,
+  "baseline_beta": 0.8,
+  "weight_clip": 3.0,
+  "bootstrap_resamples": 2000,
+  "min_seeds_for_claim": 10,
+  "checkpoints_keep": 3,
+  "lineage_keep_generations": 50
+ },
+ "config_hash": "c7bb56b21a5e8c6fdb3334cf605bd010d4de50961cc3fc54678bc58cfc1793e6",
+ "world_fingerprint": "e59b7c93fada16e117f2638d74af94079ddaa10dc4bc28b4893eed64658aebda",
+ "runs": [
+  {
+   "run_id": "20261012T084034Z-add290",
+   "started_utc": "2026-10-12T08:40:34+00:00",
+   "gen_start": 0,
+   "requested_gens": 20,
+   "status": "completed",
+   "code_revision": "5a318a64909f54cd5e889567bcc27acc2e8afd0e",
+   "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu_count": 4,
+    "github_run_id": "38224993495",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38224993495"
+   },
+   "mode": "fresh (explicitly allowed)",
+   "gens_done": 20,
+   "gen_end": 20,
+   "evals_added": 60000,
+   "wall_s": 10.772,
+   "cpu_s": 10.77,
+   "peak_rss_mb": 89.5,
+   "finished_utc": "2026-10-12T08:40:45+00:00"
+  }
+ ],
+ "llm": {
+  "arm": "E_llm_baseline",
+  "status": "NOT RUN",
+  "reason": "NOT RUN: FLYFOUNDRY_LLM_ENDPOINT is not set (no free LLM endpoint configured in this environment)"
+ },
+ "checkpoint": {
+  "version": 1,
+  "sha256": "9ac3cbee3be0266bc76fd8f2b99d532165ffc4250a1e56a7d870e5a4b06b7cf7",
+  "file": "ckpt_000001.json.gz",
+  "bytes": 11326534,
+  "problems": []
+ },
+ "resume_test": {
+  "loaded_from_version": null,
+  "gens_before": 0,
+  "saved_version": 1,
+  "reload_roundtrip_identical": true,
+  "generation_after_reload": 20
+ },
+ "analysis": {
+  "arms": {
+   "A_fly_plastic": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.18848151855687015,
+      "lo": 0.18087945887073267,
+      "hi": 0.19595210585260686,
+      "median": 0.18998576176964713,
+      "per_seed": [
+       0.18216346957850021,
+       0.1930128087993745,
+       0.17571746900844246,
+       0.18998576176964713,
+       0.20152808362838653
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.20641853004099492,
+      "lo": 0.1981278602210625,
+      "hi": 0.2162587540630326,
+      "median": 0.20438425923224468,
+      "per_seed": [
+       0.19634239677971102,
+       0.2096169819751239,
+       0.1966375483644522,
+       0.20438425923224468,
+       0.22511146385344274
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.3405212212026298,
+      "lo": 0.3027598715547987,
+      "hi": 0.39098080127206963,
+      "median": 0.3306967052654709,
+      "per_seed": [
+       0.3306967052654709,
+       0.33681480418283166,
+       0.3134017796575871,
+       0.4348958075066432,
+       0.2867970094006161
+      ]
+     },
+     "f_mean": {
+      "mean": -0.1785312818587703,
+      "lo": -0.21150437836633618,
+      "hi": -0.15259471007578113,
+      "median": -0.16396124587918354,
+      "per_seed": [
+       -0.16396124587918354,
+       -0.13789020266826815,
+       -0.19445327690688596,
+       -0.15927065328400242,
+       -0.2370810305555114
+      ]
+     },
+     "discovered": {
+      "mean": 0.12,
+      "lo": 0.0,
+      "hi": 0.36,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.0,
+       0.0,
+       0.6,
+       0.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 33.68,
+      "lo": 31.439999999999998,
+      "hi": 35.64,
+      "median": 34.4,
+      "per_seed": [
+       36.8,
+       35.0,
+       32.8,
+       34.4,
+       29.4
+      ]
+     },
+     "diversity": {
+      "mean": 0.3015816807369408,
+      "lo": 0.29988383533678126,
+      "hi": 0.30280875892523806,
+      "median": 0.30244775957388853,
+      "per_seed": [
+       0.30244775957388853,
+       0.29829519418941824,
+       0.3013674323952462,
+       0.30263185580574553,
+       0.30316616172040545
+      ]
+     },
+     "novelty": {
+      "mean": 0.17404896678266085,
+      "lo": 0.17046519578042463,
+      "hi": 0.17763273778489705,
+      "median": 0.17379687232419933,
+      "per_seed": [
+       0.17744131193771906,
+       0.16866247880211907,
+       0.17379687232419933,
+       0.17060207448684284,
+       0.17974209636242391
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.27631799079999897,
+    "cpu_monitor_s_mean": 0.15283557880000237,
+    "mem_peak_kb_max": 2161.0537109375,
+    "heldout_qd_per_1k_evals": 0.09424075927843507,
+    "heldout_qd_per_cpu_s": 0.6821181567337556,
+    "auc_heldout_qd": 0.18499878210306328
+   },
+   "A_fly_noplast": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.19952916656245537,
+      "lo": 0.1856167880968233,
+      "hi": 0.2171419888717868,
+      "median": 0.1897628722799966,
+      "per_seed": [
+       0.20903645997357084,
+       0.18327941649486484,
+       0.23055320016075936,
+       0.18501388390308504,
+       0.1897628722799966
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.21855502797549095,
+      "lo": 0.2082535474149529,
+      "hi": 0.23288108702804097,
+      "median": 0.2105125844569228,
+      "per_seed": [
+       0.22057877377445018,
+       0.2105125844569228,
+       0.2463062053371608,
+       0.21046953095464843,
+       0.20490804535427237
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.3196385249958275,
+      "lo": 0.2858091132360829,
+      "hi": 0.35012658410390374,
+      "median": 0.31930380150471643,
+      "per_seed": [
+       0.2811857693896899,
+       0.3536555889391152,
+       0.37036235219745695,
+       0.31930380150471643,
+       0.27368511294815906
+      ]
+     },
+     "f_mean": {
+      "mean": -0.20840564092817743,
+      "lo": -0.2636162785112909,
+      "hi": -0.153195003345064,
+      "median": -0.2358864922933345,
+      "per_seed": [
+       -0.13940899723580538,
+       -0.26034085265142204,
+       -0.1256352649801874,
+       -0.2807565974801378,
+       -0.2358864922933345
+      ]
+     },
+     "discovered": {
+      "mean": 0.4,
+      "lo": 0.0,
+      "hi": 0.8,
+      "median": 0.0,
+      "per_seed": [
+       1.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 33.88,
+      "lo": 29.32,
+      "hi": 38.12,
+      "median": 37.4,
+      "per_seed": [
+       28.6,
+       37.6,
+       37.4,
+       39.0,
+       26.8
+      ]
+     },
+     "diversity": {
+      "mean": 0.3016773494211386,
+      "lo": 0.29135888842832575,
+      "hi": 0.3099598134435867,
+      "median": 0.30666884116432946,
+      "per_seed": [
+       0.2835215622152541,
+       0.3148488137335387,
+       0.29658377257037355,
+       0.30676375742219725,
+       0.30666884116432946
+      ]
+     },
+     "novelty": {
+      "mean": 0.1743570971570793,
+      "lo": 0.16833543015798808,
+      "hi": 0.17925850133243887,
+      "median": 0.1766075516577052,
+      "per_seed": [
+       0.16282068249151,
+       0.17692287214960237,
+       0.17346675197357264,
+       0.18196762751300646,
+       0.1766075516577052
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.2589547190000009,
+    "cpu_monitor_s_mean": 0.1530490963999989,
+    "mem_peak_kb_max": 917.640625,
+    "heldout_qd_per_1k_evals": 0.09976458328122768,
+    "heldout_qd_per_cpu_s": 0.7705175921604066,
+    "auc_heldout_qd": 0.1935959539050402
+   },
+   "A_fly_shuffled": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.18607954079454264,
+      "lo": 0.1699331139542363,
+      "hi": 0.20337320337074663,
+      "median": 0.18635204088266205,
+      "per_seed": [
+       0.22045621806882604,
+       0.18635204088266205,
+       0.16809208237397022,
+       0.19193268057696536,
+       0.16356468207028946
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.21185438911944598,
+      "lo": 0.1929929462588816,
+      "hi": 0.23189806308526975,
+      "median": 0.20945580925910107,
+      "per_seed": [
+       0.24937434714193535,
+       0.20945580925910107,
+       0.198172780969119,
+       0.2202472070474927,
+       0.18202180117958192
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0008333333333333333,
+      "lo": 0.0,
+      "hi": 0.0025,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.004166666666666667,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.349968314343033,
+      "lo": 0.3338998408248668,
+      "hi": 0.3747777774616846,
+      "median": 0.3396870622919065,
+      "per_seed": [
+       0.3396870622919065,
+       0.3458535990467197,
+       0.3993948394603247,
+       0.3360173066355425,
+       0.3288887642806714
+      ]
+     },
+     "f_mean": {
+      "mean": -0.1464466923398137,
+      "lo": -0.18624205520976428,
+      "hi": -0.1032113807487315,
+      "median": -0.15048049934018312,
+      "per_seed": [
+       -0.15130043184266911,
+       -0.21085470157510552,
+       -0.15048049934018312,
+       -0.07143215695778911,
+       -0.1481656719833216
+      ]
+     },
+     "discovered": {
+      "mean": 0.5599999999999999,
+      "lo": 0.24,
+      "hi": 0.9199999999999999,
+      "median": 0.6,
+      "per_seed": [
+       0.0,
+       0.2,
+       0.6,
+       1.0,
+       1.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 35.2,
+      "lo": 31.96,
+      "hi": 38.68,
+      "median": 32.6,
+      "per_seed": [
+       32.6,
+       31.2,
+       32.4,
+       40.6,
+       39.2
+      ]
+     },
+     "diversity": {
+      "mean": 0.2968179899361929,
+      "lo": 0.29151013842241,
+      "hi": 0.3014741459174624,
+      "median": 0.29825353641413416,
+      "per_seed": [
+       0.29825353641413416,
+       0.3032800343409433,
+       0.30127856224564564,
+       0.2864991953846115,
+       0.29477862129562993
+      ]
+     },
+     "novelty": {
+      "mean": 0.16820310146634607,
+      "lo": 0.1622789134335142,
+      "hi": 0.17331125762230895,
+      "median": 0.16945864151948054,
+      "per_seed": [
+       0.17150792663974124,
+       0.176612181984637,
+       0.16521181551789255,
+       0.15822494166997905,
+       0.16945864151948054
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.27099623799999994,
+    "cpu_monitor_s_mean": 0.15365095620000063,
+    "mem_peak_kb_max": 1223.42578125,
+    "heldout_qd_per_1k_evals": 0.09303977039727132,
+    "heldout_qd_per_cpu_s": 0.6866499039538058,
+    "auc_heldout_qd": 0.18436878603458481
+   },
+   "B_evolved_ann": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.2927651079151468,
+      "lo": 0.2739661145224136,
+      "hi": 0.3132648609223851,
+      "median": 0.27564405613328036,
+      "per_seed": [
+       0.3154989832317776,
+       0.27332764354258077,
+       0.3257352323560263,
+       0.27564405613328036,
+       0.27361962431206904
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.3249121099544868,
+      "lo": 0.29632746661047404,
+      "hi": 0.35507902307879846,
+      "median": 0.3018765202184158,
+      "per_seed": [
+       0.3610616525806929,
+       0.3018765202184158,
+       0.3717419705563485,
+       0.3015149001458557,
+       0.2883655062711215
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.008333333333333333,
+      "lo": 0.00125,
+      "hi": 0.017083333333333332,
+      "median": 0.00625,
+      "per_seed": [
+       0.00625,
+       0.0,
+       0.025,
+       0.010416666666666666,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.40684965010109053,
+      "lo": 0.38084926322278057,
+      "hi": 0.436235745497991,
+      "median": 0.39249330847690694,
+      "per_seed": [
+       0.42374537535782314,
+       0.3848423402430394,
+       0.46213306285222444,
+       0.39249330847690694,
+       0.3710341635754586
+      ]
+     },
+     "f_mean": {
+      "mean": 0.13313797176757042,
+      "lo": 0.10191497233339879,
+      "hi": 0.16412498220497765,
+      "median": 0.13421440146192465,
+      "per_seed": [
+       0.18231361176337452,
+       0.10788818301339749,
+       0.16089164301810727,
+       0.08038201958104824,
+       0.13421440146192465
+      ]
+     },
+     "discovered": {
+      "mean": 1.08,
+      "lo": 0.04,
+      "hi": 2.2399999999999998,
+      "median": 0.2,
+      "per_seed": [
+       3.0,
+       0.2,
+       2.2,
+       0.0,
+       0.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 35.0,
+      "lo": 30.52,
+      "hi": 39.16,
+      "median": 35.6,
+      "per_seed": [
+       33.8,
+       26.4,
+       37.8,
+       35.6,
+       41.4
+      ]
+     },
+     "diversity": {
+      "mean": 0.19114118169682942,
+      "lo": 0.18806307982097953,
+      "hi": 0.19405906520090715,
+      "median": 0.19181998231884845,
+      "per_seed": [
+       0.1898027468063249,
+       0.185315176928086,
+       0.19254988600179138,
+       0.19181998231884845,
+       0.1962181164290963
+      ]
+     },
+     "novelty": {
+      "mean": 0.1135602002230959,
+      "lo": 0.11229390635085354,
+      "hi": 0.11482649409533822,
+      "median": 0.11450997327957584,
+      "per_seed": [
+       0.11155751809113697,
+       0.111922261146209,
+       0.11450997327957584,
+       0.11496956176382134,
+       0.1148416868347363
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.2571587743999984,
+    "cpu_monitor_s_mean": 0.12465103560000004,
+    "mem_peak_kb_max": 890.802734375,
+    "heldout_qd_per_1k_evals": 0.1463825539575734,
+    "heldout_qd_per_cpu_s": 1.1384605040143971,
+    "auc_heldout_qd": 0.2633976293693866
+   },
+   "C_genetic": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.3526303911902464,
+      "lo": 0.3267128586172634,
+      "hi": 0.3787474095632707,
+      "median": 0.3547271079629853,
+      "per_seed": [
+       0.3547271079629853,
+       0.33146245537829316,
+       0.39858794825142774,
+       0.31186369667474906,
+       0.3665107476837768
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.4159559787503702,
+      "lo": 0.4017642313146294,
+      "hi": 0.43068827142462957,
+      "median": 0.40470735224846555,
+      "per_seed": [
+       0.4351263980927243,
+       0.40470735224846555,
+       0.4378892412483203,
+       0.39740966687687806,
+       0.40464723528546276
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.07125000000000001,
+      "lo": 0.04624999999999999,
+      "hi": 0.09624999999999997,
+      "median": 0.06458333333333333,
+      "per_seed": [
+       0.1145833333333333,
+       0.06458333333333333,
+       0.09374999999999999,
+       0.041666666666666664,
+       0.041666666666666664
+      ]
+     },
+     "f_best": {
+      "mean": 0.4584360722123228,
+      "lo": 0.43489213584101394,
+      "hi": 0.48495109932611163,
+      "median": 0.4544450438193409,
+      "per_seed": [
+       0.4697369694367751,
+       0.4442528064544159,
+       0.4544450438193409,
+       0.42015696777129297,
+       0.5035885735797891
+      ]
+     },
+     "f_mean": {
+      "mean": 0.20574298264416155,
+      "lo": 0.19673219680665077,
+      "hi": 0.2155448365160319,
+      "median": 0.20391341136241709,
+      "per_seed": [
+       0.2135327423404859,
+       0.20391341136241709,
+       0.19021388169049835,
+       0.19948659662127285,
+       0.22156828120613364
+      ]
+     },
+     "discovered": {
+      "mean": 2.4,
+      "lo": 2.0,
+      "hi": 3.2,
+      "median": 2.0,
+      "per_seed": [
+       4.0,
+       2.0,
+       2.0,
+       2.0,
+       2.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 36.92,
+      "lo": 33.720000000000006,
+      "hi": 40.480000000000004,
+      "median": 36.4,
+      "per_seed": [
+       38.0,
+       36.4,
+       44.0,
+       32.2,
+       34.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.23157005124479824,
+      "lo": 0.22541085277687972,
+      "hi": 0.23752855452110028,
+      "median": 0.22883163022615,
+      "per_seed": [
+       0.22446665784032183,
+       0.2383619069447258,
+       0.24154540222399107,
+       0.22883163022615,
+       0.22464465898880243
+      ]
+     },
+     "novelty": {
+      "mean": 0.12331969871144403,
+      "lo": 0.11974651282539976,
+      "hi": 0.12689288459748832,
+      "median": 0.12126877096706892,
+      "per_seed": [
+       0.12126877096706892,
+       0.12745773723657267,
+       0.12914008877361363,
+       0.12058182811055893,
+       0.11815006846940601
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.25649590520000104,
+    "cpu_monitor_s_mean": 0.10014651359999834,
+    "mem_peak_kb_max": 255.8125,
+    "heldout_qd_per_1k_evals": 0.1763151955951232,
+    "heldout_qd_per_cpu_s": 1.3747993010464832,
+    "auc_heldout_qd": 0.315720190271423
+   },
+   "D_random": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.29826613667565377,
+      "lo": 0.2841352323280205,
+      "hi": 0.3127500988829293,
+      "median": 0.30281908688306763,
+      "per_seed": [
+       0.27794731191074307,
+       0.280098580818669,
+       0.30888691399713003,
+       0.3215787897686594,
+       0.30281908688306763
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.29919266437400216,
+      "lo": 0.27108340410601733,
+      "hi": 0.3347057813497508,
+      "median": 0.296497942181215,
+      "per_seed": [
+       0.2559492281247272,
+       0.2735103110497085,
+       0.296497942181215,
+       0.36500637759234267,
+       0.30499946292201746
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0045833333333333325,
+      "lo": 0.0,
+      "hi": 0.013749999999999995,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.0,
+       0.0,
+       0.02291666666666666,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.2325146382319069,
+      "lo": 0.22781127653079075,
+      "hi": 0.23700353132718535,
+      "median": 0.23149386108063577,
+      "per_seed": [
+       0.23646188622034087,
+       0.24030001155730457,
+       0.22413853206617979,
+       0.23149386108063577,
+       0.2301789002350736
+      ]
+     },
+     "f_mean": {
+      "mean": -0.560095879379321,
+      "lo": -0.5772604819388856,
+      "hi": -0.5429312768197565,
+      "median": -0.5603399294062804,
+      "per_seed": [
+       -0.5603399294062804,
+       -0.5453234989616309,
+       -0.5775127655188547,
+       -0.5854684746252192,
+       -0.5318347283846201
+      ]
+     },
+     "discovered": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "median": 0.0,
+      "per_seed": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 13.36,
+      "lo": 9.120000000000001,
+      "hi": 16.48,
+      "median": 15.8,
+      "per_seed": [
+       5.6,
+       15.8,
+       16.6,
+       16.8,
+       12.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.40140353347967894,
+      "lo": 0.3996182492572685,
+      "hi": 0.40261362638851106,
+      "median": 0.4019482074240129,
+      "per_seed": [
+       0.39806494381277235,
+       0.4014445539023385,
+       0.4019482074240129,
+       0.4024351879423452,
+       0.4031247743169259
+      ]
+     },
+     "novelty": {
+      "mean": 0.24987515826560988,
+      "lo": 0.2490933203771651,
+      "hi": 0.2508173676885327,
+      "median": 0.24968470475204355,
+      "per_seed": [
+       0.24880680388963067,
+       0.2490841446772604,
+       0.2516012778781441,
+       0.24968470475204355,
+       0.2501988601309708
+      ]
+     }
+    },
+    "evals_per_seed": 2000,
+    "cpu_search_s_mean": 0.044783243400000436,
+    "cpu_monitor_s_mean": 0.09972601520000088,
+    "mem_peak_kb_max": 255.65625,
+    "heldout_qd_per_1k_evals": 0.14913306833782689,
+    "heldout_qd_per_cpu_s": 6.6602173945188365,
+    "auc_heldout_qd": 0.2701907360757606
+   }
+  },
+  "paired": [
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_qd",
+    "diff": -0.10428358935827667,
+    "lo": -0.1310960688759423,
+    "hi": -0.07809420904348216
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_best",
+    "diff": -0.11849357991349196,
+    "lo": -0.15535559937987348,
+    "hi": -0.08163156044711048
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_discovery",
+    "diff": -0.008333333333333333,
+    "lo": -0.017083333333333332,
+    "hi": -0.00125
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_qd",
+    "diff": -0.011047648005585175,
+    "lo": -0.03592299450072629,
+    "hi": 0.009593817034472246
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_best",
+    "diff": -0.012136497934496004,
+    "lo": -0.031223317370668704,
+    "hi": 0.007095655204194612
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_discovery",
+    "diff": 0.0,
+    "lo": 0.0,
+    "hi": 0.0
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_qd",
+    "diff": 0.0024019777623275397,
+    "lo": -0.021839955528764693,
+    "hi": 0.023913734500289045
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_best",
+    "diff": -0.005435859078451094,
+    "lo": -0.0338076277550073,
+    "hi": 0.02271344258447146
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_discovery",
+    "diff": -0.0008333333333333333,
+    "lo": -0.0025,
+    "hi": 0.0
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_qd",
+    "diff": -0.16414887263337624,
+    "lo": -0.19440874967265295,
+    "hi": -0.13712756540468626
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_best",
+    "diff": -0.20953744870937524,
+    "lo": -0.23103235173342088,
+    "hi": -0.1880425456853297
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_discovery",
+    "diff": -0.07125000000000001,
+    "lo": -0.09624999999999999,
+    "hi": -0.04625
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": -0.10978461811878366,
+    "lo": -0.12616318984601615,
+    "hi": -0.09340604639155117
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": -0.09277413433300725,
+    "lo": -0.1282667160484146,
+    "hi": -0.06537766398155527
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": -0.0045833333333333325,
+    "lo": -0.013749999999999995,
+    "hi": 0.0
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_qd",
+    "diff": -0.05986528327509959,
+    "lo": -0.07817178606357054,
+    "hi": -0.04180606847621303
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_best",
+    "diff": -0.0910438687958833,
+    "lo": -0.10682397776396087,
+    "hi": -0.07526375982780575
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_discovery",
+    "diff": -0.06291666666666665,
+    "lo": -0.0870833333333333,
+    "hi": -0.040833333333333326
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": -0.00550102876050701,
+    "lo": -0.031407865937768696,
+    "hi": 0.020405808416754677
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": 0.025719445580484713,
+    "lo": -0.026376931805211713,
+    "hi": 0.07781582296618114
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": 0.0037500000000000007,
+    "lo": -0.006249999999999997,
+    "hi": 0.015000000000000003
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": 0.05436425451459258,
+    "lo": 0.019799678266027076,
+    "hi": 0.0793306642827578
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": 0.11676331437636803,
+    "lo": 0.07192079005022405,
+    "hi": 0.15571411626690837
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": 0.06666666666666667,
+    "lo": 0.037083333333333336,
+    "hi": 0.09624999999999997
+   }
+  ],
+  "conclusions": [
+   {
+    "title": "Scope",
+    "text": "Results cover 20 generations x 100 agents per arm and 5 paired seeds on a SYNTHETIC benchmark. Nothing here is evidence about real markets, customers or revenue (real revenue: EUR 0 / unknown). With n=5 < 10 seeds, no statistical-significance claim is made; intervals are indicative only."
+   },
+   {
+    "title": "Best arm per measured metric (mean of last 5 generations, across seeds)",
+    "list": [
+     "Held-out quality-diversity score: highest mean = C_genetic (0.353); lead over D_random = +0.054; intervals do not overlap.",
+     "Held-out best candidate score: highest mean = C_genetic (0.416); lead over B_evolved_ann = +0.091; intervals do not overlap.",
+     "Held-out peak discovery rate: highest mean = C_genetic (0.071); lead over B_evolved_ann = +0.063; intervals do not overlap.",
+     "Train best-of-generation fitness: highest mean = C_genetic (0.458); lead over B_evolved_ann = +0.052; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Train mean fitness: highest mean = C_genetic (0.206); lead over B_evolved_ann = +0.073; intervals do not overlap [training metric - not a basis for declaring a winner].",
+     "Distinct real peaks discovered (train): highest mean = C_genetic (2.400); lead over B_evolved_ann = +1.320; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Viable niches (archive): highest mean = C_genetic (36.920); lead over A_fly_shuffled = +1.720; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Population diversity: highest mean = D_random (0.401); lead over A_fly_noplast = +0.100; intervals do not overlap.",
+     "Novelty: highest mean = D_random (0.250); lead over A_fly_noplast = +0.076; intervals do not overlap."
+    ]
+   },
+   {
+    "title": "Headline (held-out only)",
+    "text": "On the held-out quality-diversity score the highest-scoring arm is C_genetic (0.353) ahead of D_random (0.298). Paired difference +0.054 (95% bootstrap CI +0.020 to +0.079, n=5). The CI excludes zero, but with this few seeds this is preliminary and is not declared a winner."
+   },
+   {
+    "title": "Did the biologically inspired architecture add measurable value?",
+    "list": [
+     "Mushroom-body-inspired controller with plasticity vs an evolved ANN with the same parameter budget and evolutionary engine: held-out QD diff -0.104 [-0.131, -0.078] - CI excludes zero (preliminary).",
+     "Mushroom-body-inspired controller with plasticity vs the same circuit without plasticity: held-out QD diff -0.011 [-0.036, +0.010] - CI includes zero: no measurable difference.",
+     "Mushroom-body-inspired controller with plasticity vs the same circuit with shuffled PN->KC wiring: held-out QD diff +0.002 [-0.022, +0.024] - CI includes zero: no measurable difference.",
+     "Even a positive difference would show value of a sparse, plastic architecture on THIS synthetic task, not of real Drosophila connectivity (none is used)."
+    ]
+   },
+   {
+    "title": "Uncertainty",
+    "text": "Intervals are percentile bootstrap CIs over 5 seeds (2000 resamples); a single world (fixed hidden landscape) is used, so results do not generalise across worlds. Metrics are averaged over the last 5 generations to reduce evaluation noise."
+   },
+   {
+    "title": "What remains unverified",
+    "list": [
+     "Any real-world validity: no public evidence dataset is wired in yet; all hypotheses are synthetic-tier.",
+     "Arm E (LLM baseline): NOT RUN - NOT RUN: FLYFOUNDRY_LLM_ENDPOINT is not set (no free LLM endpoint configured in this environment)",
+     "Biological fidelity: no FlyWire/hemibrain connectivity is used; the controller is a documented mushroom-body-inspired model.",
+     "Robustness across different hidden worlds and benchmark difficulty levels.",
+     "Seeds: n=5 is below the configured minimum of 10."
+    ]
+   },
+   {
+    "title": "Suggested next experiments",
+    "list": [
+     "Increase seeds to >= 10 (cheap: ~minutes of CPU) and re-test the paired differences.",
+     "Add a second, non-stationary benchmark world (peaks drift over generations) where lifetime plasticity should matter; the current stationary task gives plasticity little to exploit.",
+     "Wire in one public, legitimately accessible evidence dataset (evidence-tier fitness) with recorded provenance.",
+     "Run arm E when a free LLM endpoint is available, at a matched evaluation budget."
+    ]
+   }
+  ]
+ }
+}
