@@ -55,7 +55,7 @@ jobs:
 
       - name: Restore durable state (orphan branch flyfoundry-state)
         id: restore
-        run: scripts/state_restore.sh origin "$STATE_DIR"
+        run: bash scripts/state_restore.sh origin "$STATE_DIR"
 
       - name: Schedule guard (01:00-03:59 Europe/Riga, once per local date)
         id: guard
@@ -111,7 +111,7 @@ jobs:
 
       - name: Persist state (single-commit orphan branch)
         if: steps.guard.outputs.run == 'true'
-        run: scripts/state_save.sh origin "$STATE_DIR" "state after run ${{ github.run_id }} (${{ github.sha }})"
+        run: bash scripts/state_save.sh origin "$STATE_DIR" "state after run ${{ github.run_id }} (${{ github.sha }})"
 
       - name: Run summary
         if: always() && steps.guard.outputs.run == 'true'
