@@ -90,3 +90,17 @@ Run ids: medium 38363756689, slow 38364548452, fast 38365434438. Raw verdicts: `
 Arm means (fast): fly ≈ 0.183–0.188, random 0.185, GA 0.310, ANN 0.319.
 
 Conclusion (per the pre-registered stopping rule): the fly-inspired controller does not beat the evolved ANN in any drift speed, and neither plasticity nor the wiring shows a detectable effect; fly arms sit at random-search level. The primary claim (E4-H2, medium) is INCONCLUSIVE. For this synthetic task type the fly arm is a dead end; v0.2 continues with C_genetic and B_evolved_ann. Why the fly arm generalizes poorly is an untested hypothesis.
+
+## E2 — island model vs single pool (run 38368713798, 100 paired repeats, 60 generations, 60 000 evaluations per condition)
+
+Protocol frozen in docs/V0_2_SPEC.md before the run. Metric `final_qd`: merged archive judged once, noise-free, on the `final` contexts. Raw verdicts: `reports/e2-summaries/`.
+
+| Arm | islands + migration | islands, no migration | single pool (10x population) |
+|---|---|---|---|
+| C_genetic | 0.406 | 0.405 | 0.391 |
+| B_evolved_ann | 0.367 | 0.368 | 0.370 |
+
+- C_genetic, E2-H1 (primary): +0.0153 [+0.0117, +0.0192] SUPPORTED. The benefit comes from the merge step (E2-H3 +0.0139, SUPPORTED), not from migration (E2-H2 +0.0014, INCONCLUSIVE).
+- B_evolved_ann, E2-H1 (primary): −0.0038 [−0.0069, −0.0009] REFUTED (islands slightly worse than one pool).
+- Winner's curse: no evidence of over-selection in either arm (E2-H4 INCONCLUSIVE); gaps are +0.008…+0.019 in every condition, including the single pool.
+- Caveat (pre-registered): islands use `select` evaluations that the single pool cannot use, so the GA gain is "islands + select-based merge", and it is small (about 4% of final QD). Absolute level: GA 0.41 vs ANN 0.37 on `final` contexts.

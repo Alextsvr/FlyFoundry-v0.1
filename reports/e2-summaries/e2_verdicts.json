@@ -1,0 +1,225 @@
+{
+ "meta": {
+  "config_hash": "f8bda3737377e95b5609f2ff46faf6d161c090efe0119ccf94a7401f44cc5353",
+  "world_fingerprint": "e59b7c93fada16e117f2638d74af94079ddaa10dc4bc28b4893eed64658aebda",
+  "generations": 60,
+  "repeats": 100,
+  "n_islands": 10,
+  "migrate_every": 10,
+  "n_migrants": 3,
+  "pool_factor": 10
+ },
+ "n_repeats": 100,
+ "arms": {
+  "B_evolved_ann": {
+   "islands_mig": {
+    "final_qd": 0.3665278854737232,
+    "ci": [
+     0.36461772736179243,
+     0.36861666948651745
+    ],
+    "gap": 0.00833406759501246,
+    "gap_ci": [
+     0.005052424012441128,
+     0.011468922834994231
+    ],
+    "final_best": 0.47289344954295176,
+    "n_evals": 60000
+   },
+   "islands_nomig": {
+    "final_qd": 0.3679337133701295,
+    "ci": [
+     0.36604273615371485,
+     0.3699355507523196
+    ],
+    "gap": 0.010719148986507655,
+    "gap_ci": [
+     0.007019817594954287,
+     0.014545781783620438
+    ],
+    "final_best": 0.47585167796166117,
+    "n_evals": 60000
+   },
+   "single_pool": {
+    "final_qd": 0.3703488832461979,
+    "ci": [
+     0.3682686660743608,
+     0.37245908707903996
+    ],
+    "gap": 0.010147039686507644,
+    "gap_ci": [
+     0.005982666440245333,
+     0.01409439945029939
+    ],
+    "final_best": 0.4467550274158961,
+    "n_evals": 60000
+   }
+  },
+  "C_genetic": {
+   "islands_mig": {
+    "final_qd": 0.40604481260416847,
+    "ci": [
+     0.40374161379088724,
+     0.40831146618788977
+    ],
+    "gap": 0.01781878443455754,
+    "gap_ci": [
+     0.014822119972047356,
+     0.02095411579819914
+    ],
+    "final_best": 0.4850094975184886,
+    "n_evals": 60000
+   },
+   "islands_nomig": {
+    "final_qd": 0.4045999471808458,
+    "ci": [
+     0.4026478578218491,
+     0.40674755397747275
+    ],
+    "gap": 0.018520320589507092,
+    "gap_ci": [
+     0.01574743300327666,
+     0.02141905120801035
+    ],
+    "final_best": 0.48052014367434126,
+    "n_evals": 60000
+   },
+   "single_pool": {
+    "final_qd": 0.39072903965031924,
+    "ci": [
+     0.388394243407836,
+     0.3929784572787355
+    ],
+    "gap": 0.01683102982688507,
+    "gap_ci": [
+     0.013234883074292613,
+     0.020333678681895305
+    ],
+    "final_best": 0.46421660137930515,
+    "n_evals": 60000
+   }
+  }
+ },
+ "contrasts": [
+  {
+   "id": "E2-H1",
+   "arm": "B_evolved_ann",
+   "a": "islands_mig",
+   "b": "single_pool",
+   "metric": "final_qd",
+   "alpha": 0.025,
+   "kind": "primary",
+   "diff": -0.0038209977724747005,
+   "ci": [
+    -0.006891588456626554,
+    -0.0008652791286965515
+   ],
+   "verdict": "REFUTED"
+  },
+  {
+   "id": "E2-H2",
+   "arm": "B_evolved_ann",
+   "a": "islands_mig",
+   "b": "islands_nomig",
+   "metric": "final_qd",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": -0.001405827896406288,
+   "ci": [
+    -0.003961650639584898,
+    0.001150558779596999
+   ],
+   "verdict": "INCONCLUSIVE"
+  },
+  {
+   "id": "E2-H3",
+   "arm": "B_evolved_ann",
+   "a": "islands_nomig",
+   "b": "single_pool",
+   "metric": "final_qd",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": -0.0024151698760684127,
+   "ci": [
+    -0.0054956823149631216,
+    0.0006816359215698252
+   ],
+   "verdict": "INCONCLUSIVE"
+  },
+  {
+   "id": "E2-H4",
+   "arm": "B_evolved_ann",
+   "a": "islands_mig",
+   "b": "single_pool",
+   "metric": "gap",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": -0.0018129720914951835,
+   "ci": [
+    -0.006860056851713013,
+    0.0032660572833612934
+   ],
+   "verdict": "INCONCLUSIVE"
+  },
+  {
+   "id": "E2-H1",
+   "arm": "C_genetic",
+   "a": "islands_mig",
+   "b": "single_pool",
+   "metric": "final_qd",
+   "alpha": 0.025,
+   "kind": "primary",
+   "diff": 0.015315772953849054,
+   "ci": [
+    0.011651493635104452,
+    0.019165624899318938
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "id": "E2-H2",
+   "arm": "C_genetic",
+   "a": "islands_mig",
+   "b": "islands_nomig",
+   "metric": "final_qd",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": 0.0014448654233225433,
+   "ci": [
+    -0.0007535904645681588,
+    0.00383945265843201
+   ],
+   "verdict": "INCONCLUSIVE"
+  },
+  {
+   "id": "E2-H3",
+   "arm": "C_genetic",
+   "a": "islands_nomig",
+   "b": "single_pool",
+   "metric": "final_qd",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": 0.013870907530526513,
+   "ci": [
+    0.010435530175325902,
+    0.01728969752839756
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "id": "E2-H4",
+   "arm": "C_genetic",
+   "a": "islands_mig",
+   "b": "single_pool",
+   "metric": "gap",
+   "alpha": 0.05,
+   "kind": "exploratory",
+   "diff": 0.0009877546076724692,
+   "ci": [
+    -0.0037731416359158467,
+    0.0058828791485994415
+   ],
+   "verdict": "INCONCLUSIVE"
+  }
+ ]
+}
