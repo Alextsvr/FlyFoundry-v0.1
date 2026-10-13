@@ -12,3 +12,6 @@ reports/gh-run/
 reports/e4-*/
 reports/local-first-run/
 reports/e2/
+
+reports/phase1/
+out/

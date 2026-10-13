@@ -281,6 +281,14 @@ def build_parser():
     sp.add_argument("--repeats", type=int, default=30); sp.add_argument("--generations", type=int, default=60)
     sp.add_argument("--shard", default=None); sp.add_argument("--arms", nargs="+", default=["B_evolved_ann", "C_genetic"])
     sp.set_defaults(fn=cmd_islands)
+    sp = sub.add_parser("probe", help="Phase 1: run free public-API probes (network)")
+    sp.add_argument("--ideas", default="data/ideas.csv"); sp.add_argument("--cache", required=True)
+    sp.add_argument("--sources", nargs="+", default=["hn", "github", "stackexchange"]); sp.add_argument("--max-requests", type=int, default=3000)
+    sp.set_defaults(fn=cmd_probe)
+    sp = sub.add_parser("calibrate", help="Phase 1: calibrate layer F against the H01-H12 reference (offline)")
+    sp.add_argument("--facts", required=True); sp.add_argument("--compare", default=None)
+    sp.add_argument("--reference", default="data/calibration_reference.csv"); sp.add_argument("--out", default="reports/phase1")
+    sp.set_defaults(fn=cmd_calibrate)
     sp = sub.add_parser("schedule-guard"); sp.add_argument("--state-dir", default="state")
     sp.add_argument("--tz", default="Europe/Riga"); sp.add_argument("--window", default="1-3"); sp.set_defaults(fn=cmd_guard)
     return p
@@ -314,6 +322,47 @@ def cmd_islands(args) -> int:
                "repeats": args.repeats, "shard": [i, n], "n_islands": isl.N_ISLANDS, "migrate_every": isl.MIGRATE_EVERY,
                "n_migrants": isl.N_MIGRANTS, "pool_factor": isl.POOL_FACTOR, "rows": rows}
     (out / f"e2_shard_{i}.json").write_text(json.dumps(payload))
+    return 0
+
+
+def cmd_probe(args) -> int:
+    """Phase 1 layer F: run the free public-API probes (live network; meant for GitHub Actions). Resumable via the cache."""
+    from ..phase1 import probes
+    ideas = probes.load_ideas(args.ideas)
+    cache = probes.ProbeCache(args.cache)
+    facts = probes.run_probes(ideas, cache, sources=tuple(args.sources), max_requests=args.max_requests)
+    st = {}
+    for f in facts:
+        st[f["status"]] = st.get(f["status"], 0) + 1
+    print(json.dumps({"ideas": len(ideas), "facts": len(facts), "status": st, "cache": str(args.cache)}))
+    return 0
+
+
+def cmd_calibrate(args) -> int:
+    """Phase 1 calibration of the automated layer-F score against the manual H01-H12 verdicts (offline, from the cache)."""
+    from ..phase1 import calibration, probes, scoring
+    facts = list(probes.ProbeCache(args.facts).facts.values())
+    scores = scoring.f_scores(facts)
+    y = calibration.load_reference(args.reference)
+    res = {"calibration": calibration.calibrate(scores, y), "scores": scores,
+           "negative_control": calibration.calibrate(scoring.f_scores(scoring.shuffle_facts(facts, 0)), y),
+           "n_facts": len(facts), "facts_ok": sum(f["status"] == "ok" for f in facts)}
+    if args.compare:
+        other = scoring.f_scores(list(probes.ProbeCache(args.compare).facts.values()))
+        res["stability"] = calibration.stability(scores, other)
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "calibration.json").write_text(json.dumps(res, indent=1))
+    c, n = res["calibration"], res["negative_control"]
+    L = ["## Phase 1 calibration (automated layer F vs manual H01-H12 verdicts)", "",
+         f"Facts: {res['facts_ok']} ok of {res['n_facts']}. n = {c['n']} ideas.", "",
+         f"**Verdict: {c['verdict']}** - Spearman rho = {c['rho']:+.3f} (95% CI {c['ci95'][0]:+.2f}..{c['ci95'][1]:+.2f}), "
+         f"one-sided permutation p = {c['p_one_sided']:.4f}; pass needs rho >= 0.5 and p <= 0.05 (n = 12: low power).", "",
+         f"Negative control (probe results shuffled across ideas): rho = {n['rho']:+.3f}, p = {n['p_one_sided']:.3f}."]
+    if "stability" in res:
+        L += ["", f"Stability vs second run: rho = {res['stability']['rho']:+.3f} -> {res['stability']['verdict']} (needs >= 0.8)."]
+    (out / "calibration.md").write_text("\n".join(L) + "\n")
+    print("\n".join(L))
     return 0
 
 

@@ -1,0 +1,13 @@
+id,name,calibration,hn_phrases,gh_query,se_query,se_site,basis
+H01,Tender / RFP Scout,1,find tenders|rfp alerts|public procurement,tender notices alerts,public procurement tender,stackoverflow,"zero-capital-synthesis-v1 H01; queries frozen 2026-10-13 before any probe run"
+H02,Award -> Sub Intelligence,1,contract awards|subcontractor leads,contract awards data,construction subcontractor leads,stackoverflow,"zero-capital-synthesis-v1 H02"
+H03,Rare Parts Sourcing,1,obsolete parts|hard to find parts,obsolete parts search,obsolete part sourcing,stackoverflow,"zero-capital-synthesis-v1 H03"
+H04,B2B Quote Concierge,1,request for quote|supplier quotes,rfq quote comparison,request for quotation supplier,stackoverflow,"zero-capital-synthesis-v1 H04"
+H05,Public-Registry Trigger Leads,1,new company registrations|company registry leads,company registry new companies,company registry api,stackoverflow,"zero-capital-synthesis-v1 H05"
+H06,Website Problem -> Lead,1,website audit leads|broken websites outreach,website audit lead generation,website audit,stackoverflow,"zero-capital-synthesis-v1 H06"
+H07,Reconciliation Rescue,1,reconciliation spreadsheet|bank reconciliation,bank reconciliation,bank reconciliation,stackoverflow,"zero-capital-synthesis-v1 H07"
+H08,Catalogue / Compatibility Cleanup,1,product catalog cleanup|fitment data,product data normalization,product catalog normalization,stackoverflow,"zero-capital-synthesis-v1 H08"
+H09,Distressed Asset Intelligence,1,distressed assets|insolvency auctions,insolvency auction scraper,insolvency data,stackoverflow,"zero-capital-synthesis-v1 H09"
+H10,Marketplace Price-Anomaly,1,underpriced listings|arbitrage deals,marketplace price alert,price tracking scraper,stackoverflow,"zero-capital-synthesis-v1 H10"
+H11,Grant / Subsidy Matcher,1,find grants|subsidy funding,grant finder,grant matching,stackoverflow,"zero-capital-synthesis-v1 H11"
+H12,B2B Intent Radar,1,buyer intent data|intent signals leads,buyer intent leads,lead intent signals,stackoverflow,"zero-capital-synthesis-v1 H12"

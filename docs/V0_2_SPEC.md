@@ -224,7 +224,7 @@ Purpose: add model judgement to Phase 1 fitness (e.g. score a candidate's plausi
 - Decide whether to enable the Claude-in-the-loop module (section 5) after checking terms.
 - v0.1 scheduled run still unverified (first cron expected 01:30 Europe/Riga, 2026-10-13).
 
-## 8. Phase 1 outline (not binding yet)
+## 8. Phase 1 outline (superseded by docs/PHASE1_SPEC.md, draft v0.1)
 
 Task: produce a ranked list of business models, idea space wider than the original
 project, no dependence on a human closer, EUR 0, owner's profile constraints.
