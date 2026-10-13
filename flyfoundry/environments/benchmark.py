@@ -60,12 +60,24 @@ class BenchmarkWorld:
         self._shift = S
         self.ctx_train = rng.random((cfg.n_train_scenarios, K))
         self.ctx_heldout = rng.random((cfg.n_heldout_scenarios, K))
+        # v0.2 E4 drift: separate RNG stream so that the stationary world (drift_amp = 0) is bit-identical to v0.1
+        self._drift_dir = self._drift_phase = None
+        if cfg.drift_amp > 0:
+            drng = np.random.default_rng(np.random.SeedSequence([cfg.world_seed, 202]))
+            u = drng.standard_normal((P, D))
+            u[:, DIM_CAPITAL] = 0.0
+            u[:, DIM_EFFORT] = 0.0
+            self._drift_dir = u
+            self._drift_phase = drng.uniform(0.0, 2 * np.pi, P)
 
     # ------------------------------------------------------------ fingerprint
     def fingerprint(self) -> str:
         h = hashlib.sha256()
         for a in (self._centers, self._values, self._decoy, self._shift, self.ctx_train, self.ctx_heldout):
             h.update(np.ascontiguousarray(a).tobytes())
+        if self._drift_dir is not None:  # only when drifting, so stationary fingerprints stay unchanged
+            for a in (self._drift_dir, self._drift_phase, np.array([self.cfg.drift_amp, self.cfg.drift_period])):
+                h.update(np.ascontiguousarray(a).tobytes())
         return h.hexdigest()
 
     # ----------------------------------------------------------- core scoring
@@ -76,21 +88,30 @@ class BenchmarkWorld:
         uns = cfg.unsupported_penalty * np.maximum(0.0, X[:, DIM_DEMAND_CLAIM] - X[:, DIM_EVIDENCE] - 0.15)
         return cap + eff + uns
 
-    def _shifted_centers(self, ctx: np.ndarray) -> np.ndarray:
+    def drift_offset(self, t: float) -> np.ndarray | None:
+        """(P,D) displacement of the peak centres at time t (generation index); None for a stationary world."""
+        if self._drift_dir is None:
+            return None
+        phase = 2 * np.pi * float(t) / self.cfg.drift_period + self._drift_phase
+        return self.cfg.drift_amp * self._drift_dir * np.sin(phase)[:, None]
+
+    def _shifted_centers(self, ctx: np.ndarray, t: float = 0.0) -> np.ndarray:
         """ctx (n,K) -> (n,P,D)"""
         sh = np.einsum("pdk,nk->npd", self._shift, ctx - 0.5)
-        return np.clip(self._centers[None] + sh, 0.0, 1.0)
+        off = self.drift_offset(t)
+        base = self._centers[None] if off is None else self._centers[None] + off[None]
+        return np.clip(base + sh, 0.0, 1.0)
 
-    def _dist_match(self, X: np.ndarray, ctx: np.ndarray):
-        cs = self._shifted_centers(ctx)
+    def _dist_match(self, X: np.ndarray, ctx: np.ndarray, t: float = 0.0):
+        cs = self._shifted_centers(ctx, t)
         dist = np.linalg.norm(X[:, None, :] - cs, axis=2)  # (n,P)
         match = self._values[None] * np.exp(-dist / self.cfg.peak_length_scale)
         return dist, match
 
     # ------------------------------------------------------------- training
-    def train_fitness(self, X: np.ndarray, scen_idx: np.ndarray, noise: np.ndarray):
+    def train_fitness(self, X: np.ndarray, scen_idx: np.ndarray, noise: np.ndarray, t: float = 0.0):
         ctx = self.ctx_train[scen_idx]
-        dist, match = self._dist_match(X, ctx)
+        dist, match = self._dist_match(X, ctx, t)
         f = match.max(axis=1) - self._penalty(X) + noise
         f = np.clip(f, -1.0, 1.0)
         hit = (dist <= self.cfg.discovery_radius) & (
@@ -98,8 +119,8 @@ class BenchmarkWorld:
         return f, hit.any(axis=0)
 
     # ------------------------------------------------------------- held-out
-    def heldout_metrics(self, Xh: np.ndarray) -> dict:
-        """Xh: (E, S, D) candidates (entry e, held-out context s). Noise-free."""
+    def heldout_metrics(self, Xh: np.ndarray, t: float = 0.0) -> dict:
+        """Xh: (E, S, D) candidates (entry e, held-out context s). Noise-free, evaluated at time t."""
         cfg = self.cfg
         E, S, _ = Xh.shape
         real = ~self._decoy
@@ -107,7 +128,7 @@ class BenchmarkWorld:
         qd, best, cov = [], [], []
         for s in range(S):
             ctx = np.repeat(self.ctx_heldout[s][None], E, axis=0)
-            dist, match = self._dist_match(Xh[:, s, :], ctx)
+            dist, match = self._dist_match(Xh[:, s, :], ctx, t)
             net = match - self._penalty(Xh[:, s, :])[:, None]
             per_peak = np.maximum(net, 0.0).max(axis=0)
             qd.append(per_peak[real].sum() / denom)
@@ -142,6 +163,7 @@ class Evaluator:
         self.n_evals = 0
         self.allowed_evals = allowed_evals
         self.discovered = np.zeros(world.n_peaks, dtype=bool)  # telemetry, never read by agents
+        self.t = 0  # current generation clock, set by the runner before each step (drifting worlds only use it)
 
     def sample_scenarios(self, n: int):
         idx = self.env_rng.integers(0, self._world.cfg.n_train_scenarios, n)
@@ -153,7 +175,7 @@ class Evaluator:
             raise BudgetExceeded(f"evaluation budget exceeded: {self.n_evals}+{n} > {self.allowed_evals}")
         X = np.clip(np.asarray(X, dtype=np.float64), 0.0, 1.0)
         noise = self.env_rng.normal(0.0, self._world.cfg.obs_noise, n)
-        f, hit = self._world.train_fitness(X, scen_idx, noise)
+        f, hit = self._world.train_fitness(X, scen_idx, noise, self.t)
         self.discovered |= hit
         self.n_evals += n
         return f

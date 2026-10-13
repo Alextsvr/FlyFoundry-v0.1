@@ -38,6 +38,7 @@ class ArmRunner:
         if tracemalloc.is_tracing():
             tracemalloc.reset_peak()
         t0 = time.process_time()
+        self.evaluator.t = gen  # drifting worlds: training fitness is evaluated at the current generation
         out = arm.step(self.evaluator, gen)
         t1 = time.process_time()
         mem_kb = (tracemalloc.get_traced_memory()[1] - base_mem) / 1024 if tracemalloc.is_tracing() else 0.0
@@ -45,7 +46,8 @@ class ArmRunner:
         fl = arm.archive.filled
         ast = arm.archive.stats(cfg.viable_threshold)
         Xh = arm.heldout_candidates(self.world.ctx_heldout)
-        ho = self.world.heldout_metrics(Xh) if Xh is not None else \
+        t_next = gen + 1  # held-out metrics describe the world the arm will face next
+        ho = self.world.heldout_metrics(Xh, t_next) if Xh is not None else \
             {"heldout_qd": 0.0, "heldout_best": 0.0, "heldout_discovery": 0.0}
         f = out.f
         rec = {
@@ -61,6 +63,10 @@ class ArmRunner:
             "champion_id": int(out.ids[int(np.argmax(f))]),
             **ast, **ho,
         }
+        if cfg.drift_amp > 0:  # E4 tracking metric: the current population on held-out contexts at time t+1
+            tr = self.world.heldout_metrics(arm.population_candidates(self.world.ctx_heldout), t_next)
+            rec.update({"track_qd": tr["heldout_qd"], "track_best": tr["heldout_best"],
+                        "track_discovery": tr["heldout_discovery"]})
         t2 = time.process_time()
         rec["cpu_search_s"] = t1 - t0
         rec["cpu_monitor_s"] = t2 - t1

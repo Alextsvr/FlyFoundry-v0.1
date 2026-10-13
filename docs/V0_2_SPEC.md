@@ -8,6 +8,10 @@ Implementation log (updated as pieces land):
   Sizing finding: one 10-seed shard checkpoint is ~24 MB and a merged 100-seed checkpoint ~235 MB, which exceeds GitHub's
   100 MB per-file push limit, so the swarm does NOT persist the merged checkpoint in the state branch (shard artifacts
   live 1 day; the report is the product). - 2026-10-13: E1 executed on GitHub Actions (run 38361995321). H1 REFUTED, H2 and H3 INCONCLUSIVE, H4 SUPPORTED (see docs/RESULTS.md).
+- 2026-10-13: E4 pre-registered (section 4) and implemented: drifting world (`drift_amp`, `drift_period`), tracking metrics,
+  `configs/e4_drift_*.json`, `scripts/analyze_e4.py`, `swarm.yml` config input. Regression: with `drift_amp = 0` a tiny run is
+  state-identical to the pre-change code and the world fingerprint equals the E1 one. 41 tests pass. A 6-seed pipeline rehearsal
+  was run only to test the plumbing; its numbers are not used for any decision.
   Not yet done: islands/migration, three-way context split, fitness plugin, E2/E3.
 Language note: repo docs are English; the project owner discusses in Russian.
 
@@ -104,6 +108,38 @@ a dated amendment section; results must report the original thresholds.
   on the final weight sets; H07 and H01 are the top 2; H03 is last.
 - Mandatory caveat in the report: inputs are the same scores that define the reference
   ranking, so a pass shows the machinery works, not that it can find good businesses.
+
+### E4 — Non-stationary world (does lifetime plasticity help when the task drifts?)
+Added 2026-10-13 AFTER E1 and BEFORE any drifting-world code existed or ran. Purpose: give the mushroom-body-inspired arm one
+fair chance on a task where its mechanism (within-lifetime reward-modulated learning that survivors carry across generations)
+has something to exploit. E1 showed no benefit on a stationary task.
+- World change: every real/decoy peak centre moves with time t (= generation index) by `drift_amp * u[p,d] * sin(2*pi*t/T + phi[p])`
+  per dimension (u ~ N(0,1) and phi uniform, drawn from a separate RNG stream; capital and effort dimensions do not drift;
+  centres are clipped to [0,1]). With `drift_amp = 0` the world, its fingerprint and every v0.1/E1 result are unchanged.
+  Training fitness is evaluated at the current t. Peak values/penalties are unchanged.
+- THREE conditions, all fixed now, all reported, none added or dropped after seeing data: drift_amp = 0.15 with period
+  T = 120 (slow), 40 (medium, PRIMARY), 15 (fast) generations. 100 paired seeds, 6 arms, 60 generations, population 100,
+  same config as E1 otherwise (`configs/e4_drift_{slow,medium,fast}.json`).
+- Primary metric `track_qd`: the same quality-diversity score as held-out QD, computed on the arm's CURRENT population
+  (what it would deploy now: survivors with their learned weights plus newly born agents; for context-blind arms the
+  population genomes), on the 16 held-out contexts, noise-free, at time t+1. Per seed: mean over generations 41-60.
+  (The archive-based `heldout_qd` is also logged, at time t+1, but it is secondary because old elites go stale.)
+- Hypotheses and decision rule (paired percentile bootstrap, 2000 resamples, n = 100; SUPPORTED if the 95% CI lower bound > 0,
+  REFUTED if the upper bound < 0, otherwise INCONCLUSIVE), each evaluated in each condition:
+  - E4-H1: A_fly_plastic - B_evolved_ann (>= 0 expected only if the architecture helps under drift).
+  - E4-H2: A_fly_plastic - A_fly_noplast (does lifetime plasticity itself help?). PRIMARY claim = E4-H2 in the medium condition.
+  - E4-H3: A_fly_plastic - A_fly_shuffled.
+  - E4-H4 (sanity): C_genetic - D_random.
+- Multiplicity: 3 conditions x 3 contrasts = 9 tests. Only the PRIMARY (H2, medium) may be called a confirmed finding. Any other
+  SUPPORTED result is reported as exploratory.
+- Validity checks (must pass before the verdict counts): (a) unit test: with drift enabled a fixed candidate set scores differently at
+  different t (the drift actually matters); (b) drift_amp = 0 reproduces the v0.1/E1 world fingerprint; (c) agents still cannot reference
+  held-out data (static test).
+- Stopping rule, fixed now: if E4-H1 is REFUTED in all three conditions, the fly-inspired controller is declared a dead end for
+  tasks of this synthetic type and v0.2 continues with C_genetic and B_evolved_ann only (islands, E2). If E4-H2 is SUPPORTED in the
+  medium condition, a follow-up is justified, and it would still say nothing about real flies or real markets.
+- Not allowed: changing the drift parameters, the metric window or the contrasts after seeing E4 results to make an arm look
+  better. A change requires a dated amendment and the original verdict stays in the record.
 
 ## 5. Optional module: Claude in the loop (OFF by default)
 

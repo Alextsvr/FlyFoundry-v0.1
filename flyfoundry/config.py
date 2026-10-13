@@ -45,6 +45,8 @@ class ExperimentConfig:
     capital_penalty: float = 2.0
     effort_penalty: float = 1.0
     unsupported_penalty: float = 1.0
+    drift_amp: float = 0.0          # v0.2 E4: per-dimension peak drift amplitude; 0 = stationary world (v0.1 behaviour)
+    drift_period: float = 40.0      # generations per drift cycle (only used when drift_amp > 0)
     # --- archive / diversity -------------------------------------------------
     archive_bins: int = 4
     archive_dims: tuple = (0, 1, 3)

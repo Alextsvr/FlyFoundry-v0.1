@@ -7,6 +7,15 @@ name: swarm
 on:
   workflow_dispatch:
     inputs:
+      config:
+        description: "Experiment configuration (E1 = stationary scale test; E4 = drifting worlds, see docs/V0_2_SPEC.md)"
+        type: choice
+        default: configs/swarm_e1.json
+        options:
+          - configs/swarm_e1.json
+          - configs/e4_drift_slow.json
+          - configs/e4_drift_medium.json
+          - configs/e4_drift_fast.json
       seeds:
         description: "Total seeds (E1 default: 100)"
         default: "100"
@@ -26,7 +35,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  CONFIG: configs/swarm_e1.json
+  CONFIG: ${{ inputs.config }}
 
 jobs:
   plan:
@@ -130,9 +139,17 @@ jobs:
           python -m flyfoundry merge --config "$CONFIG" "${args[@]}" --state-dir merged_state --out reports/swarm
       - name: Verify merged checkpoint
         run: python -m flyfoundry validate --state-dir merged_state
+      - name: E4 verdicts (only for drifting-world configurations)
+        run: |
+          if ! python -c "import json,sys; sys.exit(0 if json.load(open('$CONFIG')).get('drift_amp', 0) > 0 else 1)"; then
+            echo "stationary configuration: no E4 analysis"; exit 0
+          fi
+          python scripts/analyze_e4.py reports/swarm/history.csv --condition "$CONFIG" \
+            --out reports/swarm/e4_verdicts.md --json reports/swarm/e4_verdicts.json
       - name: Run summary
         if: always()
         run: |
+          if [ -f reports/swarm/e4_verdicts.md ]; then cat reports/swarm/e4_verdicts.md >> "$GITHUB_STEP_SUMMARY"; fi
           if [ -f reports/swarm/summary.md ]; then cat reports/swarm/summary.md >> "$GITHUB_STEP_SUMMARY"; fi
           if [ -f reports/swarm/error.md ]; then cat reports/swarm/error.md >> "$GITHUB_STEP_SUMMARY"; fi
       - uses: actions/upload-artifact@v4

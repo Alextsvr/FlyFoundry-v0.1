@@ -110,6 +110,16 @@ class ControllerArm(Arm):
             Xh[:, s, :] = self.policy.forward(params, ctx, zero)[0]
         return Xh
 
+    def population_candidates(self, eval_ctx):
+        """Current population (survivors with their learned weights + newborns) acting without exploration noise."""
+        N, S = len(self.ids), len(eval_ctx)
+        out = np.zeros((N, S, self.cfg.n_dims))
+        zero = np.zeros((N, self.cfg.n_dims), dtype=np.float32)
+        for s in range(S):
+            ctx = np.repeat(eval_ctx[s][None], N, axis=0)
+            out[:, s, :] = self.policy.forward(self.learned, ctx, zero)[0]
+        return out
+
     def model_card(self):
         c = self.policy.model_card()
         c["plasticity_enabled"] = bool(self.plastic)

@@ -36,6 +36,9 @@ class _DirectArm(Arm):
             return None
         return np.repeat(self.archive.X[fl][:, None, :], len(eval_ctx), axis=1)
 
+    def population_candidates(self, eval_ctx):
+        return np.repeat(self.X[:, None, :], len(eval_ctx), axis=1)
+
     def get_state(self):
         s = self._base_state()
         s.update({"X": self.X, "champions": np.array(self.champions, dtype=np.int64).reshape(-1, 2)})

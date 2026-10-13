@@ -42,6 +42,10 @@ class Arm:
         """-> (E, S, D) candidates from the arm's archive, or None. Uses TRAINING-selected elites only."""
         raise NotImplementedError
 
+    def population_candidates(self, eval_ctx: np.ndarray) -> np.ndarray:
+        """-> (N, S, D): what the CURRENT population would deploy in each of the S given contexts (E4 tracking metric)."""
+        raise NotImplementedError
+
     def living_ids(self):
         return self.ids
 

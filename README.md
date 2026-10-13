@@ -119,3 +119,4 @@ shard state directories into one full experiment and writes the normal report. A
 state-for-state (see `tests/test_shards.py`). `.github/workflows/swarm.yml` runs the shards as parallel jobs (max 10 at once, manual
 trigger only) and is disabled until the repository variable `SWARM_ENABLED` is `true`. Plan and pre-registered criteria: `docs/V0_2_SPEC.md`.
 
+E4 (drifting world): `drift_amp > 0` makes peak centres oscillate with the generation clock; arms additionally log `track_qd` (current population on held-out contexts). Verdict rules: `docs/V0_2_SPEC.md`, analysis: `scripts/analyze_e4.py`.
