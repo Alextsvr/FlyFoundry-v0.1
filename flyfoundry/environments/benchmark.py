@@ -62,6 +62,7 @@ class BenchmarkWorld:
         self.ctx_heldout = rng.random((cfg.n_heldout_scenarios, K))
         # v0.2 E4 drift: separate RNG stream so that the stationary world (drift_amp = 0) is bit-identical to v0.1
         self._drift_dir = self._drift_phase = None
+        self._split = None  # v0.2 E2: (select, final) contexts, built lazily from their own RNG stream
         if cfg.drift_amp > 0:
             drng = np.random.default_rng(np.random.SeedSequence([cfg.world_seed, 202]))
             u = drng.standard_normal((P, D))
@@ -121,13 +122,17 @@ class BenchmarkWorld:
     # ------------------------------------------------------------- held-out
     def heldout_metrics(self, Xh: np.ndarray, t: float = 0.0) -> dict:
         """Xh: (E, S, D) candidates (entry e, held-out context s). Noise-free, evaluated at time t."""
+        return self.metrics_on(Xh, self.ctx_heldout, t)
+
+    def metrics_on(self, Xh: np.ndarray, ctx_set: np.ndarray, t: float = 0.0) -> dict:
+        """Same metrics as ``heldout_metrics`` on an arbitrary context set (len(ctx_set) == Xh.shape[1])."""
         cfg = self.cfg
         E, S, _ = Xh.shape
         real = ~self._decoy
         denom = float(self._values[real].sum())
         qd, best, cov = [], [], []
         for s in range(S):
-            ctx = np.repeat(self.ctx_heldout[s][None], E, axis=0)
+            ctx = np.repeat(ctx_set[s][None], E, axis=0)
             dist, match = self._dist_match(Xh[:, s, :], ctx, t)
             net = match - self._penalty(Xh[:, s, :])[:, None]
             per_peak = np.maximum(net, 0.0).max(axis=0)
@@ -137,6 +142,32 @@ class BenchmarkWorld:
             cov.append(found[real].sum() / real.sum())
         return {"heldout_qd": float(np.mean(qd)), "heldout_best": float(np.mean(best)),
                 "heldout_discovery": float(np.mean(cov))}
+
+    def entry_scores(self, Xh: np.ndarray, ctx_set: np.ndarray, t: float = 0.0) -> np.ndarray:
+        """(E,) mean noise-free net score of each entry over the given contexts (Xh: (E,S,D))."""
+        E, S, _ = Xh.shape
+        out = np.zeros(E)
+        for s in range(S):
+            ctx = np.repeat(ctx_set[s][None], E, axis=0)
+            _, match = self._dist_match(Xh[:, s, :], ctx, t)
+            out += match.max(axis=1) - self._penalty(Xh[:, s, :])
+        return out / S
+
+    # ------------------------------------------------- v0.2 three-way split
+    def _split_contexts(self):
+        if self._split is None:
+            rng = np.random.default_rng(np.random.SeedSequence([self.cfg.world_seed, 303]))
+            K = self.cfg.n_ctx
+            self._split = (rng.random((16, K)), rng.random((16, K)))
+        return self._split
+
+    def select_view(self) -> "SelectView":
+        """What islands may use for migration / survivor decisions. Exposes ONLY the `select` contexts."""
+        return SelectView(self, self._split_contexts()[0])
+
+    def final_judge(self) -> "FinalJudge":
+        """Only the final tournament (research/tournament.py) may call this."""
+        return FinalJudge(self, self._split_contexts()[1])
 
     def static_candidate_heldout(self, x: np.ndarray) -> float:
         """Mean held-out net score of ONE fixed candidate across held-out contexts (report only)."""
@@ -152,6 +183,29 @@ class BenchmarkWorld:
     @property
     def n_peaks(self) -> int:
         return len(self._values)
+
+
+class SelectView:
+    """Noise-free scoring on the `select` contexts. Has no access to the `final` contexts."""
+
+    def __init__(self, world: "BenchmarkWorld", ctx: np.ndarray):
+        self._world, self.ctx = world, ctx
+
+    def score(self, Xh: np.ndarray) -> np.ndarray:
+        return self._world.entry_scores(Xh, self.ctx)
+
+
+class FinalJudge:
+    """Noise-free scoring on the `final` contexts; created only by the final tournament."""
+
+    def __init__(self, world: "BenchmarkWorld", ctx: np.ndarray):
+        self._world, self.ctx = world, ctx
+
+    def score(self, Xh: np.ndarray) -> np.ndarray:
+        return self._world.entry_scores(Xh, self.ctx)
+
+    def metrics(self, Xh: np.ndarray) -> dict:
+        return self._world.metrics_on(Xh, self.ctx)
 
 
 class Evaluator:

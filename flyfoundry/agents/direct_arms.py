@@ -34,7 +34,23 @@ class _DirectArm(Arm):
         fl = self.archive.filled
         if len(fl) == 0:
             return None
-        return np.repeat(self.archive.X[fl][:, None, :], len(eval_ctx), axis=1)
+        return self.deploy(fl, eval_ctx)
+
+    def deploy(self, niches, eval_ctx):
+        """(len(niches), S, D): what the archive elites of the given niches would deploy in each context."""
+        return np.repeat(self.archive.X[niches][:, None, :], len(eval_ctx), axis=1)
+
+    def export_genomes(self, niches):
+        return self.archive.X[niches].copy()
+
+    def import_genomes(self, G, gen):
+        """Island migration: overwrite the last k population slots with migrants (newborn slots, never the elites)."""
+        k = len(G)
+        self.lineage.death(self.ids[-k:], gen)
+        self.X[-k:] = G
+        new_ids = self.lineage.new_ids(k)
+        self.lineage.birth(new_ids, -np.ones(k), -np.ones(k), gen, np.full(k, 3), np.zeros(k))
+        self.ids[-k:] = new_ids
 
     def population_candidates(self, eval_ctx):
         return np.repeat(self.X[:, None, :], len(eval_ctx), axis=1)

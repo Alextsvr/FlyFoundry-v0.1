@@ -101,14 +101,34 @@ class ControllerArm(Arm):
         fl = self.archive.filled
         if len(fl) == 0:
             return None
-        params = (self.archive.pheno if self.plastic else self.archive.genome)[fl]
+        return self.deploy(fl, eval_ctx)
+
+    def deploy(self, niches, eval_ctx):
+        """(len(niches), S, D): the archive elites of the given niches acting in each context, no exploration noise."""
+        params = (self.archive.pheno if self.plastic else self.archive.genome)[niches]
         S = len(eval_ctx)
-        Xh = np.zeros((len(fl), S, self.cfg.n_dims))
-        zero = np.zeros((len(fl), self.cfg.n_dims), dtype=np.float32)
+        Xh = np.zeros((len(niches), S, self.cfg.n_dims))
+        zero = np.zeros((len(niches), self.cfg.n_dims), dtype=np.float32)
         for s in range(S):
-            ctx = np.repeat(eval_ctx[s][None], len(fl), axis=0)
+            ctx = np.repeat(eval_ctx[s][None], len(niches), axis=0)
             Xh[:, s, :] = self.policy.forward(params, ctx, zero)[0]
         return Xh
+
+    def export_genomes(self, niches):
+        return (self.archive.pheno if self.plastic else self.archive.genome)[niches].copy()
+
+    def import_genomes(self, G, gen):
+        """Island migration: overwrite the last k population slots with migrants (newborn slots, never the survivors)."""
+        k = len(G)
+        G = np.asarray(G, dtype=np.float32)
+        self.lineage.death(self.ids[-k:], gen)
+        self.genome[-k:] = G
+        if self.plastic:
+            self.learned[-k:] = G
+        self.baseline[-k:] = np.nan
+        new_ids = self.lineage.new_ids(k)
+        self.lineage.birth(new_ids, -np.ones(k), -np.ones(k), gen, np.full(k, 3), np.zeros(k))
+        self.ids[-k:] = new_ids
 
     def population_candidates(self, eval_ctx):
         """Current population (survivors with their learned weights + newborns) acting without exploration noise."""

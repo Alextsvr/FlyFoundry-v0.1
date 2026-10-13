@@ -12,7 +12,7 @@ Implementation log (updated as pieces land):
   `configs/e4_drift_*.json`, `scripts/analyze_e4.py`, `swarm.yml` config input. Regression: with `drift_amp = 0` a tiny run is
   state-identical to the pre-change code and the world fingerprint equals the E1 one. 41 tests pass. A 6-seed pipeline rehearsal
   was run only to test the plumbing; its numbers are not used for any decision.
-  Not yet done: islands/migration, three-way context split, fitness plugin, E2/E3.
+  Done in code (2026-10-13): islands, migration, three-way split, final tournament (E2 protocol frozen, run pending). Not yet done: fitness plugin, E3.
 Language note: repo docs are English; the project owner discusses in Russian.
 
 ## 0. Purpose and phases
@@ -98,6 +98,38 @@ a dated amendment section; results must report the original thresholds.
 - Winner's-curse check: the champion's `select` score minus its `final` score is reported
   (expected > 0); a swarm whose gap is much larger than the no-island baseline's gap is
   flagged as over-selecting.
+
+#### E2 — frozen protocol (written 2026-10-13, BEFORE the official run)
+
+Disclosure: before freezing, the code was smoke-tested on 2 repeats at 60 generations and 4 repeats at 20 generations
+(plumbing only; the numbers were glanced at and are not used for any decision). The official run is a fresh run of the
+frozen code below with 100 repeats.
+
+- **Why this experiment.** E4 stopping rule: the fly-inspired arms are dropped; E2 uses `C_genetic` and `B_evolved_ann`.
+- **World.** Stationary E1 world (`configs/swarm_e1.json`, fingerprint unchanged). Two NEW context sets, `select` and
+  `final` (16 contexts each, own RNG stream, disjoint from `train` and `held-out`), do not change the fingerprint.
+- **Conditions per repeat and arm** (all with 60 generations and exactly 60 000 training evaluations in total):
+  `islands_mig` = 10 islands x pop 100, ring migration every 10 generations (not after the last one), the 3 best archive
+  elites (ranked on `select`) of each island replace the 3 newest population slots of the next island;
+  `islands_nomig` = the same 10 islands (same seeds) without migration;
+  `single_pool` = one population of 1000 (survivors 300, elites 50: counts scaled with the population).
+- **Merge and tournament.** The swarm's output is a merged archive: per niche the island elite with the best `select` score
+  (noise-free mean net score over the 16 `select` contexts; same rule applied to the single pool, which has one elite per
+  niche). The merged archive is judged ONCE on the `final` contexts, noise-free: `final_qd` (primary metric, same definition
+  as held-out QD), plus `final_best`. Champion = merged entry with the best `select` score; winner's-curse gap = champion
+  `select` score minus its `final` score. (Simplification vs section 3.5: no round-robin, ranking is by `select` score,
+  and nothing is ever re-selected on `final`.)
+- **Known asymmetry (disclosed).** `select` evaluations are noise-free and not counted in the evaluation budget; islands use
+  them for migration and merging, the single pool has nothing to choose between. A positive E2-H1 therefore means "the whole
+  pipeline beats one pool", and E2-H3 (merge only) vs E2-H2 (migration) show where the benefit comes from.
+- **Repeats.** 100 paired repeats (repeat r uses island seeds seed_base + 1000 r + i and pool seed seed_base + 1000 r + 99).
+- **Tests.** Primary, one per arm, 97.5% CI each (two primaries): E2-H1 `final_qd(islands_mig) - final_qd(single_pool)`.
+  Exploratory (95% CI): E2-H2 `islands_mig - islands_nomig`; E2-H3 `islands_nomig - single_pool`; E2-H4 the gap difference
+  `gap(islands_mig) - gap(single_pool)`, flagged OVER-SELECTING if its CI lower bound > 0.
+  Rule: SUPPORTED if CI lower bound > 0, REFUTED if upper bound < 0, otherwise INCONCLUSIVE.
+- **Isolation tests.** `tests/test_islands.py`: islands code contains no reference to the final contexts; budgets equal;
+  determinism; migration keeps population size. Command: `python -m flyfoundry islands`; workflow `islands.yml`;
+  analysis `scripts/analyze_e2.py`.
 
 ### E3 — Plumbing backtest on the project's own hypotheses (NOT validation)
 - Data: the H01-H12 criteria scores (1-5, 13 criteria) and 5 weight sets from

@@ -1,4 +1,4 @@
-"""Command line interface: smoke | fresh | resume | run | merge | report | validate | export | schedule-guard."""
+"""Command line interface: smoke | fresh | resume | run | merge | report | validate | export | schedule-guard | islands."""
 from __future__ import annotations
 
 import argparse
@@ -276,9 +276,45 @@ def build_parser():
     sp = sub.add_parser("report", help="regenerate the HTML dashboard from the latest checkpoint"); common(sp); sp.set_defaults(fn=cmd_report)
     sp = sub.add_parser("validate", help="validate checkpoint integrity"); sp.add_argument("--state-dir", default="state"); sp.set_defaults(fn=cmd_validate)
     sp = sub.add_parser("export", help="export results.json/history.csv/hypotheses.json"); common(sp); sp.set_defaults(fn=cmd_export)
+    sp = sub.add_parser("islands", help="v0.2 E2: island model vs single pool (one shard of repeats)")
+    sp.add_argument("--config", default=None); sp.add_argument("--out", default="e2_out")
+    sp.add_argument("--repeats", type=int, default=30); sp.add_argument("--generations", type=int, default=60)
+    sp.add_argument("--shard", default=None); sp.add_argument("--arms", nargs="+", default=["B_evolved_ann", "C_genetic"])
+    sp.set_defaults(fn=cmd_islands)
     sp = sub.add_parser("schedule-guard"); sp.add_argument("--state-dir", default="state")
     sp.add_argument("--tz", default="Europe/Riga"); sp.add_argument("--window", default="1-3"); sp.set_defaults(fn=cmd_guard)
     return p
+
+
+def cmd_islands(args) -> int:
+    """v0.2 E2: one shard of swarm repeats (island model vs single pool). Writes e2_shard_<i>.json."""
+    import time
+    from ..environments.benchmark import BenchmarkWorld
+    from ..research import islands as isl
+    from ..research.tournament import final_tournament
+    cfg = _cfg(args)
+    if cfg.drift_amp > 0:
+        raise SystemExit("E2 is defined for the stationary world only")
+    i, n = _parse_shard(args) or (0, 1)
+    reps = shard_seeds(args.repeats, i, n)
+    world = BenchmarkWorld(cfg)
+    rows, t0 = [], time.time()
+    for rep in reps:
+        for arm in args.arms:
+            for cond in ("islands_mig", "islands_nomig", "single_pool"):
+                if cond == "single_pool":
+                    pops = isl.run_pool(arm, cfg, world, rep, args.generations)
+                else:
+                    pops = isl.run_islands(arm, cfg, world, rep, args.generations, migrate=cond == "islands_mig")
+                rows.append({"rep": int(rep), "arm": arm, "condition": cond, **final_tournament(pops, world)})
+            print(f"rep {rep} {arm} done ({time.time() - t0:.0f}s)", flush=True)
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    payload = {"config_hash": cfg.identity_hash(), "world_fingerprint": world.fingerprint(), "generations": args.generations,
+               "repeats": args.repeats, "shard": [i, n], "n_islands": isl.N_ISLANDS, "migrate_every": isl.MIGRATE_EVERY,
+               "n_migrants": isl.N_MIGRANTS, "pool_factor": isl.POOL_FACTOR, "rows": rows}
+    (out / f"e2_shard_{i}.json").write_text(json.dumps(payload))
+    return 0
 
 
 def main(argv=None) -> int:
