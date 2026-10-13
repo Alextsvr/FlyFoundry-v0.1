@@ -1,0 +1,144 @@
+name: swarm
+# FlyFoundry v0.2 swarm: the seeds of one experiment are split into shards that run as parallel jobs
+# (one matrix, hard-capped at 10 jobs in parallel), then a merge job builds the report.
+# Disabled until the repository variable SWARM_ENABLED is set to "true" (kill switch):
+#   gh variable set SWARM_ENABLED --body true      /      gh variable set SWARM_ENABLED --body false
+# Manual only: never scheduled. See docs/V0_2_SPEC.md section 2 for the resource caps.
+on:
+  workflow_dispatch:
+    inputs:
+      seeds:
+        description: "Total seeds (E1 default: 100)"
+        default: "100"
+      shards:
+        description: "Number of parallel shard jobs (hard cap 10)"
+        default: "10"
+      generations:
+        description: "Generations (E1 default: 60)"
+        default: "60"
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: flyfoundry-swarm
+  cancel-in-progress: false
+
+env:
+  CONFIG: configs/swarm_e1.json
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      enabled: ${{ steps.p.outputs.enabled }}
+      matrix: ${{ steps.p.outputs.matrix }}
+    steps:
+      - id: p
+        env:
+          SWARM_ENABLED: ${{ vars.SWARM_ENABLED }}
+          SEEDS: ${{ inputs.seeds }}
+          SHARDS: ${{ inputs.shards }}
+        run: |
+          if [ "$SWARM_ENABLED" != "true" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "matrix={\"shard\":[0]}" >> "$GITHUB_OUTPUT"
+            echo "::notice::SWARM_ENABLED is not 'true' - nothing was run (kill switch)."
+            exit 0
+          fi
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, sys
+          seeds, shards = int(os.environ["SEEDS"]), int(os.environ["SHARDS"])
+          if not (1 <= shards <= 10):
+              sys.exit("shards must be between 1 and 10 (resource cap, see docs/V0_2_SPEC.md)")
+          if seeds < shards or seeds > 1000:
+              sys.exit("need shards <= seeds <= 1000")
+          print("enabled=true")
+          print("matrix=" + json.dumps({"shard": list(range(shards))}))
+          PY
+
+  shard:
+    needs: plan
+    if: needs.plan.outputs.enabled == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install (pinned lock file)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install -e . --no-deps
+      - name: Run shard
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARDS: ${{ inputs.shards }}
+          SEEDS: ${{ inputs.seeds }}
+          GENS: ${{ inputs.generations }}
+        run: |
+          python -m flyfoundry run --config "$CONFIG" --state-dir shard_state --out shard_out \
+            --allow-fresh --seeds "$SEEDS" --generations "$GENS" --shard "$SHARD/$SHARDS" --time-budget-s 1500
+      - name: Verify shard checkpoint
+        run: python -m flyfoundry validate --state-dir shard_state
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shard-${{ matrix.shard }}
+          path: shard_state
+          retention-days: 1          # intermediate data only; the merged report is the product
+          if-no-files-found: error
+
+  merge:
+    needs: [plan, shard]
+    if: needs.plan.outputs.enabled == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install (pinned lock file)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+          pip install -e . --no-deps
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-*
+          path: shards
+      - name: Merge shards and build the report
+        run: |
+          args=()
+          for d in shards/shard-*; do args+=(--shard-dir "$d"); done
+          python -m flyfoundry merge --config "$CONFIG" "${args[@]}" --state-dir merged_state --out reports/swarm
+      - name: Verify merged checkpoint
+        run: python -m flyfoundry validate --state-dir merged_state
+      - name: Run summary
+        if: always()
+        run: |
+          if [ -f reports/swarm/summary.md ]; then cat reports/swarm/summary.md >> "$GITHUB_STEP_SUMMARY"; fi
+          if [ -f reports/swarm/error.md ]; then cat reports/swarm/error.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: flyfoundry-swarm-report-${{ github.run_id }}
+          path: reports/swarm
+          retention-days: 7
+          if-no-files-found: warn

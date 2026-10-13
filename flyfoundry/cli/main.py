@@ -1,4 +1,4 @@
-"""Command line interface: smoke | fresh | resume | run | report | validate | export | schedule-guard."""
+"""Command line interface: smoke | fresh | resume | run | merge | report | validate | export | schedule-guard."""
 from __future__ import annotations
 
 import argparse
@@ -13,9 +13,9 @@ from zoneinfo import ZoneInfo
 from ..config import ExperimentConfig
 from ..reporting import html_report, summary
 from ..research import analysis
-from ..research.experiment import Experiment
+from ..research.experiment import Experiment, shard_seeds
 from ..research.opportunities import build_hypotheses
-from ..storage.checkpoint import CheckpointError, CheckpointMissing, CheckpointStore
+from ..storage.checkpoint import CheckpointCorrupt, CheckpointError, CheckpointMissing, CheckpointStore
 from ..storage.serialize import state_hash
 
 DEFAULT_CONFIG = Path(__file__).resolve().parents[2] / "configs" / "default.json"
@@ -26,6 +26,25 @@ def _cfg(args) -> ExperimentConfig:
     cfg = ExperimentConfig.from_file(path) if path.exists() else ExperimentConfig()
     return cfg.with_overrides(gens_per_run=getattr(args, "generations", None), n_seeds=getattr(args, "seeds", None),
                               pop_size=getattr(args, "pop_size", None))
+
+
+def _parse_shard(args):
+    """--shard i/N -> (index, n) or None. Shard index is 0-based."""
+    spec = getattr(args, "shard", None)
+    if not spec:
+        return None
+    try:
+        i, n = (int(x) for x in spec.split("/"))
+    except ValueError:
+        raise SystemExit(f"invalid --shard {spec!r}: expected i/N, e.g. 0/10") from None
+    if n < 1 or not 0 <= i < n:
+        raise SystemExit(f"invalid --shard {spec!r}: need N >= 1 and 0 <= i < N")
+    return i, n
+
+
+def _new_experiment(cfg, args):
+    sh = _parse_shard(args)
+    return Experiment(cfg, shard_seeds(cfg.n_seeds, *sh) if sh else None)
 
 
 def _info(entry, problems=None):
@@ -66,6 +85,16 @@ def _advance_save_report(exp, store, args, ckpt_load_info=None, run_note=None) -
         print("ERROR: checkpoint round trip is not identical", file=sys.stderr)
         return 6
     info = _info(entry, (ckpt_load_info or {}).get("problems"))
+    if not exp.is_full:
+        # a shard holds only some seeds: statistics over seeds are meaningless here, so write a small status file only
+        out = Path(args.out)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "shard.json").write_text(json.dumps({
+            "seeds": exp.seeds, "generation": exp.generation, "total_evals": exp.total_evals, "checkpoint": info,
+            "resume_test": resume_test, "note": "shard of a larger experiment; run `flyfoundry merge` to build the report"},
+            indent=1), encoding="utf-8")
+        print(f"checkpoint v{entry['version']} saved ({entry['bytes']:,} bytes); shard seeds {exp.seeds[0]}..{exp.seeds[-1]}")
+        return 0
     _write_outputs(exp, Path(args.out), info, resume_test)
     print(f"checkpoint v{entry['version']} saved ({entry['bytes']:,} bytes); report written to {args.out}")
     return 0
@@ -77,7 +106,7 @@ def cmd_fresh(args) -> int:
     if store.exists() and not args.overwrite:
         print("state directory already holds a checkpoint; use `resume`, or pass --overwrite to start a new experiment", file=sys.stderr)
         return 2
-    return _advance_save_report(Experiment(cfg), store, args, run_note={"mode": "fresh"})
+    return _advance_save_report(_new_experiment(cfg, args), store, args, run_note={"mode": "fresh"})
 
 
 def cmd_resume(args, allow_fresh=False) -> int:
@@ -89,10 +118,15 @@ def cmd_resume(args, allow_fresh=False) -> int:
         if not allow_fresh:
             raise
         print(f"NOTICE: {e}; --allow-fresh given, starting experiment from generation 0")
-        return _advance_save_report(Experiment(cfg), store, args, run_note={"mode": "fresh (explicitly allowed)"})
+        return _advance_save_report(_new_experiment(cfg, args), store, args, run_note={"mode": "fresh (explicitly allowed)"})
     if loaded.recovered:
         print("WARNING: newest checkpoint(s) invalid, recovered from older one:", *loaded.problems, sep="\n  ")
     exp = Experiment.from_payload(loaded.payload, cfg)
+    sh = _parse_shard(args)
+    want = shard_seeds(cfg.n_seeds, *sh) if sh else list(range(cfg.n_seeds))
+    if exp.seeds != want:
+        raise CheckpointCorrupt(f"state directory holds seeds {exp.seeds[0]}..{exp.seeds[-1]} ({len(exp.seeds)}), "
+                                f"but this invocation asks for {want[0]}..{want[-1]} ({len(want)}); refusing to mix shards")
     print(f"restored checkpoint v{loaded.entry['version']} at generation {exp.generation} ({exp.total_evals:,} evals)")
     if exp.generation >= exp.cfg.max_total_generations:
         print("experiment already at max_total_generations; regenerating report only")
@@ -114,6 +148,36 @@ def cmd_run(args) -> int:
             mp.unlink()
         print("NOTICE: previous state removed by explicit --overwrite-state; starting a NEW experiment")
     return cmd_resume(args, allow_fresh=args.allow_fresh)
+
+
+def cmd_merge(args) -> int:
+    """Combine shard state directories into one full experiment checkpoint and write the report."""
+    payloads, infos = [], []
+    for d in args.shard_dir:
+        loaded = CheckpointStore(d).load_latest()
+        if loaded.recovered:
+            print(f"WARNING: {d}: newest checkpoint(s) invalid, recovered from older one:", *loaded.problems, sep="\n  ")
+        payloads.append(loaded.payload)
+        infos.append(_info(loaded.entry, loaded.problems))
+    exp = Experiment.merge(payloads)
+    store = CheckpointStore(args.state_dir)
+    if store.exists() and not args.overwrite:
+        print("merge target already holds a checkpoint; pass --overwrite to replace it", file=sys.stderr)
+        return 2
+    payload = exp.payload()
+    entry = store.save(payload, {"generation": exp.generation, "total_evals": exp.total_evals,
+                                 "config_hash": exp.cfg.identity_hash(), "code_revision": payload["meta"]["code_revision"]},
+                       {"merged_from_shards": len(payloads)})
+    exp2 = Experiment.from_payload(store.load_latest().payload, exp.cfg)
+    if state_hash(exp2.payload()["runners"]) != state_hash(payload["runners"]):
+        print("ERROR: merged checkpoint round trip is not identical", file=sys.stderr)
+        return 6
+    info = _info(entry)
+    _write_outputs(exp, Path(args.out), info, {"note": f"merged from {len(payloads)} shards", "shards": infos,
+                                               "reload_roundtrip_identical": True})
+    print(f"merged {len(payloads)} shards ({len(exp.seeds)} seeds, generation {exp.generation}, {exp.total_evals:,} evals); "
+          f"checkpoint v{entry['version']} saved; report written to {args.out}")
+    return 0
 
 
 def cmd_report(args) -> int:
@@ -197,6 +261,7 @@ def build_parser():
             sp.add_argument("--pop-size", type=int)
             sp.add_argument("--time-budget-s", type=float)
             sp.add_argument("--scheduled", action="store_true")
+            sp.add_argument("--shard", help="i/N: run only shard i (0-based) of N seed blocks; combine later with `merge`")
     sp = sub.add_parser("smoke"); sp.set_defaults(fn=cmd_smoke)
     sp = sub.add_parser("fresh", help="start a new benchmark experiment"); common(sp, run=True)
     sp.add_argument("--overwrite", action="store_true"); sp.set_defaults(fn=cmd_fresh)
@@ -205,6 +270,9 @@ def build_parser():
     sp.add_argument("--allow-fresh", action="store_true")
     sp.add_argument("--overwrite-state", action="store_true", help="discard existing state first (needs --allow-fresh)")
     sp.set_defaults(fn=cmd_run)
+    sp = sub.add_parser("merge", help="merge shard state directories into one full experiment"); common(sp)
+    sp.add_argument("--shard-dir", action="append", required=True, help="state directory of one shard (repeat for each shard)")
+    sp.add_argument("--overwrite", action="store_true"); sp.set_defaults(fn=cmd_merge)
     sp = sub.add_parser("report", help="regenerate the HTML dashboard from the latest checkpoint"); common(sp); sp.set_defaults(fn=cmd_report)
     sp = sub.add_parser("validate", help="validate checkpoint integrity"); sp.add_argument("--state-dir", default="state"); sp.set_defaults(fn=cmd_validate)
     sp = sub.add_parser("export", help="export results.json/history.csv/hypotheses.json"); common(sp); sp.set_defaults(fn=cmd_export)

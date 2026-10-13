@@ -1,6 +1,13 @@
 # FlyFoundry v0.2 — Specification (pre-registered)
 
-Status: DRAFT, written before any v0.2 code or run exists. Nothing below is a result.
+Status: DRAFT. Nothing below is a result.
+Implementation log (updated as pieces land):
+- 2026-10-13: sharding step implemented (section 3, items 1-2): `--shard i/N`, `flyfoundry merge`, `swarm.yml`
+  (manual, kill switch `SWARM_ENABLED`, <= 10 parallel jobs), 16 new tests (merged shards == unsharded run, state-for-state).
+  Local rehearsal: 100 seeds / 10 shards / 3 generations ran in ~45 s of shard time + 35 s merge.
+  Sizing finding: one 10-seed shard checkpoint is ~24 MB and a merged 100-seed checkpoint ~235 MB, which exceeds GitHub's
+  100 MB per-file push limit, so the swarm does NOT persist the merged checkpoint in the state branch (shard artifacts
+  live 1 day; the report is the product). Not yet done: islands/migration, three-way context split, fitness plugin, E2/E3.
 Language note: repo docs are English; the project owner discusses in Russian.
 
 ## 0. Purpose and phases

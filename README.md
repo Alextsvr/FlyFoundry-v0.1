@@ -111,3 +111,11 @@ Single synthetic world; stationary landscape (little for plasticity to exploit);
 partial credit by distance so it is lenient — read it together with held-out discovery rate; MB model is not a connectome; no real-world
 evidence layer; no LLM arm; archive elites are ranked by a single noisy evaluation. Defaults were fixed before results were seen; the small
 exploratory parameter sweep in `docs/EXPLORATORY_SENSITIVITY.md` was *not* used to tune the main comparison.
+
+## Swarm (v0.2, in progress)
+
+`flyfoundry run --shard i/N` runs only shard *i* of *N* contiguous seed blocks (0-based); `flyfoundry merge --shard-dir ...` combines
+shard state directories into one full experiment and writes the normal report. A merged result equals the unsharded run
+state-for-state (see `tests/test_shards.py`). `.github/workflows/swarm.yml` runs the shards as parallel jobs (max 10 at once, manual
+trigger only) and is disabled until the repository variable `SWARM_ENABLED` is `true`. Plan and pre-registered criteria: `docs/V0_2_SPEC.md`.
+

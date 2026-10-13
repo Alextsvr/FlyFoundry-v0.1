@@ -19,13 +19,31 @@ def _rss_mb() -> float:
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
 
 
+def shard_seeds(n_seeds: int, index: int, n_shards: int) -> list[int]:
+    """Seed indices of shard ``index`` (0-based) out of ``n_shards``: contiguous blocks, sizes differ by at most one.
+
+    Seeds are whole experimental units (every arm runs the same seed indices), so a shard is a self-contained
+    sub-experiment and the union over all shards is exactly range(n_seeds).
+    """
+    if n_shards < 1 or not 0 <= index < n_shards:
+        raise ValueError(f"invalid shard {index}/{n_shards}")
+    if n_shards > n_seeds:
+        raise ValueError(f"cannot split {n_seeds} seeds into {n_shards} shards")
+    base, extra = divmod(n_seeds, n_shards)
+    start = index * base + min(index, extra)
+    return list(range(start, start + base + (1 if index < extra else 0)))
+
+
 class Experiment:
-    def __init__(self, cfg: ExperimentConfig):
+    def __init__(self, cfg: ExperimentConfig, seeds=None):
         self.cfg = cfg
         self.world = BenchmarkWorld(cfg)
+        self.seeds = sorted(range(cfg.n_seeds) if seeds is None else (int(x) for x in seeds))
+        if not self.seeds or len(set(self.seeds)) != len(self.seeds) or not set(self.seeds) <= set(range(cfg.n_seeds)):
+            raise ValueError(f"invalid seed subset {self.seeds} for n_seeds={cfg.n_seeds}")
         self.runners: dict[str, ArmRunner] = {}
         for arm in cfg.arms:
-            for s in range(cfg.n_seeds):
+            for s in self.seeds:
                 r = ArmRunner(arm, s, cfg, self.world)
                 self.runners[r.key] = r
         ok, reason = llm_baseline.availability()
@@ -37,6 +55,11 @@ class Experiment:
                             for a in cfg.arms}
 
     # ------------------------------------------------------------ properties
+    @property
+    def is_full(self) -> bool:
+        """True when this experiment holds every seed (i.e. it is not one shard of a larger experiment)."""
+        return self.seeds == list(range(self.cfg.n_seeds))
+
     @property
     def generation(self) -> int:
         gens = {r.generation for r in self.runners.values()}
@@ -99,7 +122,7 @@ class Experiment:
             "meta": {"schema": SCHEMA_VERSION, "generation": self.generation, "total_evals": self.total_evals,
                      "config_hash": self.cfg.identity_hash(), "world_fingerprint": self.world.fingerprint(),
                      "taxonomy_sha256": provenance.taxonomy_hash(), "code_revision": provenance.code_revision(),
-                     "n_runs": len(self.runs)},
+                     "n_runs": len(self.runs), "seeds": list(self.seeds)},
             "config": self.cfg.to_dict(),
             "runners": {k: r.get_state() for k, r in self.runners.items()},
             "runs": self.runs, "llm": self.llm, "model_cards": self.model_cards,
@@ -114,7 +137,7 @@ class Experiment:
                 f"({cfg.identity_hash()[:12]} vs {stored.identity_hash()[:12]}); start a new experiment instead")
         # keep runtime-only knobs (gens_per_run) from the caller
         use = cfg.with_overrides() if cfg is not None else stored
-        exp = cls(use)
+        exp = cls(use, seeds=payload["meta"].get("seeds"))  # checkpoints from before v0.2 have no "seeds" -> all
         if exp.world.fingerprint() != payload["meta"]["world_fingerprint"]:
             raise CheckpointCorrupt("benchmark world fingerprint differs from checkpoint (code/dataset drift)")
         if set(payload["runners"]) != set(exp.runners):
@@ -125,3 +148,36 @@ class Experiment:
         exp.llm = payload["llm"]
         exp.check_invariants()
         return exp
+
+    # ----------------------------------------------------------------- merge
+    @classmethod
+    def merge(cls, payloads: list[dict]) -> "Experiment":
+        """Combine shard payloads into one full experiment. Refuses anything that is not a clean partition."""
+        if not payloads:
+            raise CheckpointCorrupt("no shard payloads to merge")
+        metas = [p["meta"] for p in payloads]
+        for key in ("config_hash", "world_fingerprint", "taxonomy_sha256", "generation"):
+            vals = {m.get(key) for m in metas}
+            if len(vals) != 1:
+                raise CheckpointCorrupt(f"shards disagree on {key}: {sorted(map(str, vals))}")
+        revs = {m.get("code_revision") for m in metas}
+        if len(revs) != 1:
+            raise CheckpointCorrupt(f"shards were produced by different code revisions: {sorted(map(str, revs))}")
+        cfg = ExperimentConfig.from_dict(payloads[0]["config"])
+        seen: list[int] = []
+        for m in metas:
+            if "seeds" not in m:
+                raise CheckpointCorrupt("a payload without seed information cannot be merged")
+            seen.extend(m["seeds"])
+        if sorted(seen) != list(range(cfg.n_seeds)):
+            raise CheckpointCorrupt(
+                f"shards do not partition the seeds 0..{cfg.n_seeds - 1} (got {sorted(seen)}): overlap or missing shard")
+        exp = cls(cfg)
+        for p in payloads:
+            for k, st in p["runners"].items():
+                exp.runners[k].set_state(st)
+        exp.runs = [dict(r, shard_seeds=list(p["meta"]["seeds"])) for p in payloads for r in p["runs"]]
+        exp.llm = payloads[0]["llm"]
+        exp.check_invariants()
+        return exp
+
