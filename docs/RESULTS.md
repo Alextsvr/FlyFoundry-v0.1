@@ -54,3 +54,25 @@ Full output of this run: `reports/local-first-run/` (open `index.html`).
   GitHub's real start-time delay (design flaw, not a bug in the guard logic).
 - Fix (this commit): guard allows one run per Riga calendar date at any hour (`--window 0-23`). Verification of a full
   scheduled experiment is still pending until the next scheduled run after this fix is pushed.
+
+
+## E1 scale test (v0.2) - verified on GitHub Actions
+
+Run: https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38361995321 (workflow `swarm`, commit `d9e6719`),
+10 shard jobs in parallel (<= 10 cap) + merge, about 17 min of runner time in total. 100 paired seeds, 6 arms, 60 generations,
+100 agents per population, 3,600,000 evaluations. Report files: `reports/e1-scale-100seeds/` (history is gzipped).
+Metric: held-out QD, mean of the last 5 generations per seed; paired percentile bootstrap, 2000 resamples (verified independently
+from `history.csv`: same numbers). Decision rules were fixed in `docs/V0_2_SPEC.md` before the run.
+
+| Pre-registered hypothesis | Paired difference [95% CI] | Verdict |
+|---|---|---|
+| H1: fly+plasticity >= evolved ANN | -0.149 [-0.155, -0.143] | **REFUTED** (upper bound < 0) |
+| H2: plasticity matters (plastic - noplast) | -0.001 [-0.007, +0.006] | **INCONCLUSIVE** (CI contains 0) |
+| H3: wiring matters (plastic - shuffled) | +0.001 [-0.006, +0.008] | **INCONCLUSIVE** (CI contains 0) |
+| H4: genetic algorithm > random search | +0.038 [+0.034, +0.043] | **SUPPORTED** |
+
+Reading: the prior expectation stated before the run (H1 refuted or inconclusive) held. Neither H2 nor H3 is "supported" under the
+rule, and the intervals are narrow (about +-0.007), but no equivalence margin was pre-registered, so we do not claim the effects are
+zero, only that none was detected. Scope: one fixed synthetic world, stationary task; this says nothing about real flies, real markets
+or revenue. Arm E (LLM) was NOT RUN. The mushroom-body-inspired controller underperforming here may reflect this implementation and
+task rather than the biological idea.

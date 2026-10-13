@@ -7,7 +7,8 @@ Implementation log (updated as pieces land):
   Local rehearsal: 100 seeds / 10 shards / 3 generations ran in ~45 s of shard time + 35 s merge.
   Sizing finding: one 10-seed shard checkpoint is ~24 MB and a merged 100-seed checkpoint ~235 MB, which exceeds GitHub's
   100 MB per-file push limit, so the swarm does NOT persist the merged checkpoint in the state branch (shard artifacts
-  live 1 day; the report is the product). Not yet done: islands/migration, three-way context split, fitness plugin, E2/E3.
+  live 1 day; the report is the product). - 2026-10-13: E1 executed on GitHub Actions (run 38361995321). H1 REFUTED, H2 and H3 INCONCLUSIVE, H4 SUPPORTED (see docs/RESULTS.md).
+  Not yet done: islands/migration, three-way context split, fitness plugin, E2/E3.
 Language note: repo docs are English; the project owner discusses in Russian.
 
 ## 0. Purpose and phases
