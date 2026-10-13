@@ -104,3 +104,9 @@ Protocol frozen in docs/V0_2_SPEC.md before the run. Metric `final_qd`: merged a
 - B_evolved_ann, E2-H1 (primary): −0.0038 [−0.0069, −0.0009] REFUTED (islands slightly worse than one pool).
 - Winner's curse: no evidence of over-selection in either arm (E2-H4 INCONCLUSIVE); gaps are +0.008…+0.019 in every condition, including the single pool.
 - Caveat (pre-registered): islands use `select` evaluations that the single pool cannot use, so the GA gain is "islands + select-based merge", and it is small (about 4% of final QD). Absolute level: GA 0.41 vs ANN 0.37 on `final` contexts.
+
+## E3 — plumbing backtest on H01-H12 (NOT validation), 30 repeats
+
+Pre-registered criteria (docs/V0_2_SPEC.md): **PASS** — 100% of repeats met all three (Spearman 0.965 / 0.930 on the two final weight sets, top-2 = H07+H01, last = H03). Details: `reports/e3/`.
+
+**But the test is almost vacuous, and this must be read together with the PASS.** Random criterion weights pass the same criteria in 95.5% of draws (mean Spearman 0.92 / 0.93); plain equal weights already give 0.935 / 0.963 with the right top-2 and last. The five weight sets all rank the 12 hypotheses nearly the same way, so almost any positive weighting reproduces the ranking. The PASS therefore shows only that the machinery runs end to end (data -> plugin -> unchanged GA arm -> train/final split -> verdict). It carries no evidence that the swarm can find good businesses, and the criteria are too weak to catch a broken search. A discriminating E3 would need a hidden ranking that random weights cannot reproduce (e.g. leave-one-hypothesis-out, or real outcome data in Phase 1).

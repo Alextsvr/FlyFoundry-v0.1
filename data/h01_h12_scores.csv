@@ -1,0 +1,13 @@
+h,name,demand,wtp_solo,buyer,data_access,automation_leverage,mvp,delivery_economics,acquisition,competition,reg_platform,recurrence,defensibility,speed
+H01,Tender / RFP Scout,5,2,4,5,4,5,4,3,1,5,4,2,3
+H02,Award -> Sub Intelligence,3,2,3,4,2,4,2,2,2,4,3,2,2
+H03,Rare Parts Sourcing,4,1,3,1,1,5,1,2,1,2,1,1,3
+H04,B2B Quote Concierge,3,2,2,3,2,5,2,2,2,4,2,1,3
+H05,Public-Registry Trigger Leads,4,3,3,4,3,5,3,3,2,3,4,2,3
+H06,Website Problem -> Lead,3,1,4,5,5,5,3,3,1,3,2,1,3
+H07,Reconciliation Rescue,5,4,4,5,4,4,4,3,3,3,4,3,4
+H08,Catalogue / Compatibility Cleanup,3,2,3,3,3,4,3,2,2,3,2,2,2
+H09,Distressed Asset Intelligence,3,2,3,3,3,4,3,3,2,2,3,2,2
+H10,Marketplace Price-Anomaly,4,2,3,1,5,4,3,2,1,1,2,1,3
+H11,Grant / Subsidy Matcher,4,2,3,5,3,4,3,3,2,3,2,2,1
+H12,B2B Intent Radar,5,3,3,4,4,4,3,2,1,3,4,2,3

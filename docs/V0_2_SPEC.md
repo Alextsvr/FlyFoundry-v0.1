@@ -12,7 +12,7 @@ Implementation log (updated as pieces land):
   `configs/e4_drift_*.json`, `scripts/analyze_e4.py`, `swarm.yml` config input. Regression: with `drift_amp = 0` a tiny run is
   state-identical to the pre-change code and the world fingerprint equals the E1 one. 41 tests pass. A 6-seed pipeline rehearsal
   was run only to test the plumbing; its numbers are not used for any decision.
-  Done in code (2026-10-13): islands, migration, three-way split, final tournament (E2 protocol frozen, run pending). Not yet done: fitness plugin, E3.
+  Done in code (2026-10-13): islands, migration, three-way split, final tournament (E2 protocol frozen, run pending). Fitness plugin and E3 backtest implemented. Not yet done: shard kill/resume test on Actions, first scheduled nightly run, Phase 1 spec.
 Language note: repo docs are English; the project owner discusses in Russian.
 
 ## 0. Purpose and phases
@@ -140,6 +140,20 @@ frozen code below with 100 repeats.
   on the final weight sets; H07 and H01 are the top 2; H03 is last.
 - Mandatory caveat in the report: inputs are the same scores that define the reference
   ranking, so a pass shows the machinery works, not that it can find good businesses.
+
+#### E3 — frozen protocol and implementation (2026-10-13)
+
+- Fitness plugin interface: `flyfoundry/evaluation/plugins.py` (`Fitness` protocol, `ContextEvaluator`, `TabularBacktest`).
+  The unchanged `C_genetic` arm runs on it (test). The synthetic landscape was NOT ported onto the protocol (it keeps its
+  own `Evaluator`; golden fingerprint pinned).
+- Task: candidate = 13 non-negative criterion weights; context = a weight set; fitness = Spearman between the ranking
+  induced by the candidate on H01-H12 and the reference ranking of that weight set. Data: `data/` (hand-transcribed from
+  section 5 of `zero-capital-synthesis-v1`; a test re-computes the published weighted means).
+- Split (fixed): train = base, equal, money_first; final = automation_first, risk_averse. Champion is selected on train
+  sets only and judged once on the final sets. 30 repeats x 60 generations x pop 100, GA only.
+- PASS if >= 90% of repeats satisfy all three: Spearman >= 0.8 on both final sets, top-2 = {H07, H01}, last = H03.
+- Disclosure: the code was run once before this text was written (to see that it works).
+  Result and its weakness are in docs/RESULTS.md. The criteria above were not changed after seeing it.
 
 ### E4 — Non-stationary world (does lifetime plasticity help when the task drifts?)
 Added 2026-10-13 AFTER E1 and BEFORE any drifting-world code existed or ran. Purpose: give the mushroom-body-inspired arm one
