@@ -16,7 +16,7 @@ ci on 5a318a6 failed (a test forbade `https://` in the report, but on Actions th
 
 First GitHub run (20 generations, 5 seeds, mean of last 5 generations): held-out QD — C genetic 0.353, D random 0.298, B evolved ANN 0.293, A fly-inspired 0.186–0.200.
 CPU 10.8 s, peak RSS 89.5 MB. Same qualitative picture as the longer local run below; n = 5 seeds, no significance claims.
-Nightly schedule (01:30 Europe/Riga) is configured; `experiment` workflow state is `active`; the first scheduled run has not happened yet at the time of writing.
+Nightly schedule (01:30 Europe/Riga) is configured; `experiment` workflow state is `active`; see the schedule observations below.
 
 ## Local first run (3 consecutive resumes x 20 generations = 60 generations)
 
@@ -43,3 +43,14 @@ Reading (conservative; n = 5 seeds < 10, so no significance claim):
 * Nothing here says anything about real markets. Real revenue: EUR 0 / unknown.
 
 Full output of this run: `reports/local-first-run/` (open `index.html`).
+
+
+## Schedule observations (GitHub, verified via the public API)
+
+- 2026-10-13: two `schedule` runs fired (ids 38340234730 at 03:07 UTC and 38343014139 at 03:42 UTC), roughly 4.5 h after the
+  configured 22:30/23:30 UTC crons. Both finished green, but the schedule guard (window 01:00-03:59 Riga) skipped the experiment
+  because the runs started at about 06:07 / 06:42 Riga time. No new checkpoint and no new row in `runs.csv` were produced.
+- Conclusion: the schedule trigger works, but the first nightly experiment did NOT run. Cause: guard window too narrow for
+  GitHub's real start-time delay (design flaw, not a bug in the guard logic).
+- Fix (this commit): guard allows one run per Riga calendar date at any hour (`--window 0-23`). Verification of a full
+  scheduled experiment is still pending until the next scheduled run after this fix is pushed.

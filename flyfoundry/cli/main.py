@@ -142,7 +142,7 @@ def cmd_export(args) -> int:
 
 
 def cmd_guard(args) -> int:
-    """For scheduled runs: allow only 01:00-03:59 Europe/Riga and only once per local date."""
+    """For scheduled runs: allow only inside --window (local hours, inclusive) and only once per local date."""
     now = datetime.now(ZoneInfo(args.tz))
     lo, hi = (int(x) for x in args.window.split("-"))
     if not (lo <= now.hour <= hi):

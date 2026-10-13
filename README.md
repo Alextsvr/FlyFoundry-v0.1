@@ -81,7 +81,7 @@ Outputs in `--out`: `index.html` (self-contained dashboard, no external requests
 
 * `ci.yml` — tests + smoke experiment on every push/PR.
 * `experiment.yml` — `workflow_dispatch` (inputs: generations, seeds, pop_size, fresh_start) and a nightly schedule at **01:30 Europe/Riga**
-  (two UTC crons + a guard that allows one run per Riga date within 01:00–03:59 local, handling the EEST/EET switch). `concurrency` prevents
+  (two UTC crons + a guard that allows exactly one run per Riga calendar date at any hour, handling the EEST/EET switch; GitHub may start scheduled runs hours late). `concurrency` prevents
   overlap; 60-minute timeout; artifacts kept 14 days; the run summary shows the report; optional GitHub Pages deployment when the repository
   variable `ENABLE_PAGES=true`. Standard hosted CPU runner only; no paid features.
 
