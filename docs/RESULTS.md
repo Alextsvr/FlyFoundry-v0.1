@@ -110,3 +110,13 @@ Protocol frozen in docs/V0_2_SPEC.md before the run. Metric `final_qd`: merged a
 Pre-registered criteria (docs/V0_2_SPEC.md): **PASS** — 100% of repeats met all three (Spearman 0.965 / 0.930 on the two final weight sets, top-2 = H07+H01, last = H03). Details: `reports/e3/`.
 
 **But the test is almost vacuous, and this must be read together with the PASS.** Random criterion weights pass the same criteria in 95.5% of draws (mean Spearman 0.92 / 0.93); plain equal weights already give 0.935 / 0.963 with the right top-2 and last. The five weight sets all rank the 12 hypotheses nearly the same way, so almost any positive weighting reproduces the ranking. The PASS therefore shows only that the machinery runs end to end (data -> plugin -> unchanged GA arm -> train/final split -> verdict). It carries no evidence that the swarm can find good businesses, and the criteria are too weak to catch a broken search. A discriminating E3 would need a hidden ranking that random weights cannot reproduce (e.g. leave-one-hypothesis-out, or real outcome data in Phase 1).
+
+## Phase 1 calibration (run 38371302136, 2026-10-13): automated layer F vs the manual H01-H12 verdicts
+
+Frozen queries (commit 819c55f, before the first probe). 49 probe facts, all `ok` (HN 25, GitHub 12, Stack Exchange 12). Raw data: `data/probes/run1_2026-10-13.jsonl`, summary: `reports/phase1-summaries/`.
+
+**Verdict: FAIL.** Spearman rho = -0.178 (95% CI -0.77..+0.44), one-sided permutation p = 0.71; pass needed rho >= 0.5 and p <= 0.05. Negative control (shuffled probe results) gave rho = +0.447 (p = 0.07): with n = 12 pure noise alone can produce correlations of that size, so the test could only have been passed by a strong signal, and there was none.
+
+Notable: the probes put H03 (all three manual tracks negative) first and H05, H08, H10 last. The automated layer does not reproduce the manual research; it measures how much the tech-audience sources mention a topic and how many open-source repos exist, which is not what the manual verdicts weighed (willingness to pay, competition, legal blockers).
+
+Consequence under the pre-registered stop rule (docs/PHASE1_SPEC.md section 6): the probes are NOT used for ranking. Phase 1 ranks from layer C (curated, cited features and gates) alone and reports that automation added no information. Low power (n = 12) means "not shown", not "proven useless". Changing queries or the score after seeing this would be a new, separately pre-registered attempt (v2) and must be counted as such.

@@ -113,3 +113,9 @@ reachable, so live probes run only on GitHub Actions (`phase1-probe` workflow); 
 P1-A probes + cache + tests (offline fixtures); P1-B `data/ideas.csv` with frozen queries for H01-H12 and the taxonomy v4;
 P1-C calibration + negative control + stability; P1-D swarm search over the idea space with a random-sampling baseline;
 P1-E report and dashboard. P1-C gates P1-D: no ranking is produced before the calibration verdict exists.
+
+## 11. Outcome log
+
+- 2026-10-13, P1-C calibration run 1 (Actions run 38371302136): FAIL (rho -0.18, p 0.71). Stop rule triggered: layer F is not used for
+  ranking; Phase 1 continues with layer C only. See docs/RESULTS.md. The 7-day stability check is moot for ranking purposes
+  but may still be run once to document probe noise.
