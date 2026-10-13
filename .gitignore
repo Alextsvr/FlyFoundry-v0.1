@@ -9,3 +9,5 @@ reports/latest/
 # raw downloads of CI artifacts (shard checkpoints are ~25 MB each; never commit them)
 reports/swarm-e1/
 reports/gh-run/
+reports/e4-*/
+reports/local-first-run/

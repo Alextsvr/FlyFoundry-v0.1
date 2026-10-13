@@ -76,3 +76,17 @@ rule, and the intervals are narrow (about +-0.007), but no equivalence margin wa
 zero, only that none was detected. Scope: one fixed synthetic world, stationary task; this says nothing about real flies, real markets
 or revenue. Arm E (LLM) was NOT RUN. The mushroom-body-inspired controller underperforming here may reflect this implementation and
 task rather than the biological idea.
+
+## E4 — non-stationary world (drift_amp 0.15), 100 paired seeds, metric track_qd gens 41-60
+
+Run ids: medium 38363756689, slow 38364548452, fast 38365434438. Raw verdicts: `reports/e4-summaries/<condition>/`.
+
+| Condition | E4-H1 fly-plastic − ANN | E4-H2 plasticity | E4-H3 PN→KC wiring | E4-H4 GA − random |
+|---|---|---|---|---|
+| slow (T=120) | −0.147 REFUTED | +0.001 INCONCLUSIVE | +0.002 INCONCLUSIVE | +0.112 SUPPORTED |
+| medium (T=40, primary) | −0.136 REFUTED | +0.001 INCONCLUSIVE | +0.002 INCONCLUSIVE | +0.121 SUPPORTED |
+| fast (T=15) | −0.132 REFUTED | +0.004 INCONCLUSIVE | +0.000 INCONCLUSIVE | +0.125 SUPPORTED |
+
+Arm means (fast): fly ≈ 0.183–0.188, random 0.185, GA 0.310, ANN 0.319.
+
+Conclusion (per the pre-registered stopping rule): the fly-inspired controller does not beat the evolved ANN in any drift speed, and neither plasticity nor the wiring shows a detectable effect; fly arms sit at random-search level. The primary claim (E4-H2, medium) is INCONCLUSIVE. For this synthetic task type the fly arm is a dead end; v0.2 continues with C_genetic and B_evolved_ann. Why the fly arm generalizes poorly is an untested hypothesis.
