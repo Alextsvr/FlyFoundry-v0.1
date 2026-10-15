@@ -119,3 +119,6 @@ P1-E report and dashboard. P1-C gates P1-D: no ranking is produced before the ca
 - 2026-10-13, P1-C calibration run 1 (Actions run 38371302136): FAIL (rho -0.18, p 0.71). Stop rule triggered: layer F is not used for
   ranking; Phase 1 continues with layer C only. See docs/RESULTS.md. The 7-day stability check is moot for ranking purposes
   but may still be run once to document probe noise.
+- 2026-10-15, P1 layer-C first pass: `ideaspace.py` plugin, taxonomy v4, seeds H01-H12 + N1-N7, exhaustive ranking + island swarm. The swarm
+  recovered less of the exact top-50 than random sampling (19% vs 37%); enumeration is authoritative. All component values are
+  priors; `reports/phase1-ideas/ideas_rank.md` is a candidate list for the research round, not a result.

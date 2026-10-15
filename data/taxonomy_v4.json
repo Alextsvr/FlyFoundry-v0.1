@@ -1,0 +1,517 @@
+{
+ "meta": {
+  "version": 4,
+  "note": "Layer C: curated owner/analyst judgement priors on a 1-5 scale (5 = favourable), NOT evidence. Component values are unverified and exist to be challenged by the research round. Outbound outreach by the system is deliberately not a channel (owner rule). The channel 'own existing network' was removed on 2026-10-15: the owner has no known audience, so it only rewarded an asset that does not exist.",
+  "fields": {
+   "customer": [
+    "buyer",
+    "wtp_solo",
+    "acquisition",
+    "reg_platform"
+   ],
+   "problem": [
+    "demand",
+    "data_access",
+    "automation_leverage",
+    "competition",
+    "recurrence",
+    "reg_platform"
+   ],
+   "solution": [
+    "mvp",
+    "delivery_economics",
+    "automation_leverage",
+    "defensibility",
+    "speed"
+   ],
+   "revenue": [
+    "wtp_solo",
+    "delivery_economics",
+    "recurrence"
+   ],
+   "channel": [
+    "acquisition",
+    "reg_platform",
+    "speed"
+   ]
+  },
+  "forbidden_pairs": [
+   [
+    "customer",
+    "municipalities and public buyers",
+    "revenue",
+    "success fee (% recovered)"
+   ],
+   [
+    "customer",
+    "municipalities and public buyers",
+    "revenue",
+    "marketplace commission"
+   ],
+   [
+    "customer",
+    "municipalities and public buyers",
+    "channel",
+    "marketplace listing"
+   ],
+   [
+    "solution",
+    "template and workflow kit",
+    "revenue",
+    "usage-based fee"
+   ],
+   [
+    "solution",
+    "template and workflow kit",
+    "revenue",
+    "marketplace commission"
+   ]
+  ],
+  "legal_flag_reg_at_most": 2,
+  "hard_gate_reg_at_most": 1,
+  "owner_fit": {
+   "customers": [
+    "independent accountants",
+    "bookkeeping firms",
+    "small EU e-commerce merchants",
+    "iGaming affiliates",
+    "iGaming / PSP merchants"
+   ],
+   "problems": [
+    "manual reconciliation of data",
+    "invoice and document data extraction",
+    "fee and overcharge auditing",
+    "dispute and chargeback evidence",
+    "duplicate and error detection in records",
+    "fraud and anomaly flagging",
+    "tax and VAT data validation",
+    "recurring report generation",
+    "cross-system data synchronisation"
+   ],
+   "basis": "owner profile: payments / reconciliation / settlement cycle, iGaming merchants, Python parsing of xlsx/PDF/CSV. Reported as an overlay, never mixed into the score."
+  }
+ },
+ "components": {
+  "customer": {
+   "independent accountants": [
+    4,
+    3,
+    3,
+    4
+   ],
+   "bookkeeping firms": [
+    4,
+    3,
+    3,
+    4
+   ],
+   "small EU e-commerce merchants": [
+    4,
+    3,
+    3,
+    3
+   ],
+   "iGaming affiliates": [
+    3,
+    3,
+    3,
+    2
+   ],
+   "iGaming / PSP merchants": [
+    4,
+    4,
+    2,
+    2
+   ],
+   "freelancers and solo consultants": [
+    3,
+    2,
+    4,
+    5
+   ],
+   "small construction subcontractors": [
+    3,
+    2,
+    2,
+    4
+   ],
+   "regional logistics dispatchers": [
+    3,
+    3,
+    2,
+    4
+   ],
+   "small clinic managers": [
+    3,
+    3,
+    2,
+    2
+   ],
+   "property managers": [
+    3,
+    3,
+    3,
+    4
+   ],
+   "small law firms": [
+    4,
+    4,
+    2,
+    2
+   ],
+   "solo SaaS founders": [
+    4,
+    3,
+    4,
+    5
+   ],
+   "recruitment agencies": [
+    4,
+    3,
+    3,
+    3
+   ],
+   "small marketing agencies": [
+    4,
+    3,
+    4,
+    5
+   ],
+   "import/export SMEs": [
+    3,
+    3,
+    2,
+    3
+   ],
+   "NGOs and non-profits": [
+    3,
+    2,
+    3,
+    4
+   ],
+   "agri SMEs and farmers": [
+    3,
+    2,
+    2,
+    4
+   ],
+   "independent garages and car dealers": [
+    3,
+    2,
+    3,
+    4
+   ],
+   "small hotels and travel operators": [
+    3,
+    2,
+    3,
+    4
+   ],
+   "municipalities and public buyers": [
+    3,
+    3,
+    1,
+    3
+   ],
+   "content creators": [
+    3,
+    2,
+    4,
+    4
+   ]
+  },
+  "problem": {
+   "manual reconciliation of data": [
+    5,
+    4,
+    4,
+    3,
+    4,
+    4
+   ],
+   "invoice and document data extraction": [
+    5,
+    4,
+    4,
+    2,
+    4,
+    4
+   ],
+   "deadline and compliance tracking": [
+    4,
+    4,
+    4,
+    3,
+    5,
+    3
+   ],
+   "regulatory change monitoring": [
+    3,
+    4,
+    4,
+    3,
+    4,
+    4
+   ],
+   "fee and overcharge auditing": [
+    4,
+    3,
+    4,
+    3,
+    3,
+    4
+   ],
+   "duplicate and error detection in records": [
+    4,
+    4,
+    5,
+    3,
+    3,
+    5
+   ],
+   "fragmented supplier information": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   "lead discovery from public registries": [
+    4,
+    4,
+    4,
+    1,
+    3,
+    3
+   ],
+   "tender and grant discovery": [
+    4,
+    5,
+    4,
+    1,
+    4,
+    5
+   ],
+   "recurring report generation": [
+    4,
+    4,
+    5,
+    2,
+    5,
+    4
+   ],
+   "data cleanup and normalization": [
+    4,
+    3,
+    4,
+    3,
+    2,
+    4
+   ],
+   "fraud and anomaly flagging": [
+    4,
+    3,
+    3,
+    2,
+    4,
+    3
+   ],
+   "dispute and chargeback evidence": [
+    4,
+    2,
+    3,
+    2,
+    4,
+    3
+   ],
+   "subscription churn analysis": [
+    3,
+    3,
+    4,
+    2,
+    4,
+    4
+   ],
+   "tax and VAT data validation": [
+    4,
+    4,
+    4,
+    1,
+    3,
+    2
+   ],
+   "licence and registry monitoring": [
+    3,
+    4,
+    4,
+    3,
+    4,
+    4
+   ],
+   "cross-system data synchronisation": [
+    4,
+    2,
+    3,
+    2,
+    4,
+    3
+   ],
+   "market data digests and benchmarks": [
+    3,
+    4,
+    5,
+    2,
+    4,
+    4
+   ],
+   "document localisation and translation workflow": [
+    3,
+    3,
+    3,
+    2,
+    3,
+    4
+   ],
+   "scheduling and capacity planning": [
+    3,
+    2,
+    3,
+    2,
+    4,
+    4
+   ]
+  },
+  "solution": {
+   "automated checker / validator": [
+    4,
+    4,
+    5,
+    2,
+    4
+   ],
+   "curated public-data digest": [
+    5,
+    4,
+    5,
+    1,
+    4
+   ],
+   "template and workflow kit": [
+    5,
+    5,
+    2,
+    1,
+    5
+   ],
+   "alerting and monitoring service": [
+    4,
+    4,
+    5,
+    2,
+    3
+   ],
+   "document parser and converter": [
+    4,
+    4,
+    5,
+    2,
+    4
+   ],
+   "reconciliation engine": [
+    3,
+    4,
+    5,
+    3,
+    3
+   ],
+   "audit report generator": [
+    4,
+    4,
+    4,
+    2,
+    4
+   ],
+   "API / data product": [
+    3,
+    5,
+    5,
+    3,
+    2
+   ],
+   "browser or desktop tool": [
+    3,
+    4,
+    4,
+    2,
+    3
+   ],
+   "dashboard": [
+    4,
+    3,
+    4,
+    1,
+    4
+   ]
+  },
+  "revenue": {
+   "one-off paid report": [
+    3,
+    3,
+    1
+   ],
+   "monthly subscription": [
+    3,
+    4,
+    5
+   ],
+   "usage-based fee": [
+    3,
+    4,
+    4
+   ],
+   "success fee (% recovered)": [
+    4,
+    3,
+    2
+   ],
+   "productized fixed-price service": [
+    4,
+    2,
+    2
+   ],
+   "template or product sale": [
+    2,
+    5,
+    1
+   ],
+   "marketplace commission": [
+    3,
+    4,
+    3
+   ]
+  },
+  "channel": {
+   "search and content": [
+    3,
+    5,
+    2
+   ],
+   "partner referral": [
+    3,
+    5,
+    3
+   ],
+   "marketplace listing": [
+    3,
+    3,
+    4
+   ],
+   "community and forums": [
+    2,
+    3,
+    4
+   ]
+  }
+ }
+}
