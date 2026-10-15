@@ -277,3 +277,16 @@ def test_review_priority_penalises_hardware_or_engine_mismatch():
     a = review_priority(plain, e, gate(plain, CFG, NOW, {}), CFG, NOW)
     b = review_priority(vr, e, gate(vr, CFG, NOW, {}), CFG, NOW)
     assert b["value"] < a["value"] and b["tech_mismatch_keywords"]
+
+
+def test_verify_state_accepts_legacy_latest_without_manifest_but_not_a_broken_manifest(tmp_path, monkeypatch):
+    """Regression for the first CI run: the state branch written by v0.2.0 has latest/ without manifest.json."""
+    fake_fetcher(monkeypatch, pages8())
+    bounty(tmp_path, "--no-detail")
+    st = tmp_path / "state"
+    (st / "latest" / "manifest.json").unlink()
+    assert C.main_bounty(["verify-state", "--state-dir", str(st)]) == 0
+    bounty(tmp_path, "--no-detail", now="2026-10-16T12:00:00Z")                      # next run replaces latest/ with a verified set
+    assert (st / "latest" / "manifest.json").exists()
+    (st / "latest" / "report.html").write_text("tampered")
+    assert C.main_bounty(["verify-state", "--state-dir", str(st)]) == 7

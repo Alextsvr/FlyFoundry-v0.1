@@ -216,12 +216,16 @@ def cmd_verify_state(args) -> int:
             s.close()
         except Exception as e:  # noqa: BLE001
             problems.append(f"sqlite open failed: {type(e).__name__}: {e}")
+    warnings = []
     if (d / "latest").exists():
-        problems += [f"latest/{p}" for p in verify_manifest(d / "latest")]
+        if not (d / "latest" / "manifest.json").exists():
+            warnings.append("latest/ has no manifest.json (written by a pre-0.2.1 run); it is replaced by the next successful run")
+        else:
+            problems += [f"latest/{p}" for p in verify_manifest(d / "latest")]
     size = db.stat().st_size if db.exists() else 0
     if size > 90_000_000:
         problems.append(f"sqlite is {size} bytes (> 90 MB): retention policy failed")
-    print(json.dumps({"state_dir": str(d), "ok": not problems, "problems": problems, "sqlite_bytes": size}))
+    print(json.dumps({"state_dir": str(d), "ok": not problems, "problems": problems, "warnings": warnings, "sqlite_bytes": size}))
     return 0 if not problems else 7
 
 
