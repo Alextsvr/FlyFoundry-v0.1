@@ -1,7 +1,7 @@
 {
  "n_total": 117600,
- "n_gated_or_forbidden": 5860,
- "n_scored": 111740,
+ "n_gated_or_forbidden": 11300,
+ "n_scored": 106300,
  "sets": [
   "base",
   "equal",
@@ -11,6 +11,48 @@
  ],
  "top": [
   {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "automated checker / validator",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6989494203289934,
+   "min_over_sets": 0.6707317073170732,
+   "rank_range": [
+    4,
+    149
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6989494203289934,
+   "min_over_sets": 0.6707317073170732,
+   "rank_range": [
+    5,
+    112
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6989494203289934,
+   "min_over_sets": 0.6707317073170732,
+   "rank_range": [
+    5,
+    161
+   ],
+   "legal_check_needed": false
+  },
+  {
    "customer": "solo SaaS founders",
    "problem": "duplicate and error detection in records",
    "solution": "automated checker / validator",
@@ -19,7 +61,7 @@
    "mean": 0.6989494203289934,
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
-    2,
+    1,
     100
    ],
    "legal_check_needed": false
@@ -27,14 +69,98 @@
   {
    "customer": "small marketing agencies",
    "problem": "duplicate and error detection in records",
-   "solution": "document parser and converter",
+   "solution": "curated public-data digest",
    "revenue": "monthly subscription",
    "channel": "partner referral",
-   "mean": 0.6989494203289934,
-   "min_over_sets": 0.6707317073170732,
+   "mean": 0.6978962052513882,
+   "min_over_sets": 0.676829268292683,
    "rank_range": [
     1,
-    85
+    245
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "curated public-data digest",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6978962052513882,
+   "min_over_sets": 0.676829268292683,
+   "rank_range": [
+    2,
+    195
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "API / data product",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6910739844505088,
+   "min_over_sets": 0.6402439024390244,
+   "rank_range": [
+    1,
+    1954
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "API / data product",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6910739844505088,
+   "min_over_sets": 0.6402439024390244,
+   "rank_range": [
+    4,
+    2330
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6903049372714006,
+   "min_over_sets": 0.6646341463414634,
+   "rank_range": [
+    17,
+    310
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "automated checker / validator",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6903049372714006,
+   "min_over_sets": 0.6646341463414634,
+   "rank_range": [
+    8,
+    313
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6903049372714006,
+   "min_over_sets": 0.6646341463414634,
+   "rank_range": [
+    7,
+    235
    ],
    "legal_check_needed": false
   },
@@ -42,144 +168,46 @@
    "customer": "small marketing agencies",
    "problem": "duplicate and error detection in records",
    "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6989494203289934,
-   "min_over_sets": 0.6707317073170732,
-   "rank_range": [
-    1,
-    190
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6989494203289934,
-   "min_over_sets": 0.6707317073170732,
-   "rank_range": [
-    6,
-    147
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "curated public-data digest",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6978962052513882,
-   "min_over_sets": 0.676829268292683,
-   "rank_range": [
-    4,
-    195
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "curated public-data digest",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6978962052513882,
-   "min_over_sets": 0.676829268292683,
-   "rank_range": [
-    3,
-    187
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "API / data product",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6910739844505088,
-   "min_over_sets": 0.6402439024390244,
-   "rank_range": [
-    2,
-    3011
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "API / data product",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6910739844505088,
-   "min_over_sets": 0.6402439024390244,
-   "rank_range": [
-    3,
-    2161
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "document parser and converter",
    "revenue": "usage-based fee",
    "channel": "partner referral",
    "mean": 0.6903049372714006,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
     11,
-    312
+    255
    ],
    "legal_check_needed": false
   },
   {
    "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
+   "problem": "tender and grant discovery",
    "solution": "document parser and converter",
-   "revenue": "usage-based fee",
+   "revenue": "monthly subscription",
    "channel": "partner referral",
-   "mean": 0.6903049372714006,
-   "min_over_sets": 0.6646341463414634,
+   "mean": 0.6902179037087575,
+   "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    13,
-    354
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "automated checker / validator",
-   "revenue": "usage-based fee",
-   "channel": "partner referral",
-   "mean": 0.6903049372714006,
-   "min_over_sets": 0.6646341463414634,
-   "rank_range": [
-    9,
-    386
+    8,
+    370
    ],
    "legal_check_needed": false
   },
   {
    "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
+   "problem": "tender and grant discovery",
    "solution": "automated checker / validator",
-   "revenue": "usage-based fee",
+   "revenue": "monthly subscription",
    "channel": "partner referral",
-   "mean": 0.6903049372714006,
-   "min_over_sets": 0.6646341463414634,
+   "mean": 0.6902179037087575,
+   "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    16,
-    226
+    7,
+    390
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "small marketing agencies",
+   "customer": "solo SaaS founders",
    "problem": "tender and grant discovery",
    "solution": "document parser and converter",
    "revenue": "monthly subscription",
@@ -188,7 +216,7 @@
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
     4,
-    488
+    384
    ],
    "legal_check_needed": false
   },
@@ -196,41 +224,13 @@
    "customer": "small marketing agencies",
    "problem": "tender and grant discovery",
    "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6902179037087575,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    3,
-    505
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "tender and grant discovery",
-   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6902179037087575,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
     5,
-    576
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "tender and grant discovery",
-   "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6902179037087575,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    8,
-    512
+    393
    ],
    "legal_check_needed": false
   },
@@ -243,8 +243,8 @@
    "mean": 0.6894999360395702,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    16,
-    1603
+    19,
+    1711
    ],
    "legal_check_needed": false
   },
@@ -257,8 +257,8 @@
    "mean": 0.6894999360395702,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    18,
-    1310
+    17,
+    1458
    ],
    "legal_check_needed": false
   },
@@ -272,7 +272,7 @@
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
     7,
-    309
+    307
    ],
    "legal_check_needed": false
   },
@@ -285,8 +285,8 @@
    "mean": 0.689280859722933,
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
-    8,
-    333
+    6,
+    296
    ],
    "legal_check_needed": false
   },
@@ -299,8 +299,8 @@
    "mean": 0.689280859722933,
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
-    12,
-    319
+    9,
+    290
    ],
    "legal_check_needed": false
   },
@@ -313,27 +313,13 @@
    "mean": 0.689280859722933,
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
-    3,
-    293
+    11,
+    328
    ],
    "legal_check_needed": false
   },
   {
    "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "curated public-data digest",
-   "revenue": "usage-based fee",
-   "channel": "partner referral",
-   "mean": 0.6892517221937954,
-   "min_over_sets": 0.6707317073170732,
-   "rank_range": [
-    18,
-    648
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
    "problem": "duplicate and error detection in records",
    "solution": "curated public-data digest",
    "revenue": "usage-based fee",
@@ -342,7 +328,21 @@
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
     10,
-    878
+    659
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "curated public-data digest",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6892517221937954,
+   "min_over_sets": 0.6707317073170732,
+   "rank_range": [
+    9,
+    766
    ],
    "legal_check_needed": false
   },
@@ -355,8 +355,8 @@
    "mean": 0.6891646886311521,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
-    7,
-    813
+    6,
+    818
    ],
    "legal_check_needed": false
   },
@@ -369,8 +369,64 @@
    "mean": 0.6891646886311521,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
-    6,
-    1020
+    3,
+    898
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "search and content",
+   "mean": 0.6884467209619648,
+   "min_over_sets": 0.6524390243902439,
+   "rank_range": [
+    33,
+    953
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "automated checker / validator",
+   "revenue": "monthly subscription",
+   "channel": "search and content",
+   "mean": 0.6884467209619648,
+   "min_over_sets": 0.6524390243902439,
+   "rank_range": [
+    21,
+    1126
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "search and content",
+   "mean": 0.6884467209619648,
+   "min_over_sets": 0.6524390243902439,
+   "rank_range": [
+    34,
+    1031
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "alerting and monitoring service",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6884467209619648,
+   "min_over_sets": 0.6524390243902439,
+   "rank_range": [
+    30,
+    1012
    ],
    "legal_check_needed": false
   },
@@ -383,8 +439,8 @@
    "mean": 0.6884467209619648,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    20,
-    810
+    15,
+    1038
    ],
    "legal_check_needed": false
   },
@@ -398,77 +454,7 @@
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
     31,
-    1161
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "search and content",
-   "mean": 0.6884467209619648,
-   "min_over_sets": 0.6524390243902439,
-   "rank_range": [
-    25,
-    805
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "alerting and monitoring service",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6884467209619648,
-   "min_over_sets": 0.6524390243902439,
-   "rank_range": [
-    27,
-    1124
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "search and content",
-   "mean": 0.6884467209619648,
-   "min_over_sets": 0.6524390243902439,
-   "rank_range": [
-    26,
-    757
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "search and content",
-   "mean": 0.6884467209619648,
-   "min_over_sets": 0.6524390243902439,
-   "rank_range": [
-    21,
-    1083
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "manual reconciliation of data",
-   "solution": "curated public-data digest",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6882276446453276,
-   "min_over_sets": 0.676829268292683,
-   "rank_range": [
-    5,
-    907
+    1076
    ],
    "legal_check_needed": false
   },
@@ -482,7 +468,35 @@
    "min_over_sets": 0.676829268292683,
    "rank_range": [
     2,
-    990
+    589
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "manual reconciliation of data",
+   "solution": "curated public-data digest",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6882276446453276,
+   "min_over_sets": 0.676829268292683,
+   "rank_range": [
+    8,
+    959
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "duplicate and error detection in records",
+   "solution": "audit report generator",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6879974877764512,
+   "min_over_sets": 0.6646341463414634,
+   "rank_range": [
+    27,
+    792
    ],
    "legal_check_needed": false
   },
@@ -495,22 +509,8 @@
    "mean": 0.6879974877764512,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
-    33,
-    767
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "duplicate and error detection in records",
-   "solution": "audit report generator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6879974877764512,
-   "min_over_sets": 0.6646341463414634,
-   "rank_range": [
-    34,
-    707
+    32,
+    662
    ],
    "legal_check_needed": false
   },
@@ -523,8 +523,8 @@
    "mean": 0.6876198547387572,
    "min_over_sets": 0.6590909090909091,
    "rank_range": [
-    10,
-    7688
+    9,
+    6931
    ],
    "legal_check_needed": false
   },
@@ -537,8 +537,8 @@
    "mean": 0.6876198547387572,
    "min_over_sets": 0.6590909090909091,
    "rank_range": [
-    4,
-    7892
+    8,
+    8213
    ],
    "legal_check_needed": false
   },
@@ -550,37 +550,37 @@
    "channel": "search and content",
    "mean": 0.6873935058843595,
    "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    29,
-    690
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "curated public-data digest",
-   "revenue": "monthly subscription",
-   "channel": "search and content",
-   "mean": 0.6873935058843595,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    30,
-    579
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "solo SaaS founders",
-   "problem": "duplicate and error detection in records",
-   "solution": "API / data product",
-   "revenue": "usage-based fee",
-   "channel": "partner referral",
-   "mean": 0.6824295013929161,
-   "min_over_sets": 0.6341463414634146,
    "rank_range": [
     13,
-    4384
+    500
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "curated public-data digest",
+   "revenue": "monthly subscription",
+   "channel": "search and content",
+   "mean": 0.6873935058843595,
+   "min_over_sets": 0.6585365853658537,
+   "rank_range": [
+    18,
+    457
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "solo SaaS founders",
+   "problem": "duplicate and error detection in records",
+   "solution": "API / data product",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6824295013929161,
+   "min_over_sets": 0.6341463414634146,
+   "rank_range": [
+    18,
+    3752
    ],
    "legal_check_needed": false
   },
@@ -593,13 +593,27 @@
    "mean": 0.6824295013929161,
    "min_over_sets": 0.6341463414634146,
    "rank_range": [
-    15,
-    3264
+    22,
+    3665
    ],
    "legal_check_needed": false
   },
   {
    "customer": "solo SaaS founders",
+   "problem": "tender and grant discovery",
+   "solution": "API / data product",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6823424678302727,
+   "min_over_sets": 0.6280487804878049,
+   "rank_range": [
+    10,
+    5126
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
    "problem": "tender and grant discovery",
    "solution": "API / data product",
    "revenue": "monthly subscription",
@@ -608,35 +622,7 @@
    "min_over_sets": 0.6280487804878049,
    "rank_range": [
     14,
-    4828
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "tender and grant discovery",
-   "solution": "API / data product",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6823424678302727,
-   "min_over_sets": 0.6280487804878049,
-   "rank_range": [
-    9,
-    5502
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "recurring report generation",
-   "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6820392420925958,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    33,
-    483
+    4468
    ],
    "legal_check_needed": false
   },
@@ -649,8 +635,22 @@
    "mean": 0.6820392420925958,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    55,
-    594
+    50,
+    421
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "recurring report generation",
+   "solution": "automated checker / validator",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6820392420925958,
+   "min_over_sets": 0.6585365853658537,
+   "rank_range": [
+    56,
+    507
    ],
    "legal_check_needed": false
   },
@@ -663,8 +663,8 @@
    "mean": 0.6820392420925958,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    34,
-    443
+    42,
+    447
    ],
    "legal_check_needed": false
   },
@@ -677,8 +677,8 @@
    "mean": 0.6820392420925958,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    45,
-    558
+    59,
+    547
    ],
    "legal_check_needed": false
   },
@@ -691,8 +691,8 @@
    "mean": 0.6816604542138079,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    70,
-    806
+    48,
+    664
    ],
    "legal_check_needed": false
   },
@@ -705,15 +705,15 @@
    "mean": 0.6816604542138079,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    47,
-    689
+    49,
+    658
    ],
    "legal_check_needed": false
   }
  ],
  "best_per_problem": [
   {
-   "customer": "solo SaaS founders",
+   "customer": "small marketing agencies",
    "problem": "duplicate and error detection in records",
    "solution": "automated checker / validator",
    "revenue": "monthly subscription",
@@ -721,8 +721,8 @@
    "mean": 0.6989494203289934,
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
-    2,
-    100
+    4,
+    149
    ],
    "legal_check_needed": false
   },
@@ -735,8 +735,8 @@
    "mean": 0.6902179037087575,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    4,
-    488
+    8,
+    370
    ],
    "legal_check_needed": false
   },
@@ -750,35 +750,35 @@
    "min_over_sets": 0.6707317073170732,
    "rank_range": [
     7,
-    309
+    307
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "small marketing agencies",
+   "customer": "solo SaaS founders",
    "problem": "recurring report generation",
-   "solution": "automated checker / validator",
+   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6820392420925958,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    33,
-    483
+    50,
+    421
    ],
    "legal_check_needed": false
   },
   {
    "customer": "small marketing agencies",
    "problem": "deadline and compliance tracking",
-   "solution": "automated checker / validator",
+   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "marketplace listing",
    "mean": 0.6753400089070821,
    "min_over_sets": 0.65625,
    "rank_range": [
-    68,
-    1533
+    52,
+    1532
    ],
    "legal_check_needed": false
   },
@@ -791,55 +791,55 @@
    "mean": 0.6753062875471413,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    170,
-    739
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "small marketing agencies",
-   "problem": "regulatory change monitoring",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6635539375935717,
-   "min_over_sets": 0.6463414634146342,
-   "rank_range": [
-    323,
-    2189
+    194,
+    657
    ],
    "legal_check_needed": false
   },
   {
    "customer": "solo SaaS founders",
    "problem": "licence and registry monitoring",
-   "solution": "document parser and converter",
+   "solution": "automated checker / validator",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6635539375935717,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    382,
-    1916
+    324,
+    1673
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "small marketing agencies",
+   "problem": "regulatory change monitoring",
+   "solution": "automated checker / validator",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6635539375935717,
+   "min_over_sets": 0.6463414634146342,
+   "rank_range": [
+    401,
+    1773
    ],
    "legal_check_needed": false
   },
   {
    "customer": "solo SaaS founders",
    "problem": "market data digests and benchmarks",
-   "solution": "automated checker / validator",
+   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6605312979703224,
    "min_over_sets": 0.6402439024390244,
    "rank_range": [
-    615,
-    2097
+    720,
+    2524
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "solo SaaS founders",
+   "customer": "small marketing agencies",
    "problem": "fee and overcharge auditing",
    "solution": "document parser and converter",
    "revenue": "monthly subscription",
@@ -847,13 +847,13 @@
    "mean": 0.6462478383743628,
    "min_over_sets": 0.6402439024390244,
    "rank_range": [
-    2047,
-    8178
+    1920,
+    6842
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "small marketing agencies",
+   "customer": "solo SaaS founders",
    "problem": "data cleanup and normalization",
    "solution": "automated checker / validator",
    "revenue": "monthly subscription",
@@ -861,8 +861,8 @@
    "mean": 0.6376033553167699,
    "min_over_sets": 0.6341463414634146,
    "rank_range": [
-    3538,
-    11655
+    3196,
+    12950
    ],
    "legal_check_needed": false
   },
@@ -875,50 +875,50 @@
    "mean": 0.6301018984403131,
    "min_over_sets": 0.6153846153846154,
    "rank_range": [
-    3156,
-    10399
+    3734,
+    10322
    ],
    "legal_check_needed": false
   },
   {
    "customer": "small marketing agencies",
    "problem": "subscription churn analysis",
-   "solution": "document parser and converter",
+   "solution": "automated checker / validator",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6280542881914835,
    "min_over_sets": 0.6153846153846154,
    "rank_range": [
-    5533,
-    13918
+    5525,
+    12364
    ],
    "legal_check_needed": false
   },
   {
    "customer": "solo SaaS founders",
    "problem": "fragmented supplier information",
-   "solution": "automated checker / validator",
+   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "partner referral",
    "mean": 0.6224324447571399,
    "min_over_sets": 0.6153846153846154,
    "rank_range": [
-    6166,
-    25643
+    6475,
+    22973
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "solo SaaS founders",
+   "customer": "small marketing agencies",
    "problem": "fraud and anomaly flagging",
-   "solution": "document parser and converter",
+   "solution": "automated checker / validator",
    "revenue": "monthly subscription",
    "channel": "marketplace listing",
    "mean": 0.6202439438948586,
    "min_over_sets": 0.6015625,
    "rank_range": [
-    3161,
-    21812
+    3999,
+    21962
    ],
    "legal_check_needed": false
   },
@@ -931,13 +931,13 @@
    "mean": 0.6098773262645214,
    "min_over_sets": 0.578125,
    "rank_range": [
-    7536,
-    32477
+    5937,
+    32616
    ],
    "legal_check_needed": true
   },
   {
-   "customer": "solo SaaS founders",
+   "customer": "small marketing agencies",
    "problem": "document localisation and translation workflow",
    "solution": "document parser and converter",
    "revenue": "monthly subscription",
@@ -945,41 +945,13 @@
    "mean": 0.6084578725813482,
    "min_over_sets": 0.5961538461538461,
    "rank_range": [
-    9809,
-    34341
+    9599,
+    32704
    ],
    "legal_check_needed": false
   }
  ],
  "owner_fit_top": [
-  {
-   "customer": "bookkeeping firms",
-   "problem": "manual reconciliation of data",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6794768392176929,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    56,
-    681
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "independent accountants",
-   "problem": "manual reconciliation of data",
-   "solution": "document parser and converter",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6794768392176929,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    68,
-    598
-   ],
-   "legal_check_needed": false
-  },
   {
    "customer": "independent accountants",
    "problem": "manual reconciliation of data",
@@ -990,7 +962,7 @@
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
     32,
-    716
+    678
    ],
    "legal_check_needed": false
   },
@@ -1003,8 +975,36 @@
    "mean": 0.6794768392176929,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    35,
-    637
+    36,
+    592
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "bookkeeping firms",
+   "problem": "manual reconciliation of data",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6794768392176929,
+   "min_over_sets": 0.6585365853658537,
+   "rank_range": [
+    25,
+    491
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "independent accountants",
+   "problem": "manual reconciliation of data",
+   "solution": "document parser and converter",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6794768392176929,
+   "min_over_sets": 0.6585365853658537,
+   "rank_range": [
+    48,
+    582
    ],
    "legal_check_needed": false
   },
@@ -1017,8 +1017,8 @@
    "mean": 0.6784236241400875,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
-    41,
-    1272
+    19,
+    1022
    ],
    "legal_check_needed": false
   },
@@ -1031,8 +1031,8 @@
    "mean": 0.6784236241400875,
    "min_over_sets": 0.6646341463414634,
    "rank_range": [
-    15,
-    1094
+    31,
+    1055
    ],
    "legal_check_needed": false
   },
@@ -1045,22 +1045,8 @@
    "mean": 0.6722352215873557,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    156,
-    1947
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "independent accountants",
-   "problem": "recurring report generation",
-   "solution": "automated checker / validator",
-   "revenue": "monthly subscription",
-   "channel": "partner referral",
-   "mean": 0.6722352215873557,
-   "min_over_sets": 0.6463414634146342,
-   "rank_range": [
-    121,
-    1889
+    102,
+    1779
    ],
    "legal_check_needed": false
   },
@@ -1073,8 +1059,8 @@
    "mean": 0.6722352215873557,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    97,
-    1892
+    115,
+    1778
    ],
    "legal_check_needed": false
   },
@@ -1087,8 +1073,22 @@
    "mean": 0.6722352215873557,
    "min_over_sets": 0.6463414634146342,
    "rank_range": [
-    164,
-    1859
+    159,
+    1557
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "independent accountants",
+   "problem": "recurring report generation",
+   "solution": "automated checker / validator",
+   "revenue": "monthly subscription",
+   "channel": "partner referral",
+   "mean": 0.6722352215873557,
+   "min_over_sets": 0.6463414634146342,
+   "rank_range": [
+    165,
+    1765
    ],
    "legal_check_needed": false
   },
@@ -1101,8 +1101,8 @@
    "mean": 0.6716014033392083,
    "min_over_sets": 0.6280487804878049,
    "rank_range": [
-    63,
-    5750
+    37,
+    5754
    ],
    "legal_check_needed": false
   },
@@ -1115,8 +1115,8 @@
    "mean": 0.6716014033392083,
    "min_over_sets": 0.6280487804878049,
    "rank_range": [
-    69,
-    6066
+    78,
+    5730
    ],
    "legal_check_needed": false
   },
@@ -1129,8 +1129,8 @@
    "mean": 0.6711820065097504,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    282,
-    1223
+    241,
+    724
    ],
    "legal_check_needed": false
   },
@@ -1143,8 +1143,8 @@
    "mean": 0.6711820065097504,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    251,
-    1017
+    249,
+    1139
    ],
    "legal_check_needed": false
   },
@@ -1157,13 +1157,13 @@
    "mean": 0.6708323561601001,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    143,
-    1313
+    139,
+    1475
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "bookkeeping firms",
+   "customer": "independent accountants",
    "problem": "manual reconciliation of data",
    "solution": "document parser and converter",
    "revenue": "usage-based fee",
@@ -1171,8 +1171,8 @@
    "mean": 0.6708323561601001,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    164,
-    1205
+    200,
+    1582
    ],
    "legal_check_needed": false
   },
@@ -1186,12 +1186,12 @@
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
     125,
-    1661
+    1584
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "independent accountants",
+   "customer": "bookkeeping firms",
    "problem": "manual reconciliation of data",
    "solution": "document parser and converter",
    "revenue": "usage-based fee",
@@ -1199,8 +1199,8 @@
    "mean": 0.6708323561601001,
    "min_over_sets": 0.6524390243902439,
    "rank_range": [
-    199,
-    1658
+    91,
+    1450
    ],
    "legal_check_needed": false
   },
@@ -1213,8 +1213,8 @@
    "mean": 0.6700273549282696,
    "min_over_sets": 0.6341463414634146,
    "rank_range": [
-    163,
-    4198
+    88,
+    4160
    ],
    "legal_check_needed": false
   },
@@ -1228,21 +1228,7 @@
    "min_over_sets": 0.6341463414634146,
    "rank_range": [
     204,
-    3139
-   ],
-   "legal_check_needed": false
-  },
-  {
-   "customer": "independent accountants",
-   "problem": "manual reconciliation of data",
-   "solution": "curated public-data digest",
-   "revenue": "usage-based fee",
-   "channel": "partner referral",
-   "mean": 0.6697791410824948,
-   "min_over_sets": 0.6585365853658537,
-   "rank_range": [
-    205,
-    2529
+    2908
    ],
    "legal_check_needed": false
   },
@@ -1255,22 +1241,36 @@
    "mean": 0.6697791410824948,
    "min_over_sets": 0.6585365853658537,
    "rank_range": [
-    190,
-    2774
+    96,
+    3373
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "small EU e-commerce merchants",
+   "customer": "independent accountants",
    "problem": "manual reconciliation of data",
-   "solution": "document parser and converter",
+   "solution": "curated public-data digest",
+   "revenue": "usage-based fee",
+   "channel": "partner referral",
+   "mean": 0.6697791410824948,
+   "min_over_sets": 0.6585365853658537,
+   "rank_range": [
+    124,
+    2456
+   ],
+   "legal_check_needed": false
+  },
+  {
+   "customer": "bookkeeping firms",
+   "problem": "manual reconciliation of data",
+   "solution": "automated checker / validator",
    "revenue": "monthly subscription",
    "channel": "marketplace listing",
    "mean": 0.6697549664089298,
    "min_over_sets": 0.6484375,
    "rank_range": [
-    154,
-    2248
+    140,
+    2401
    ],
    "legal_check_needed": false
   },
@@ -1283,22 +1283,22 @@
    "mean": 0.6697549664089298,
    "min_over_sets": 0.6484375,
    "rank_range": [
-    171,
-    2465
+    193,
+    2454
    ],
    "legal_check_needed": false
   },
   {
-   "customer": "small EU e-commerce merchants",
+   "customer": "bookkeeping firms",
    "problem": "manual reconciliation of data",
-   "solution": "automated checker / validator",
+   "solution": "document parser and converter",
    "revenue": "monthly subscription",
    "channel": "marketplace listing",
    "mean": 0.6697549664089298,
    "min_over_sets": 0.6484375,
    "rank_range": [
-    153,
-    2258
+    92,
+    2395
    ],
    "legal_check_needed": false
   }
@@ -1310,10 +1310,10 @@
   "gens": 60,
   "evals": 60000,
   "repeats": 20,
-  "recall_top50_mean": 0.18800000000000006,
+  "recall_top50_mean": 0.19200000000000003,
   "recall_top50_min": 0.12,
   "random_recall_top50_mean": 0.37,
-  "unique_candidates_mean": 1475.2
+  "unique_candidates_mean": 1474.45
  },
  "seeds": [
   {
@@ -1328,7 +1328,8 @@
     0.708
    ],
    "mean": 0.716664676786628,
-   "percentile_vs_generated": 1.0
+   "percentile_vs_generated": 1.0,
+   "conflict": "check: reconciliation rescue: synthesis already required a contract / moonlighting / non-compete check"
   },
   {
    "id": "H01",
@@ -1342,63 +1343,23 @@
     0.693
    ],
    "mean": 0.644977317736464,
-   "percentile_vs_generated": 0.9800071594773582
-  },
-  {
-   "id": "N7",
-   "name": "Niche tender alerts (one sector or region)",
-   "confidence": "unresearched prior",
-   "scores": [
-    0.594,
-    0.615,
-    0.555,
-    0.636,
-    0.661
-   ],
-   "mean": 0.6125058156613036,
-   "percentile_vs_generated": 0.8810631823876857
-  },
-  {
-   "id": "N1",
-   "name": "PSP fee / overcharge audit (success fee)",
-   "confidence": "unresearched prior",
-   "scores": [
-    0.606,
-    0.596,
-    0.61,
-    0.625,
-    0.615
-   ],
-   "mean": 0.6102097665207421,
-   "percentile_vs_generated": 0.8688741721854305
+   "percentile_vs_generated": 0.979134524929445,
+   "conflict": ""
   },
   {
    "id": "N5",
    "name": "Licence and registry change monitoring (PSP licences etc.)",
-   "confidence": "unresearched prior",
-   "scores": [
-    0.561,
-    0.558,
-    0.543,
-    0.602,
-    0.589
-   ],
-   "mean": 0.5704601479144162,
-   "percentile_vs_generated": 0.569035260425989
-  },
-  {
-   "id": "N3",
-   "name": "PSP settlement-report converters (template or small SaaS)",
-   "confidence": "unresearched prior",
+   "confidence": "desk-researched 2026-10-15 (single pass, unverified)",
    "scores": [
     0.556,
     0.558,
-    0.53,
-    0.602,
-    0.594
+    0.537,
+    0.614,
+    0.573
    ],
-   "mean": 0.5679516790797279,
-   "percentile_vs_generated": 0.5484786110613925
+   "mean": 0.5672772518809104,
+   "percentile_vs_generated": 0.5445531514581373,
+   "conflict": "check: licence monitoring: buyers include payment providers and merchants; check overlap with the employer's business"
   },
   {
    "id": "H05",
@@ -1412,7 +1373,8 @@
     0.557
    ],
    "mean": 0.5495131782174465,
-   "percentile_vs_generated": 0.38623590477895114
+   "percentile_vs_generated": 0.38875823142050797,
+   "conflict": ""
   },
   {
    "id": "N6",
@@ -1426,7 +1388,8 @@
     0.526
    ],
    "mean": 0.5410750682244585,
-   "percentile_vs_generated": 0.31585824234830856
+   "percentile_vs_generated": 0.3187206020696143,
+   "conflict": ""
   },
   {
    "id": "H12",
@@ -1440,7 +1403,23 @@
     0.536
    ],
    "mean": 0.5378344301362594,
-   "percentile_vs_generated": 0.29203508143905493
+   "percentile_vs_generated": 0.29516462841015995,
+   "conflict": ""
+  },
+  {
+   "id": "N7",
+   "name": "Niche tender alerts (one sector or region)",
+   "confidence": "desk-researched 2026-10-15 (single pass, unverified)",
+   "scores": [
+    0.511,
+    0.519,
+    0.5,
+    0.534,
+    0.542
+   ],
+   "mean": 0.5212198912198912,
+   "percentile_vs_generated": 0.17784571966133583,
+   "conflict": ""
   },
   {
    "id": "H06",
@@ -1454,7 +1433,23 @@
     0.505
    ],
    "mean": 0.4969926398127618,
-   "percentile_vs_generated": 0.060193305888670126
+   "percentile_vs_generated": 0.06189087488240828,
+   "conflict": ""
+  },
+  {
+   "id": "R1",
+   "name": "Reconciliation / validation tool for small accounting and bookkeeping firms",
+   "confidence": "desk-researched 2026-10-15 (single pass, unverified)",
+   "scores": [
+    0.467,
+    0.481,
+    0.445,
+    0.511,
+    0.464
+   ],
+   "mean": 0.47349263033714245,
+   "percentile_vs_generated": 0.012850423330197555,
+   "conflict": "check: accounting firms serve merchants indirectly; use no employer data or employer-derived formats"
   },
   {
    "id": "N4",
@@ -1468,21 +1463,8 @@
     0.448
    ],
    "mean": 0.4666298775749995,
-   "percentile_vs_generated": 0.006461428315732952
-  },
-  {
-   "id": "N2",
-   "name": "Chargeback evidence packer",
-   "confidence": "unresearched prior",
-   "scores": [
-    0.456,
-    0.462,
-    0.457,
-    0.466,
-    0.458
-   ],
-   "mean": 0.45973070290143464,
-   "percentile_vs_generated": 0.0035886880257741186
+   "percentile_vs_generated": 0.006763875823142051,
+   "conflict": ""
   },
   {
    "id": "H11",
@@ -1496,7 +1478,8 @@
     0.484
    ],
    "mean": 0.4505216920613262,
-   "percentile_vs_generated": 0.0012260604975836765
+   "percentile_vs_generated": 0.001288805268109125,
+   "conflict": ""
   },
   {
    "id": "H09",
@@ -1510,7 +1493,8 @@
     0.401
    ],
    "mean": 0.4126778692175034,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
   },
   {
    "id": "H02",
@@ -1524,7 +1508,8 @@
     0.464
    ],
    "mean": 0.40898668912388425,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
   },
   {
    "id": "H08",
@@ -1538,7 +1523,8 @@
     0.406
    ],
    "mean": 0.3960054342676294,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
   },
   {
    "id": "H04",
@@ -1552,7 +1538,8 @@
     0.411
    ],
    "mean": 0.3705167884283738,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
   },
   {
    "id": "H10",
@@ -1566,7 +1553,8 @@
     0.286
    ],
    "mean": 0.36229147715428206,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
   },
   {
    "id": "H03",
@@ -1580,7 +1568,53 @@
     0.208
    ],
    "mean": 0.21110372012811035,
-   "percentile_vs_generated": 0.0
+   "percentile_vs_generated": 0.0,
+   "conflict": ""
+  },
+  {
+   "id": "N3",
+   "name": "PSP settlement-report converters (template or small SaaS)",
+   "confidence": "desk-researched 2026-10-15 (single pass, unverified)",
+   "scores": [
+    0.483,
+    0.5,
+    0.47,
+    0.511,
+    0.495
+   ],
+   "mean": 0.4918001662971174,
+   "percentile_vs_generated": 0.04471307619943556,
+   "conflict": "GATED: PSP settlement converters sold to PSP merchants / their finance staff: direct merchant exposure unless sold only to accountants and with no employer-derived knowledge"
+  },
+  {
+   "id": "N2",
+   "name": "Chargeback evidence packer",
+   "confidence": "unresearched prior",
+   "scores": [
+    0.456,
+    0.462,
+    0.457,
+    0.466,
+    0.458
+   ],
+   "mean": 0.45973070290143464,
+   "percentile_vs_generated": 0.0037535277516462843,
+   "conflict": "GATED: builds chargeback evidence for merchants: direct merchant exposure"
+  },
+  {
+   "id": "N1",
+   "name": "PSP fee / overcharge audit (success fee)",
+   "confidence": "desk-researched 2026-10-15 (single pass, unverified)",
+   "scores": [
+    0.389,
+    0.404,
+    0.396,
+    0.398,
+    0.391
+   ],
+   "mean": 0.3954857557753899,
+   "percentile_vs_generated": 0.0,
+   "conflict": "GATED: audits merchants' payment-provider fees: direct merchant exposure"
   }
  ]
 }

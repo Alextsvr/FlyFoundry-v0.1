@@ -1,0 +1,16 @@
+{
+ "stated": "2026-10-15, by the owner: he works at a payment provider; approaching merchants directly would be a conflict of interest.",
+ "note": "Whether his employment contract or the law actually forbids a given activity is NOT assessed here; this is a conservative planning gate. Needs a read of the contract (moonlighting, non-compete, confidentiality) before any real-world test.",
+ "hard_gate_customers": ["iGaming / PSP merchants"],
+ "flag_customers": ["small EU e-commerce merchants", "iGaming affiliates"],
+ "gated_seeds": {
+  "N1": "audits merchants' payment-provider fees: direct merchant exposure",
+  "N2": "builds chargeback evidence for merchants: direct merchant exposure",
+  "N3": "PSP settlement converters sold to PSP merchants / their finance staff: direct merchant exposure unless sold only to accountants and with no employer-derived knowledge"
+ },
+ "flag_seeds": {
+  "N5": "licence monitoring: buyers include payment providers and merchants; check overlap with the employer's business",
+  "R1": "accounting firms serve merchants indirectly; use no employer data or employer-derived formats",
+  "H07": "reconciliation rescue: synthesis already required a contract / moonlighting / non-compete check"
+ }
+}

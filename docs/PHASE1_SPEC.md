@@ -122,3 +122,5 @@ P1-E report and dashboard. P1-C gates P1-D: no ranking is produced before the ca
 - 2026-10-15, P1 layer-C first pass: `ideaspace.py` plugin, taxonomy v4, seeds H01-H12 + N1-N7, exhaustive ranking + island swarm. The swarm
   recovered less of the exact top-50 than random sampling (19% vs 37%); enumeration is authoritative. All component values are
   priors; `reports/phase1-ideas/ideas_rank.md` is a candidate list for the research round, not a result.
+- 2026-10-15, owner constraint: conflict of interest with the employer (payment provider). Hard gate on PSP-merchant customers; see
+  `data/owner_constraints.json` and docs/RESULTS.md. Candidates N1, N2, N3 gated; N5, R1, H07 flagged for a contract check.

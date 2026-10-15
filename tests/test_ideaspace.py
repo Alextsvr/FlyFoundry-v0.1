@@ -43,5 +43,14 @@ def test_unchanged_ga_arm_runs_on_the_idea_space_and_beats_random():
 
 def test_seeds_are_complete_and_ordered_like_the_weights():
     s = load_seeds()
-    assert [x["id"] for x in s] == [f"H{i:02d}" for i in range(1, 13)] + [f"N{i}" for i in range(1, 8)]
+    assert [x["id"] for x in s] == [f"H{i:02d}" for i in range(1, 13)] + [f"N{i}" for i in range(1, 8)] + ["R1"]
     assert all(len(x["f"]) == len(CRITERIA) and 1 <= min(x["f"]) and max(x["f"]) <= 5 for x in s)
+
+
+def test_owner_conflict_gate_removes_psp_merchants_and_flags_others():
+    sp = IdeaSpace()
+    idx, F, gated, legal, S = sp.exhaustive()
+    c = sp.names["customer"].index("iGaming / PSP merchants")
+    assert gated[idx[:, 0] == c].all() and np.all(S[idx[:, 0] == c] == GATE_SCORE)
+    e = sp.names["customer"].index("small EU e-commerce merchants")
+    assert (~gated[idx[:, 0] == e]).any() and legal[idx[:, 0] == e].all()

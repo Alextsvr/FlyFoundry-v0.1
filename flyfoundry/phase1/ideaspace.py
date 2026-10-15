@@ -43,6 +43,10 @@ class IdeaSpace:
         self._vals = {k: [dict(zip(self.meta["fields"][k], map(float, comp[k][n]))) for n in self.names[k]] for k in TYPES}
         self._forbidden = {(a, self.names[a].index(x), b, self.names[b].index(y)) for a, x, b, y in self.meta["forbidden_pairs"]}
         self._features = None
+        oc = json.loads((root / "data/owner_constraints.json").read_text(encoding="utf-8"))
+        self.owner_constraints = oc
+        self._gated_customers = {self.names["customer"].index(c) for c in oc["hard_gate_customers"]}
+        self._flag_customers = {self.names["customer"].index(c) for c in oc["flag_customers"]}
 
     # ------------------------------------------------------------------ decoding
     def decode_indices(self, X: np.ndarray) -> np.ndarray:
@@ -72,7 +76,8 @@ class IdeaSpace:
         gated = reg <= self.meta["hard_gate_reg_at_most"]
         for a, i, b, j in self._forbidden:
             gated |= (idx[:, TYPES.index(a)] == i) & (idx[:, TYPES.index(b)] == j)
-        legal = reg <= self.meta["legal_flag_reg_at_most"]
+        gated |= np.isin(idx[:, 0], list(self._gated_customers))      # owner's conflict-of-interest gate
+        legal = (reg <= self.meta["legal_flag_reg_at_most"]) | np.isin(idx[:, 0], list(self._flag_customers))
         return F, gated, legal
 
     def scores_from_features(self, F: np.ndarray, gated: np.ndarray) -> np.ndarray:
@@ -104,6 +109,6 @@ def load_seeds(root: Path = ROOT):
                         "f": [float(r[k]) for k in r if k not in ("h", "name")]})
     with open(root / "data/seeds_new.csv", newline="", encoding="utf-8") as f:
         for r in csv.DictReader(f):
-            out.append({"id": r["id"], "name": r["name"], "confidence": "unresearched prior",
+            out.append({"id": r["id"], "name": r["name"], "confidence": r["confidence"],
                         "f": [float(r[c]) for c in CRITERIA]})
     return out

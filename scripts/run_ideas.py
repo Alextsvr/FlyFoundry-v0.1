@@ -81,7 +81,11 @@ def main() -> int:
         pct = float(np.mean(mean[ok] < row.mean()))
         seed_rows.append({"id": s["id"], "name": s["name"], "confidence": s["confidence"], "scores": row.round(3).tolist(),
                           "mean": float(row.mean()), "percentile_vs_generated": pct})
-    seed_rows.sort(key=lambda r: -r["mean"])
+    oc = sp.owner_constraints
+    for r in seed_rows:
+        r["conflict"] = "GATED: " + oc["gated_seeds"][r["id"]] if r["id"] in oc["gated_seeds"] else (
+            "check: " + oc["flag_seeds"][r["id"]] if r["id"] in oc["flag_seeds"] else "")
+    seed_rows.sort(key=lambda r: (r["conflict"].startswith("GATED"), -r["mean"]))
     # per-problem best (diversity view)
     best_by_problem = {}
     for i in order[:20000]:
@@ -127,10 +131,10 @@ def main() -> int:
           f"{sw['islands']} islands x {sw['pop']} x {sw['gens']} gens = {sw['evals']:,} evaluations, {sw['repeats']} repeats. Recall of the exact top-{TOPK}: swarm {sw['recall_top50_mean']:.0%} (worst {sw['recall_top50_min']:.0%}) vs random sampling with the same budget {sw['random_recall_top50_mean']:.0%}. "
           "The space is small enough to enumerate, so enumeration is the authoritative ranking; the swarm is a consistency check, not a source of new ideas: it can only recombine the components written into the taxonomy.", "",
           "### Named seed ideas under the same fitness", "",
-          "Seeds carry their own criterion vectors (H01-H12: three-track research; N1-N7: unresearched priors), so their scores are NOT on the same footing as averaged components. Compare seeds with seeds.", "",
-          "| id | idea | confidence | mean | percentile vs generated |", "|---|---|---|---|---|"]
+          "Seeds carry their own criterion vectors (H01-H12: three-track research; N1-N7, R1: priors or one-pass desk research, see confidence column), so their scores are NOT on the same footing as averaged components. Compare seeds with seeds.", "",
+          "| id | idea | confidence | mean | percentile vs generated | owner conflict-of-interest |", "|---|---|---|---|---|---|"]
     for r in seed_rows:
-        L.append(f"| {r['id']} | {r['name']} | {r['confidence']} | {r['mean']:.3f} | {r['percentile_vs_generated']:.0%} |")
+        L.append(f"| {r['id']} | {r['name']} | {r['confidence']} | {r['mean']:.3f} | {r['percentile_vs_generated']:.0%} | {r['conflict']} |")
     (out / "ideas_rank.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))
     return 0
