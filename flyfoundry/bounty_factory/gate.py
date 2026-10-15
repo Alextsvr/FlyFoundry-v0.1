@@ -112,8 +112,9 @@ def evaluate(o: Opportunity, cfg: dict, now: datetime, reviews: dict | None = No
         add("possible_employer_conflict", "review", f"keyword signal '{ec.value}' (payments/merchant domain): confirm no merchant contact or employer data is needed")
     # --- physical location
     loc = o.fact("location")
-    if loc.known() and str(loc.value).strip().lower() not in ("online", "") and rv.get("location") != "remote_ok":
-        add("location_not_online", "review", f"listing location is '{loc.value}': may be in-person or hybrid (needs a human check; 'online' is the only value accepted without review)")
+    lv = loc.value.get("location") if isinstance(loc.value, dict) else loc.value
+    if loc.known() and str(lv).strip().lower() not in ("online", "") and rv.get("location") != "remote_ok":
+        add("location_not_online", "review", f"listing location is '{lv}': may be in-person or hybrid (needs a human check; 'online' is the only value accepted without review)")
     # --- geography
     gtxt = o.fact("geo_restriction_text")
     if rv.get("geo") == "ok":

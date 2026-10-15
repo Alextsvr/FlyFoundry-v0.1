@@ -324,3 +324,8 @@ def test_payments_domain_title_quarantined():
     o = devpost.to_opportunity(item(8, "PayPal AI Hackathon"), "u")
     codes = {r["code"] for r in gate(o, CFG, NOW)["reasons"]}
     assert "possible_employer_conflict" in codes
+
+
+def test_legacy_dict_location_is_understood():
+    o = opp(deadline_date="2026-12-01", location={"icon": "globe", "location": "Online"})
+    assert "location_not_online" not in {r["code"] for r in gate(o, CFG, NOW)["reasons"]}
