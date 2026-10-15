@@ -308,7 +308,7 @@ CREATE TABLE keys(key TEXT PRIMARY KEY, opp_id TEXT);
 CREATE TABLE changes(id INTEGER PRIMARY KEY, opp_id TEXT, at TEXT, field TEXT, old TEXT, new TEXT);
 """)
     rec = {"id": "bf-old", "source": "devpost", "source_key": "1", "url": "https://old.devpost.com/", "title": "Old", "organizer": "Org", "kind": "hackathon",
-           "facts": {"deadline_date": {"value": "2026-11-30", "basis": "source_claim", "evidence": "x", "observed_at": "2026-10-01T00:00:00Z"}},
+           "facts": {"deadline_date": {"value": "2026-11-30", "basis": "source_claim", "evidence": "Devpost list API https://x", "observed_at": "2026-10-01T00:00:00Z"}},
            "first_seen": "2026-10-01T00:00:00Z", "last_seen": "2026-10-01T00:00:00Z", "status": "listed", "aliases": [], "observation_ids": [], "detail_fetched_at": ""}
     c.execute("INSERT INTO opportunities VALUES('bf-old','old.devpost.com',?,?,?)", (json.dumps(rec), "a", "b"))
     c.execute("INSERT INTO observations(id,run_id,source,source_key,url,fetched_at,raw_hash,raw_text) VALUES(1,1,'devpost','u','https://x','t','h','raw')")
@@ -317,7 +317,7 @@ CREATE TABLE changes(id INTEGER PRIMARY KEY, opp_id TEXT, at TEXT, field TEXT, o
     s = Store(p)
     o = s.get("bf-old")
     assert o.fact("deadline_date").value == "2026-11-30" and s.raw(1) == "raw"
-    assert s.db.execute("PRAGMA user_version").fetchone()[0] == 2 and s.integrity() == []
+    assert s.db.execute("PRAGMA user_version").fetchone()[0] == 3 and s.integrity() == []
     assert s.find_strong(Opportunity(id="z", source="d", source_key="9", url="https://old.devpost.com", title="Old", organizer="Org")) == "bf-old"
     s.close()
     Store(p).close()                                                                 # opening again is a no-op

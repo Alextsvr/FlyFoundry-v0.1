@@ -14,7 +14,11 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 BASH = shutil.which("bash")
 GIT = shutil.which("git")
-pytestmark = pytest.mark.skipif(not (BASH and GIT), reason="needs bash and git")
+WIN = sys.platform == "win32"
+# The state scripts are bash scripts run by GitHub Actions on Linux. They are NOT supported on Windows (CRLF checkouts, mixed Windows/POSIX git
+# where "C:" is read as an ssh host): these tests are skipped there on purpose and make no claim about Windows.
+posix_only = pytest.mark.skipif(WIN or not (BASH and GIT), reason="state scripts are Linux/bash only (GitHub Actions); not supported on Windows")
+needs_bash = pytest.mark.skipif(WIN or not BASH, reason="needs a POSIX bash")
 ENV_BASE = {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1", "GIT_TERMINAL_PROMPT": "0"}
 
 
@@ -68,6 +72,7 @@ def save(work, d="state", env=None):
     return sh(["bash", "scripts/state_save.sh", "origin", d, "msg"], work, env)
 
 
+@posix_only
 def test_restore_when_branch_absent_is_empty_and_marks_none(repo):
     work, bare = repo
     r = restore(work)
@@ -76,6 +81,7 @@ def test_restore_when_branch_absent_is_empty_and_marks_none(repo):
     assert (work / "state.base_sha").read_text().strip() == "none"
 
 
+@posix_only
 def test_roundtrip_save_then_restore(repo):
     work, bare = repo
     restore(work)
@@ -90,6 +96,7 @@ def test_roundtrip_save_then_restore(repo):
     assert (work / "state" / "note.txt").read_text() == "v1" and (work / "state.base_sha").read_text().strip() == head
 
 
+@posix_only
 def test_remote_unreachable_is_failure_not_empty_state(repo):
     work, bare = repo
     git(work, "remote", "set-url", "origin", str(bare) + "-missing")
@@ -99,6 +106,7 @@ def test_remote_unreachable_is_failure_not_empty_state(repo):
     assert (work / "state" / "note.txt").read_text() == "precious"                  # nothing overwritten, nothing guessed
 
 
+@posix_only
 def test_corrupt_archive_fails_and_does_not_publish(repo, tmp_path):
     work, bare = repo
     restore(work)
@@ -115,6 +123,7 @@ def test_corrupt_archive_fails_and_does_not_publish(repo, tmp_path):
     assert remote_head(bare) == head
 
 
+@posix_only
 def test_verify_failure_on_restore_keeps_existing_dir_and_remote(repo):
     work, bare = repo
     restore(work)
@@ -127,6 +136,7 @@ def test_verify_failure_on_restore_keeps_existing_dir_and_remote(repo):
     assert remote_head(bare) == head
 
 
+@posix_only
 def test_save_refuses_when_verification_fails(repo):
     work, bare = repo
     restore(work)
@@ -135,6 +145,7 @@ def test_save_refuses_when_verification_fails(repo):
     assert r.returncode == 1 and remote_head(bare) is None
 
 
+@posix_only
 def test_save_requires_base_marker_when_asked(repo):
     work, bare = repo
     mkstate(work / "state", "x")
@@ -142,6 +153,7 @@ def test_save_requires_base_marker_when_asked(repo):
     assert r.returncode == 1 and remote_head(bare) is None
 
 
+@posix_only
 def test_lease_blocks_overwrite_of_concurrent_remote_change(repo, tmp_path):
     work, bare = repo
     restore(work)
@@ -162,6 +174,7 @@ def test_lease_blocks_overwrite_of_concurrent_remote_change(repo, tmp_path):
     assert remote_head(bare) == theirs
 
 
+@posix_only
 def test_lease_for_absent_branch_blocks_when_someone_created_it(repo, tmp_path):
     work, bare = repo
     restore(work)                                                                      # base = none
@@ -178,6 +191,7 @@ def test_lease_for_absent_branch_blocks_when_someone_created_it(repo, tmp_path):
     assert r.returncode == 1 and remote_head(bare) == theirs
 
 
+@posix_only
 def test_separate_branch_names_do_not_collide(repo):
     work, bare = repo
     env = {"STATE_BRANCH": "flyfoundry-bounty-state"}
@@ -188,6 +202,7 @@ def test_separate_branch_names_do_not_collide(repo):
 
 
 # ---------- real state (sqlite) through the verify gate
+@posix_only
 def test_verify_state_command_is_usable_as_state_verify(repo, tmp_path):
     work, bare = repo
     from flyfoundry.bounty_factory.store import Store
@@ -231,6 +246,7 @@ def test_workflow_tests_exist_and_state_branch_isolated():
     assert WF["env"]["STATE_BRANCH"] == "flyfoundry-bounty-state"
 
 
+@needs_bash
 def test_workflow_run_blocks_are_valid_bash():
     for jn, job in WF["jobs"].items():
         for st in job["steps"]:
@@ -242,6 +258,7 @@ def test_workflow_run_blocks_are_valid_bash():
             assert r.returncode == 0, (jn, st.get("name"), r.stderr)
 
 
+@needs_bash
 def test_workflow_failure_step_maps_exit_codes():
     discover = WF["jobs"]["discover"]["steps"]
     s = [x for x in discover if "Fail loudly" in x.get("name", "")][0]

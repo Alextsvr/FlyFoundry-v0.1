@@ -241,3 +241,44 @@ def test_unlisted_goes_to_review():
     o.status = "unlisted"
     g = gate(o, CFG, NOW, review(o))
     assert g["decision"] == NEEDS_REVIEW and "unlisted" in codes(g)
+
+
+# ---------- P2: review dated in the future (second independent review)
+@pytest.mark.parametrize("at", ["2099-01-01", "2099-01-01T00:00:00Z", "2026-10-17", "2026-10-15T15:30:00Z", "2026-10-15T20:00:00+03:00", "2026-10-16T01:00:00"])
+def test_future_dated_review_is_rejected_and_confirms_nothing(at):
+    o = verified_opp()
+    g = gate(o, CFG, NOW, review(o, at=at))
+    assert g["decision"] == NEEDS_REVIEW and not g["verified"]
+    assert "review_future_dated" in codes(g) and g["review_status"] == "review_future_dated"
+    for c in ("geography", "fees", "age_team", "tools_and_costs", "hardware", "wallet", "conflicts"):
+        assert g["conditions"][c]["status"] == "unknown", c          # an invalid review confirms nothing
+
+
+@pytest.mark.parametrize("at", ["2026-10-15", "2026-10-16", "2026-10-15T12:00:00Z", "2026-10-15T13:30:00Z", "2026-10-15T16:30:00+03:00", "2026-10-15T13:59:00",
+                                "2026-10-14T23:00:00-05:00", "2026-10-14"])
+def test_current_or_slightly_ahead_review_is_accepted(at):
+    """date-only values name a calendar day in ANY zone (up to UTC+14 ahead); full timestamps may be 2 h ahead (clock skew); zone offsets are honoured"""
+    o = verified_opp()
+    g = gate(o, CFG, NOW, review(o, at=at))
+    assert g["decision"] == ELIGIBLE, (at, codes(g))
+
+
+def test_tolerance_boundary_for_timestamps():
+    o = verified_opp()
+    assert gate(o, CFG, NOW, review(o, at="2026-10-15T13:59:59Z"))["decision"] == ELIGIBLE
+    assert "review_future_dated" in codes(gate(o, CFG, NOW, review(o, at="2026-10-15T14:00:01Z")))
+
+
+def test_expiry_still_enforced_next_to_future_check():
+    o = verified_opp()
+    ok_edge = (NOW - timedelta(days=CFG["review_valid_days"] - 1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    old = (NOW - timedelta(days=CFG["review_valid_days"] + 1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    assert gate(o, CFG, NOW, review(o, at=ok_edge))["decision"] == ELIGIBLE
+    g = gate(o, CFG, NOW, review(o, at=old))
+    assert g["decision"] == NEEDS_REVIEW and "review_stale" in codes(g) and "review_future_dated" not in codes(g)
+
+
+def test_unparsable_review_date_is_incomplete():
+    o = verified_opp()
+    g = gate(o, CFG, NOW, review(o, at="yesterday"))
+    assert g["decision"] == NEEDS_REVIEW and "review_incomplete" in codes(g)

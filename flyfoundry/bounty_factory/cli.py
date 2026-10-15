@@ -23,9 +23,10 @@ from .gate import load_reviews, participant_hash, SCHEMA as REVIEW_SCHEMA, REQUI
 from .http import Fetcher
 from .report import render_html, summary_json, to_csv
 from .sources import devpost, source_status_table
-from .store import Store
+from .store import Store, inspect_db, migrate_file, USABLE
 
-PACKAGE_VERSION = "0.2.1"
+PACKAGE_VERSION = "0.2.2"
+EXIT_INVALID_STATE = 7
 
 
 def _now(args):
@@ -143,18 +144,18 @@ def produce(store, cfg, args, now, out_dir: Path, status: dict, discovery=None, 
     return {"metrics": m, "briefs": made}
 
 
-def write_diagnostics(out_dir: Path, exc: BaseException, now):
+def write_diagnostics(out_dir: Path, exc: BaseException, now, status: str = "internal_error", code: int | None = None):
     d = Path(str(out_dir) + "-diagnostics")
     d.mkdir(parents=True, exist_ok=True)
     (d / "error.md").write_text(f"# Bounty Factory run FAILED\n\n- time: {P.iso(now)}\n- error: `{type(exc).__name__}: {exc}`\n- the last complete output set (if any) was left untouched\n\n```\n{traceback.format_exc()[-3000:]}\n```\n", encoding="utf-8")
-    (d / "status.json").write_text(json.dumps({"run_status": "internal_error", "exit_code": P.EXIT["internal_error"], "message": f"{type(exc).__name__}: {exc}"}, indent=1), encoding="utf-8")
+    (d / "status.json").write_text(json.dumps({"run_status": status, "exit_code": P.EXIT["internal_error"] if code is None else code, "message": f"{type(exc).__name__}: {exc}"}, indent=1), encoding="utf-8")
 
 
 def cmd_bounty(args) -> int:
+    if args.action == "verify-state":                  # needs neither config nor clock: it must work from any directory
+        return cmd_verify_state(args)
     cfg = P.load_cfg(args.config)
     now = _now(args)
-    if args.action == "verify-state":
-        return cmd_verify_state(args)
     if args.action == "review-template":
         return cmd_review_template(args, cfg, now)
     out = Path(args.out)
@@ -164,7 +165,17 @@ def cmd_bounty(args) -> int:
     recover_dir(state / "latest")
     run_id = os.environ.get("GITHUB_RUN_ID") or "local-" + now.strftime("%Y%m%dT%H%M%SZ")
     tmp = out.with_name(out.name + ".new")
-    store = Store(state / "bounty.sqlite3")
+    dbp = state / "bounty.sqlite3"
+    info = inspect_db(dbp)
+    if info["status"] not in ("absent",) + USABLE:        # never convert a damaged/foreign/empty file into a "fresh" state
+        print(f"STATE REJECTED ({info['status']}): {'; '.join(info['problems'])}; nothing was changed", file=sys.stderr)
+        write_diagnostics(out, RuntimeError(f"state database rejected: {info['status']}: {'; '.join(info['problems'])}"), now, "invalid_state", EXIT_INVALID_STATE)
+        return EXIT_INVALID_STATE
+    migrated = None
+    if info["status"] == "legacy":
+        migrated = migrate_file(dbp)
+        print(f"state database migrated: {json.dumps(migrated)}")
+    store = Store(dbp)
     rc = 0
     try:
         discovery = None
@@ -186,6 +197,10 @@ def cmd_bounty(args) -> int:
                     shutil.rmtree(latest_new)
                 shutil.copytree(out, latest_new)
                 publish_dir(latest_new, state / "latest")
+        if args.action == "run" and migrated is None and rc in (0, 3):
+            bak = dbp.with_name(dbp.name + ".premigration.bak")
+            if bak.exists():
+                bak.unlink()                                # the backup lives until the first successful run after the migration
         if args.action == "run":
             print(f"RUN STATUS: {status['run_status']} (exit {rc}): {status['message']}")
             if rc:
@@ -207,16 +222,13 @@ def cmd_verify_state(args) -> int:
     d = Path(args.state_dir)
     problems = []
     db = d / "bounty.sqlite3"
-    if not db.exists():
+    info = inspect_db(db)                                  # READ-ONLY: never creates, migrates or repairs the checked object
+    if info["status"] == "absent":
         problems.append("bounty.sqlite3 missing")
-    else:
-        try:
-            s = Store(db)
-            problems += s.integrity()
-            s.close()
-        except Exception as e:  # noqa: BLE001
-            problems.append(f"sqlite open failed: {type(e).__name__}: {e}")
-    warnings = []
+    elif info["status"] not in USABLE:
+        problems += [f"bounty.sqlite3 rejected ({info['status']}): {x}" for x in info["problems"]]
+    warnings_db = [f"bounty.sqlite3 is a legacy version {info['version']}; it is migrated (with a backup) at the start of the next run"] if info["status"] == "legacy" else []
+    warnings = list(warnings_db)
     if (d / "latest").exists():
         if not (d / "latest" / "manifest.json").exists():
             warnings.append("latest/ has no manifest.json (written by a pre-0.2.1 run); it is replaced by the next successful run")
@@ -225,7 +237,7 @@ def cmd_verify_state(args) -> int:
     size = db.stat().st_size if db.exists() else 0
     if size > 90_000_000:
         problems.append(f"sqlite is {size} bytes (> 90 MB): retention policy failed")
-    print(json.dumps({"state_dir": str(d), "ok": not problems, "problems": problems, "warnings": warnings, "sqlite_bytes": size}))
+    print(json.dumps({"state_dir": str(d), "ok": not problems, "problems": problems, "warnings": warnings, "db_status": info["status"], "sqlite_bytes": size}))
     return 0 if not problems else 7
 
 

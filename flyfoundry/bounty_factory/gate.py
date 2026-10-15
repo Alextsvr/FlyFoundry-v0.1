@@ -18,6 +18,8 @@ ELIGIBLE, INELIGIBLE, NEEDS_REVIEW = "ELIGIBLE", "INELIGIBLE", "NEEDS_REVIEW"
 REQUIRED = ("deadline", "geography", "participation_format", "access", "age_team", "fees", "tools_and_costs", "hardware", "wallet", "conflicts")
 REVIEW_STATUSES = ("ok", "not_applicable", "excluded")
 SCHEMA = 2
+CLOCK_SKEW_TOLERANCE_H = 2        # a full timestamp may be at most this far ahead of the evaluation clock (clock skew between machines)
+DATE_ONLY_TOLERANCE_H = 14        # a date-only reviewed_at means a calendar day in ANY zone (UTC+14 is the furthest ahead)
 
 
 def participant_hash(cfg: dict) -> str:
@@ -80,9 +82,13 @@ def review_problems(rv: dict, o: Opportunity, cfg: dict, now: datetime) -> list:
     if t is None:
         out.append(("review_incomplete", "reviewed_at missing or unparsable"))
     else:
-        t = t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+        t = t if t.tzinfo else t.replace(tzinfo=timezone.utc)          # no zone given = UTC (documented)
+        date_only = len(str(rv.get("reviewed_at", "")).strip()) == 10
+        tol = timedelta(hours=cfg.get("review_future_tolerance_hours_date_only", DATE_ONLY_TOLERANCE_H) if date_only else cfg.get("review_future_tolerance_hours", CLOCK_SKEW_TOLERANCE_H))
         days = cfg.get("review_valid_days", 14)
-        if now - t > timedelta(days=days):
+        if t - now > tol:
+            out.append(("review_future_dated", f"reviewed_at {rv.get('reviewed_at')} is in the future (now {now.strftime('%Y-%m-%dT%H:%M:%SZ')}, tolerance {tol}); not accepted as a confirmation"))
+        elif now - t > timedelta(days=days):
             out.append(("review_stale", f"reviewed {rv.get('reviewed_at')}, older than review_valid_days={days}"))
     if not str(rv.get("evidence_url", "")).strip():
         out.append(("review_incomplete", "evidence_url missing"))

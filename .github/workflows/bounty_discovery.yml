@@ -56,7 +56,7 @@ jobs:
       - name: Restore persistent state (verified, into a temp dir first)
         run: bash scripts/state_restore.sh origin "$STATE_DIR"
       - name: Tests (fast, offline)
-        run: python -m pytest -q tests/test_bounty_gate.py tests/test_bounty_data.py tests/test_bounty_rank_report.py
+        run: python -m pytest -q tests/test_bounty_gate.py tests/test_bounty_data.py tests/test_bounty_state.py tests/test_bounty_parser.py tests/test_bounty_rank_report.py
       - name: Discover, evaluate, report
         id: run
         env:

@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import shutil
 import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .model import Opportunity, Fact, HUMAN, MAX_HISTORY, canonical_url
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3          # 2: observation evidence columns, keys rebuilt; 3: fact origin back-fill (legacy facts without origin)
 RAW_CAP = 400_000          # bytes of raw text stored per observation (hash always covers the full text)
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS source_runs(id INTEGER PRIMARY KEY, source TEXT, started_at TEXT, finished_at TEXT,
@@ -31,6 +33,151 @@ def _parse(ts: str):
         return None
 
 
+LIST_FACTS = {"prize_amount", "prize_currency", "prize_count", "deadline_date", "deadline_precision", "deadline_tz", "location", "invite_only",
+              "themes", "registrations_count", "submission_method"}
+APP_TABLES = {
+    "source_runs": {"id", "source", "started_at", "finished_at", "status", "n_records", "complete", "error"},
+    "observations": {"id", "run_id", "source", "source_key", "url", "fetched_at", "raw_hash", "raw_text"},
+    "opportunities": {"id", "canonical", "record", "first_seen", "last_seen"},
+    "keys": {"key", "opp_id"},
+    "changes": {"id", "opp_id", "at", "field", "old", "new"},
+}
+OBS_V2_COLS = {"kind", "http_status", "parser_version", "truncated", "pruned"}
+
+
+def backfill_origins(o: Opportunity) -> int:
+    """Legacy facts (written before `origin` existed) get their origin from what the record itself proves:
+    list facts carry 'Devpost list API' evidence, manual/human facts come from their basis. A legacy detail-page value whose page
+    (overview vs rules), observation and date cannot be established is NOT kept as a current fact: it becomes status
+    'historical_unverified' (value moved to last_value, history entry added) and takes no part in eligibility or ranking.
+    Nothing is invented: observed_at/observation_id are left as they were. Returns the number of facts touched."""
+    n = 0
+    for name, f in list(o.facts.items()):
+        if f.origin:
+            continue
+        origin = ""
+        if f.basis in HUMAN:
+            origin = "manual" if o.source == "manual" else "human"
+        elif o.source == "devpost" and ((f.evidence or "").startswith("Devpost list API") or (name in LIST_FACTS and (f.basis == "unknown" or "list gives a calendar date" in (f.evidence or "")))):
+            origin = "list"
+        elif o.source == "manual":
+            origin = "manual"
+        if origin:
+            f.origin = origin
+            n += 1
+        elif f.known():
+            f.history = (f.history + [{"value": f.value, "basis": f.basis, "evidence": (f.evidence or "")[:200], "from": f.changed_at or f.observed_at, "to": "", "end": "historical_unverified"}])[-MAX_HISTORY:]
+            f.last_value, f.value, f.status, f.origin = f.value, None, "historical_unverified", "legacy_unverified"
+            n += 1
+        else:
+            f.origin = "legacy_unverified"
+    return n
+
+
+def inspect_db(path) -> dict:
+    """READ-ONLY inspection of an existing state database (never creates, migrates or repairs anything).
+    status: absent | empty_file | not_sqlite | corrupt | foreign | incomplete | invalid_records | newer | legacy | current.
+    legacy = a valid older version that needs migration; current = ready to use. Only legacy/current are usable."""
+    p = Path(path)
+    r = {"status": "absent", "version": None, "problems": [], "opportunities": 0, "bytes": 0}
+    if not p.exists():
+        return r
+    r["bytes"] = p.stat().st_size
+    if r["bytes"] == 0:
+        r.update(status="empty_file", problems=["bounty.sqlite3 is empty (0 bytes)"])
+        return r
+    with open(p, "rb") as fh:
+        if fh.read(16) != b"SQLite format 3\x00":
+            r.update(status="not_sqlite", problems=["file is not an SQLite database"])
+            return r
+    try:
+        db = sqlite3.connect(f"file:{p.as_posix()}?mode=ro", uri=True)
+    except sqlite3.Error as e:
+        r.update(status="corrupt", problems=[f"cannot open read-only: {e}"])
+        return r
+    try:
+        res = [x[0] for x in db.execute("PRAGMA integrity_check").fetchall()]
+        if res != ["ok"]:
+            r.update(status="corrupt", problems=["integrity_check: " + "; ".join(res[:3])])
+            return r
+        ver = db.execute("PRAGMA user_version").fetchone()[0]
+        r["version"] = ver
+        have = {t[0] for t in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        if not (have & set(APP_TABLES)):
+            r.update(status="foreign", problems=["no Bounty Factory tables: not a state database"])
+            return r
+        probs = []
+        for t, cols in APP_TABLES.items():
+            if t not in have:
+                probs.append(f"missing table {t}")
+                continue
+            got = {c[1] for c in db.execute(f"PRAGMA table_info({t})")}
+            if cols - got:
+                probs.append(f"table {t} lacks columns {sorted(cols - got)}")
+            if t == "observations" and ver >= 2 and OBS_V2_COLS - got:
+                probs.append(f"observations lacks columns {sorted(OBS_V2_COLS - got)}")
+        if probs:
+            r.update(status="incomplete", problems=probs)
+            return r
+        if ver > SCHEMA_VERSION:
+            r.update(status="newer", problems=[f"database version {ver} is newer than this code ({SCHEMA_VERSION})"])
+            return r
+        n = bad = 0
+        for (rec,) in db.execute("SELECT record FROM opportunities"):
+            n += 1
+            try:
+                d = json.loads(rec)
+                if not isinstance(d, dict) or not d.get("id") or not isinstance(d.get("facts", {}), dict):
+                    bad += 1
+            except ValueError:
+                bad += 1
+        r["opportunities"] = n
+        if bad:
+            r.update(status="invalid_records", problems=[f"{bad} of {n} opportunity records are not valid"])
+            return r
+        r["status"] = "current" if ver == SCHEMA_VERSION else "legacy"
+        return r
+    except sqlite3.Error as e:
+        r.update(status="corrupt", problems=[f"{type(e).__name__}: {e}"])
+        return r
+    finally:
+        db.close()
+
+
+USABLE = ("legacy", "current")
+
+
+def migrate_file(path, backup_suffix: str = ".premigration.bak") -> dict:
+    """Explicit, safe migration of an existing legacy database: the original is copied to a backup, the COPY is migrated and verified
+    (integrity, same record count), and only then atomically replaces the original. On any failure the original is untouched."""
+    p = Path(path)
+    before = inspect_db(p)
+    if before["status"] != "legacy":
+        return {"migrated": False, "status": before["status"], "backup": None}
+    bak = p.with_name(p.name + backup_suffix)
+    shutil.copy2(p, bak)
+    work = p.with_name(p.name + ".migrating")
+    if work.exists():
+        work.unlink()
+    shutil.copy2(p, work)
+    try:
+        s = Store(work)
+        probs = s.integrity()
+        n = len(s.all())
+        s.close()
+        if probs or n != before["opportunities"]:
+            raise RuntimeError(f"migration check failed: problems={probs} records {before['opportunities']}->{n}")
+        after = inspect_db(work)
+        if after["status"] != "current":
+            raise RuntimeError(f"migrated copy is not current: {after}")
+        os.replace(work, p)
+    except Exception:
+        if work.exists():
+            work.unlink()
+        raise
+    return {"migrated": True, "from_version": before["version"], "to_version": SCHEMA_VERSION, "records": n, "backup": str(bak)}
+
+
 class Store:
     def __init__(self, path):
         self.path = str(path)
@@ -45,7 +192,7 @@ class Store:
     def _migrate(self):
         ver = self.db.execute("PRAGMA user_version").fetchone()[0]
         has_obs = self.db.execute("SELECT 1 FROM sqlite_master WHERE name='observations'").fetchone()
-        if ver < SCHEMA_VERSION and self.db.execute("SELECT 1 FROM sqlite_master WHERE name='keys'").fetchone():
+        if ver < 2 and self.db.execute("SELECT 1 FROM sqlite_master WHERE name='keys'").fetchone():
             self.db.execute("DROP TABLE keys")          # old single-id key table; rebuilt below with the corrected normalization
         self.db.executescript(SCHEMA)
         if has_obs:
@@ -56,6 +203,7 @@ class Store:
             self.db.execute("UPDATE observations SET kind='list' WHERE kind IS NULL AND source='devpost'")
         if ver < SCHEMA_VERSION:
             for o in self.all():
+                backfill_origins(o)
                 self._write(o)
             self.db.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
         self.db.commit()

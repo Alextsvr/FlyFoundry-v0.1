@@ -1,0 +1,67 @@
+state database migrated: {"migrated": true, "from_version": 0, "to_version": 3, "records": 48, "backup": "/tmp/rsc1/state/bounty.sqlite3.premigration.bak"}
+devpost: ok records=47 complete=True 
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 41, 'INELIGIBLE': 7}; briefs=0; run_status=success
+RUN STATUS: success (exit 0): all primary sources ok and complete
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+{"state_dir": "/tmp/rsc1/state", "ok": true, "problems": [], "warnings": [], "db_status": "current", "sqlite_bytes": 466944}
+{
+ "input_state": {
+  "sha256": "a363f54976a1e272dca693b0e69bc1a0c444e62fdc49fd4801c09cf8a17876a4",
+  "inspect": {
+   "status": "legacy",
+   "version": 0,
+   "problems": [],
+   "opportunities": 48,
+   "bytes": 294912
+  }
+ },
+ "exit_code": 0,
+ "mutations": {
+  "prize_removed": "https://next-founders.devpost.com/",
+  "deadline_removed": "https://respawn.devpost.com/",
+  "record_dropped": "https://code-for-humanity.devpost.com/"
+ },
+ "records_before": 48,
+ "records_after": 48,
+ "prize_removed": {
+  "known": false,
+  "value": null,
+  "status": "withdrawn",
+  "origin": "list",
+  "last_value": 275.0,
+  "history": [
+   "withdrawn"
+  ]
+ },
+ "deadline_removed": {
+  "known": false,
+  "value": null,
+  "status": "withdrawn",
+  "origin": "list",
+  "last_value": "2026-10-15",
+  "history": [
+   "withdrawn"
+  ]
+ },
+ "dropped_record_status": "unlisted",
+ "unchanged_record_prize": {
+  "known": true,
+  "value": 10680.0,
+  "status": "current",
+  "origin": "list",
+  "last_value": null,
+  "history": []
+ },
+ "facts_without_origin_after": 0,
+ "db_after": {
+  "status": "current",
+  "version": 3,
+  "problems": [],
+  "opportunities": 48,
+  "bytes": 466944
+ },
+ "integrity": [],
+ "backup_present": true,
+ "manifest_ok": true,
+ "verify_state_exit": 0
+}

@@ -55,6 +55,16 @@ It is independent of the research code (`flyfoundry/bounty_factory/`); research 
 `success` 0 | `partial` 3 | `source_unavailable` 4 | `no_data` 5 | internal error 6 | `verify-state` invalid 7. Outputs are generated in `<out>.new`, verified against `manifest.json`
 (run id, times, code version, file list with SHA-256, source runs) and swapped in; on failure the last good set stays and `<out>-diagnostics/` is written. Stale briefs cannot survive. `state/latest` follows the same rule.
 
+## State safety and migration (v0.2.2)
+* `verify-state` is READ-ONLY (`store.inspect_db`): it never creates, migrates or repairs. It rejects a 0-byte file, a non-SQLite file, a foreign SQLite (no Bounty Factory tables), missing tables/columns, corrupt files, invalid records and a database newer than the code (exit 7). A valid older database is accepted with a warning. A confirmed-absent remote state branch still allows a first run (restore exits before verification).
+* `bounty run` inspects the database first and refuses a broken one (exit 7, nothing changed, no request made, `<out>-diagnostics/`). A legacy database is migrated by `migrate_file`: backup `bounty.sqlite3.premigration.bak`, migration of a COPY, integrity + record-count check, atomic replace; on failure the original is untouched. The backup is removed after the first successful run that did not migrate.
+* Schema 3 back-fills `origin` of legacy facts (list facts from their "Devpost list API" evidence, manual/human from their basis). A legacy detail-page value whose page/observation cannot be established becomes status `historical_unverified` (value kept in `last_value` + history); it is not a current fact, takes no part in eligibility or ranking, and no confirmation date or observation link is invented. Databases already migrated by 0.2.1 (user_version 2, empty origins) are repaired the same way.
+* Text signals are tied to their own object: an amount counts as a fee only if attached to the fee noun (not a prize pool); an inclusion/exclusion cue owns the place names of its own segment (reordered or "except" wording is weak); a requirement cue must directly govern the wallet/hardware/paid-tool action (a task that merely mentions a wallet is weak). If the link is not unambiguous the signal is weak and leads to NEEDS_REVIEW.
+* A review dated in the future is invalid (`review_future_dated`): tolerance 2 h for full timestamps (zone offsets honoured, no zone = UTC), 14 h for date-only values (a calendar day in any zone).
+
+## Windows boundary
+`bounty` CLI, tests for gate/data/state/parser/rank_report and the import isolation are meant to work on Windows. The bash state scripts and their git-based tests (`test_bounty_workflow.py` state tests, the refused-state publish test) are Linux/bash only (GitHub Actions) and are skipped on Windows on purpose; `.gitattributes` forces LF for `*.sh`/`*.yml`. No claim of Windows support is made for them.
+
 ## Operation
 ```
 cd C:\Extra\flyfoundry; python -m pip install -r requirements.lock; python -m pip install -e . --no-deps
