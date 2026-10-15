@@ -14,7 +14,7 @@ dependencies = ["numpy==2.5.3", "tzdata==2026.1"]
 dev = ["pytest==9.1.1"]
 
 [project.scripts]
-flyfoundry = "flyfoundry.cli.main:main"
+flyfoundry = "flyfoundry.cli.entry:main"
 
 [tool.setuptools.packages.find]
 include = ["flyfoundry*"]

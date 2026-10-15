@@ -1,0 +1,104 @@
+[
+ {
+  "id": "1.1",
+  "result": "REPRODUCED",
+  "title": "old review (fees none, geo ok) + new fees_required/geo_eligible=False",
+  "evidence": "decision=ELIGIBLE"
+ },
+ {
+  "id": "1.2",
+  "result": "REPRODUCED",
+  "title": "future deadline + legacy fees/geo review only",
+  "evidence": "decision=ELIGIBLE"
+ },
+ {
+  "id": "1.3-wallet-negated",
+  "result": "REPRODUCED",
+  "title": "You do not need to connect a wallet.",
+  "evidence": "{\"token_or_wallet_required\": true}"
+ },
+ {
+  "id": "1.3-hardware-alt",
+  "result": "REPRODUCED",
+  "title": "No hardware is required. You can build a web app or a robot.",
+  "evidence": "{\"hardware_required\": \"robot\"}"
+ },
+ {
+  "id": "1.3-fee-zero",
+  "result": "REPRODUCED",
+  "title": "Registration fee: $0.",
+  "evidence": "{\"fees_required\": true, \"fee_text\": \"Registration fee: $0.\"}"
+ },
+ {
+  "id": "1.3-geo-incl-excl",
+  "result": "REPRODUCED",
+  "title": "Residents of Latvia are eligible. Residents of Canada are not eligible.",
+  "evidence": "{\"geo_restriction_text\": \"atvia are eligible. Residents of Canada are not eligible. || Residents of Latvia are eligible. Residents of Canad\"}"
+ },
+ {
+  "id": "1.3-fee-after-no",
+  "result": "REPRODUCED",
+  "title": "There is no age restriction. Registration fee is $50.",
+  "evidence": "{}"
+ },
+ {
+  "id": "2.1",
+  "result": "REPRODUCED",
+  "title": "HTTP 200 '{}' marks previous records unlisted",
+  "evidence": "status=ok records={'bf-0': 'unlisted', 'bf-1': 'unlisted', 'bf-2': 'unlisted'}"
+ },
+ {
+  "id": "2.2",
+  "result": "REPRODUCED",
+  "title": "different Cyrillic title/organizer collapse to same key",
+  "evidence": "keys=['u:a.example/1', 't:|'] ['u:b.example/2', 't:|']"
+ },
+ {
+  "id": "2.3",
+  "result": "REPRODUCED",
+  "title": "prize 100 -> None still shows 100 and fresh last_seen",
+  "evidence": "value=100 last_seen=2026-10-10T00:00:00Z"
+ },
+ {
+  "id": "2.4",
+  "result": "REPRODUCED",
+  "title": "observations table lacks kind/http_status/parser_version",
+  "evidence": "columns=['id', 'run_id', 'source', 'source_key', 'url', 'fetched_at', 'raw_hash', 'raw_text']"
+ },
+ {
+  "id": "3.1",
+  "result": "REPRODUCED",
+  "title": "score_b exposes 'coverage' of numeric criteria incl. heuristics",
+  "evidence": "scoring.py contains key 'coverage'"
+ },
+ {
+  "id": "3.2",
+  "result": "REPRODUCED",
+  "title": "Nebius-like list-only record gets a point estimate from theme words",
+  "evidence": "class=SMALL total=5.0 template=scheduled_automation"
+ },
+ {
+  "id": "4.1",
+  "result": "REPRODUCED",
+  "title": "stale brief file survives a run that produces no briefs",
+  "evidence": "exists=True"
+ },
+ {
+  "id": "4.2",
+  "result": "REPRODUCED",
+  "title": "tar failure during restore is reported as success",
+  "evidence": "exit=0 state_dir_populated=False tail='state restored from flyfoundry-state (0 files)'"
+ },
+ {
+  "id": "4.4",
+  "result": "REPRODUCED",
+  "title": "bounty CLI unavailable when Unix 'resource' module is missing",
+  "evidence": "ModuleNotFoundError: import of resource halted; None in sys.modules"
+ },
+ {
+  "id": "4.3b",
+  "result": "REPRODUCED",
+  "title": "single job holds contents: write while running network fetch",
+  "evidence": "permissions at workflow level"
+ }
+]

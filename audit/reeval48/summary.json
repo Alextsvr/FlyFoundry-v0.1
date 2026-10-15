@@ -1,0 +1,47 @@
+{
+ "records_old": 48,
+ "records_new": 48,
+ "decision_transitions": {
+  "INELIGIBLE->INELIGIBLE": 7,
+  "NEEDS_REVIEW->NEEDS_REVIEW": 41
+ },
+ "reasons_added_counts": {
+  "unconfirmed:age_team": 48,
+  "unconfirmed:conflicts": 48,
+  "unconfirmed:hardware": 48,
+  "unconfirmed:tools_and_costs": 48,
+  "unconfirmed:wallet": 48,
+  "possible_employer_conflict": 1,
+  "location_not_online": 15,
+  "unconfirmed:participation_format": 15,
+  "unconfirmed:access": 7
+ },
+ "reasons_removed_counts": {},
+ "conditions_confirmed_distribution_new": {
+  "3/10": 27,
+  "2/10": 18,
+  "1/10": 3
+ },
+ "top5_old_rank_b": [
+  "Nebius x NVIDIA Global AI Hackathon",
+  "HackFW: MADE Challenge",
+  "Qloo Agentic Hackathon",
+  "AWS Communication Developer Services (CDS) Agentic",
+  "Life After Code"
+ ],
+ "top5_new_rank_b": [
+  "Life After Code",
+  "AWS Communication Developer Services (CDS) Agentic",
+  "PayPal AI Hackathon",
+  "Qloo Agentic Hackathon",
+  "HackFW: MADE Challenge"
+ ],
+ "top5_new_rank_review": [
+  "Galuxium Nexus V2",
+  "Qloo Agentic Hackathon",
+  "Nebius x NVIDIA Global AI Hackathon",
+  "AWS Communication Developer Services (CDS) Agentic",
+  "Life After Code"
+ ],
+ "changed_decisions": []
+}

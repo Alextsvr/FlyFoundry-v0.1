@@ -21,7 +21,7 @@ def _f(o, name):
 
 def build_brief(row: dict, now_iso: str, provisional: bool) -> str:
     o, g, est, sb = row["opp"], row["gate"], row["est"], row["score_b"]
-    tpl = by_id(est["template"]) if est.get("template") else None
+    tpl = by_id(est["template"]) if est.get("template") else None      # a keyword HYPOTHESIS, not a finding
     L = []
     L.append(f"# Development brief: {sanitize(o.title, 200)}")
     L.append("")
@@ -32,15 +32,16 @@ def build_brief(row: dict, now_iso: str, provisional: bool) -> str:
           f"- Official URL: {o.url}", f"- Organizer: {sanitize(o.organizer, 200) or 'UNKNOWN'}",
           f"- Reward: prize {_f(o, 'prize_amount')} currency {_f(o, 'prize_currency')}, cash prizes {_f(o, 'prize_count')}",
           f"- Deadline: {_f(o, 'deadline_date')}; precision {_f(o, 'deadline_precision')}; time zone {_f(o, 'deadline_tz')}",
-          f"- Gate decision: **{g['decision']}**  |  priority score (B): {sb['score']:.3f}  |  evidence coverage: {sb['coverage']:.0%}", ""]
+          f"- Gate decision: **{g['decision']}**  |  priority score (B): {sb['score']:.3f}  |  criteria filled: {sb['criteria_fill']:.0%} (heuristics included; not evidence completeness)  |  required conditions confirmed: {g['conditions_confirmed']}/{g['conditions_total']}", ""]
     L.append("## Verified requirements and eligibility evidence")
     for r in g["reasons"]:
         L.append(f"- [{r['level']}] `{r['code']}`: {sanitize(r['detail'], 300)}")
+    L += [f"- Required condition `{c}`: **{s['status']}** ({sanitize(s['detail'], 220)})" for c, s in g["conditions"].items()]
     L.append("")
     L.append("Facts on record (value [basis]):")
     for name in ("location", "geo_restriction_text", "invite_only", "fees_required", "deliverables", "submission_method", "themes", "registrations_count"):
         L.append(f"- {name}: {sanitize(_f(o, name), 400)}")
-    L += ["", "## Suggested solution (inferred, to be validated against the official rules)"]
+    L += ["", "## Suggested solution (hypothesis from keywords; validate against the official rules)"]
     if tpl:
         L += [f"- Primary template: **{tpl['name']}** (`{tpl['id']}`). Intended use: {tpl['intended_use']}",
               f"- Reuse: {tpl['reuse_from']}"]
@@ -52,8 +53,8 @@ def build_brief(row: dict, now_iso: str, provisional: bool) -> str:
     if tpl:
         L += [f"- Inputs: {', '.join(tpl['inputs'])}", f"- Outputs: {', '.join(tpl['outputs'])}", f"- Dependencies: {', '.join(tpl['dependencies']) or 'none'}"]
     L += ["- Keep dependencies minimal; prefer the Python standard library; no paid services; secrets never committed.", "", "## Effort estimate (planning aid, not a promise)",
-          f"- Class **{est['class']}**, ~{est['total_hours']} h total, confidence **{est['confidence']}**, deliverable kind: {est['deliverable_kind']}",
-          f"- Breakdown (h): {est['hours']}"]
+          f"- Range **{est['class_range']}**: {est['hours_low']}-{est['hours_high']} h (mid {est['hours_mid']} h), confidence **{est['confidence']}**, requirements read: **{est['requirements_read']}**, deliverable kind: {est['deliverable_kind']}",
+          f"- Indicative split of the mid estimate (h): {est['hours']}"]
     L += [f"- Assumption: {a}" for a in est["assumptions"]]
     L += ["", "## Acceptance criteria"]
     L += ["- Every requirement in the official rules maps to a checked item below.", "- A fresh clone runs with documented commands and no paid API.",
@@ -91,7 +92,7 @@ OPPORTUNITY (system facts; official URL is the only link to trust)
 - title: {sanitize(o.title, 200)}
 - official URL: {o.url}
 - deadline on record: {_f(o, 'deadline_date')} (time zone/time of day UNKNOWN unless stated)
-- planning estimate: class {est['class']}, about {est['total_hours']} h, confidence {est['confidence']}; suggested template: {est.get('template') or 'none'}
+- planning estimate: {est['class_range']}, {est['hours_low']}-{est['hours_high']} h, confidence {est['confidence']} (requirements read: {est['requirements_read']}); template HYPOTHESIS: {est.get('template') or 'none'}
 
 {FENCE} (begin)
 themes: {ctx['themes']}

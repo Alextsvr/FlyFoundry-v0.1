@@ -71,14 +71,14 @@
     "reward_amount": 0.22,
     "prize_count": 0.05,
     "technical_fit": 0.17,
-    "estimated_time": 0.12,
-    "deadline_feasibility": 0.12,
-    "competition_intensity": 0.06,
+    "estimated_time": 0.08,
+    "deadline_feasibility": 0.08,
+    "competition_intensity": 0.08,
     "deliverable_complexity": 0.06,
-    "free_resources": 0.04,
+    "free_resources": 0.0,
     "reusability": 0.06,
-    "requirements_quality": 0.04,
-    "human_involvement": 0.06
+    "requirements_quality": 0.08,
+    "human_involvement": 0.04
   },
   "min_priority_for_brief": 0.45,
   "detail_limit_per_run": 15,
@@ -100,5 +100,28 @@
     "igaming",
     "fintech payments",
     "settlement"
-  ]
+  ],
+  "review_valid_days": 14,
+  "platform_hints": [
+    "aws",
+    "amazon",
+    "azure",
+    "google cloud",
+    "gcp",
+    "nebius",
+    "nvidia",
+    "gitlab",
+    "paypal",
+    "stripe",
+    "openai",
+    "anthropic",
+    "snowflake",
+    "databricks",
+    "bedrock",
+    "vertex",
+    "qloo",
+    "solana",
+    "ethereum"
+  ],
+  "_weights_note": "estimated_time and deadline_feasibility both derive from the hour estimate; their weights are deliberately small and overlap is reported. free_resources has weight 0: a template match does not prove the mandatory stack of a contest is free."
 }

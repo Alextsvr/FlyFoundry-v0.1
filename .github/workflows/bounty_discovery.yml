@@ -1,6 +1,11 @@
 name: bounty-discovery
 # Bounty Factory (docs/BOUNTY_FACTORY.md): daily discovery -> gate -> rank -> report. No paid APIs, no secrets, no submissions.
+# Two jobs on purpose: `discover` runs network/parsing code with a READ-ONLY token; only `persist` has contents: write, and it only
+# runs the verified state-publish script (compare-and-swap push of one orphan branch). NOTE: contents: write is a repository-wide
+# permission, not limited to one branch; the narrowing comes from job separation and from the script being the only thing that runs.
 # GitHub may start scheduled runs hours late; the pipeline is idempotent so a late or doubled run is harmless.
+# Status semantics: run exit 0 success | 3 partial (job succeeds, warning annotation) | 4 source unavailable | 5 no data | 6 internal error
+# (4/5/6 make the job FAIL so an outage is never mistaken for a normal search; state and diagnostics are still persisted).
 # Disable without editing: gh variable set BOUNTY_ENABLED --body false
 on:
   workflow_dispatch:
@@ -12,7 +17,7 @@ on:
     - cron: "17 5 * * *"
 
 permissions:
-  contents: write     # push the orphan state branch only
+  contents: read
 
 concurrency:
   group: flyfoundry-bounty
@@ -22,12 +27,18 @@ env:
   STATE_DIR: state_bounty
   OUT_DIR: out/bounty
   STATE_BRANCH: flyfoundry-bounty-state
+  STATE_VERIFY: python -m flyfoundry bounty verify-state --state-dir "$1"
 
 jobs:
   discover:
     if: vars.BOUNTY_ENABLED != 'false'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    permissions:
+      contents: read
+    outputs:
+      state_ready: ${{ steps.after.outputs.state_ready }}
+      run_status: ${{ steps.run.outputs.run_status }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,54 +53,94 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.lock
           pip install -e . --no-deps
-      - name: Restore persistent state (orphan branch)
+      - name: Restore persistent state (verified, into a temp dir first)
         run: bash scripts/state_restore.sh origin "$STATE_DIR"
       - name: Tests (fast, offline)
-        run: python -m pytest -q tests/test_bounty.py
+        run: python -m pytest -q tests/test_bounty_gate.py tests/test_bounty_data.py tests/test_bounty_rank_report.py
       - name: Discover, evaluate, report
-        run: python -m flyfoundry bounty run --state-dir "$STATE_DIR" --out "$OUT_DIR" --provisional-briefs "${{ inputs.provisional_briefs || '3' }}"
-      - name: Source health check (warn, do not hide)
+        id: run
+        env:
+          PROVISIONAL: ${{ inputs.provisional_briefs || '3' }}
+        run: |
+          set +e
+          python -m flyfoundry bounty run --state-dir "$STATE_DIR" --out "$OUT_DIR" --provisional-briefs "$PROVISIONAL"
+          rc=$?
+          set -e
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          status=$(python -c "import json,sys; print(json.load(open('$OUT_DIR/status.json'))['run_status'])" 2>/dev/null || echo unknown)
+          echo "run_status=$status" >> "$GITHUB_OUTPUT"
+      - name: Verify state after the run
+        id: after
         if: always()
         run: |
-          python - <<'PY'
-          import json, os
-          try:
-              m = json.load(open(os.environ["OUT_DIR"] + "/metrics.json"))
-              for s, r in m["sources"].items():
-                  if r["status"] not in ("ok",) and s in ("devpost",):
-                      print(f"::warning::source {s} status={r['status']} error={r['error']}")
-              print(json.dumps(m["metrics"]["decisions"]))
-          except Exception as e:
-              print(f"::error::no metrics produced: {e}")
-          PY
-      - name: Persist state and latest report (always, even after partial failure)
-        if: always()
-        run: |
-          if [ -f "$STATE_DIR/bounty.sqlite3" ]; then
-            mkdir -p "$STATE_DIR/latest" && cp -r "$OUT_DIR"/. "$STATE_DIR/latest/" 2>/dev/null || true
-            bash scripts/state_save.sh origin "$STATE_DIR" "bounty state $(date -u +%Y-%m-%dT%H:%MZ)"
-          else
-            echo "::warning::no state produced; nothing persisted"
-          fi
+          if python -m flyfoundry bounty verify-state --state-dir "$STATE_DIR"; then echo "state_ready=true" >> "$GITHUB_OUTPUT"; else echo "state_ready=false" >> "$GITHUB_OUTPUT"; echo "::error::state failed verification; it will not be published"; fi
       - name: Job summary
         if: always()
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json, os
+          out = os.environ["OUT_DIR"]
           try:
-              rows = json.load(open(os.environ["OUT_DIR"] + "/opportunities.json"))
-          except Exception:
-              print("No report was produced; see the failed step."); raise SystemExit
-          cand = sorted([r for r in rows if r["decision"] != "INELIGIBLE"], key=lambda r: r["rank_b"] or 9999)[:3]
-          print("## Top 3 (UNVERIFIED unless marked)\n")
+              st = json.load(open(out + "/status.json"))
+              rows = json.load(open(out + "/opportunities.json"))
+          except Exception as e:
+              print(f"No report was produced ({e}); see diagnostics artifact if present."); raise SystemExit
+          print(f"## Run status: {st['run_status']} (exit {st.get('exit_code')})\n\n{st.get('message')}\n")
+          cand = sorted([r for r in rows if r['decision'] == 'NEEDS_REVIEW'], key=lambda r: r['rank_review'] or 9999)[:3]
+          print("### Check first (UNVERIFIED candidates, by review priority)\n")
           for r in cand:
-              print(f"- **{r['title']}** {r['decision']}{' VERIFIED' if r['verified'] else ' (unverified)'} | prize {r['prize_amount']} {r['prize_currency']} | deadline {r['deadline_date']} | {r['est_class']} | {r['url']}")
+              print(f"- **{r['title']}** {r['conditions_confirmed']}/{r['conditions_total']} conditions confirmed | pool {r['prize_amount']} {r['prize_currency']} | deadline {r['deadline_date']} | {r['url']}")
+          print("\nEligible (confirmed): " + str(sum(1 for r in rows if r['decision'] == 'ELIGIBLE')))
           PY
+      - name: Upload state for the persist job
+        if: always() && steps.after.outputs.state_ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: bounty-state
+          path: |
+            state_bounty
+            state_bounty.base_sha
+          retention-days: 3
+          if-no-files-found: error
       - name: Upload report artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: flyfoundry-bounty-${{ github.run_id }}
-          path: out/bounty
+          path: |
+            out/bounty
+            out/bounty-diagnostics
           retention-days: 30
           if-no-files-found: warn
+      - name: Fail loudly on source outage / no data / internal error
+        if: always()
+        run: |
+          rc="${{ steps.run.outputs.rc }}"
+          case "$rc" in
+            ""|0) ;;
+            3) echo "::warning::partial result (exit 3): see the report banner" ;;
+            *) echo "::error::bounty run failed with exit $rc (${{ steps.run.outputs.run_status }}); the report and state were still saved"; exit "$rc" ;;
+          esac
+
+  persist:
+    needs: discover
+    if: always() && needs.discover.outputs.state_ready == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          name: bounty-state
+          path: .
+      - name: Publish state (verified, compare-and-swap)
+        env:
+          STATE_REQUIRE_BASE: "1"
+        run: bash scripts/state_save.sh origin "$STATE_DIR" "bounty state run ${{ github.run_id }} (${{ github.sha }})"
