@@ -1,0 +1,368 @@
+{
+ "rank_a": [
+  "bf-0bf24f545bca",
+  "bf-b880f5e2f403",
+  "bf-f12bf0989c3d",
+  "bf-951462298371",
+  "bf-4c7ca6496ea3",
+  "bf-fc666ecf625b",
+  "bf-483e77e5c762",
+  "bf-1ce9fa4d9f4b",
+  "bf-a71bbfca935d",
+  "bf-a561896ee837",
+  "bf-3ae6751abe20",
+  "bf-82fbddb05496",
+  "bf-3debb835b042",
+  "bf-8e12ebe84c22",
+  "bf-0e1e8df132a5",
+  "bf-e39441c0eebb",
+  "bf-d6bf349cf3dc",
+  "bf-b7fbfd0dfa31",
+  "bf-6097c7fccc9b",
+  "bf-386e85150c60",
+  "bf-bfa956f572ba",
+  "bf-7ddfb8e4e643",
+  "bf-17b6f4dee273",
+  "bf-25a395bf6345",
+  "bf-3850b4ab50f4",
+  "bf-14b5548c85b0",
+  "bf-412652c6964d",
+  "bf-11218bde9102",
+  "bf-4653096854a5",
+  "bf-4a58e3268aa1",
+  "bf-5457c66b588e",
+  "bf-57a1dbcf9539",
+  "bf-5819421ca5e0",
+  "bf-6c762a8b8da1",
+  "bf-6e6456631bd0",
+  "bf-7258e2825460",
+  "bf-75699c016e93",
+  "bf-80169cbbf292",
+  "bf-e7d0a9fdd733",
+  "bf-e90074454ad2",
+  "bf-ed1ccfab8cd8"
+ ],
+ "rank_b": [
+  "bf-f12bf0989c3d",
+  "bf-8e12ebe84c22",
+  "bf-a71bbfca935d",
+  "bf-1ce9fa4d9f4b",
+  "bf-483e77e5c762",
+  "bf-fc666ecf625b",
+  "bf-4c7ca6496ea3",
+  "bf-e39441c0eebb",
+  "bf-a561896ee837",
+  "bf-386e85150c60",
+  "bf-0bf24f545bca",
+  "bf-0e1e8df132a5",
+  "bf-951462298371",
+  "bf-d6bf349cf3dc",
+  "bf-b7fbfd0dfa31",
+  "bf-b880f5e2f403",
+  "bf-3debb835b042",
+  "bf-3ae6751abe20",
+  "bf-e7d0a9fdd733",
+  "bf-412652c6964d",
+  "bf-6097c7fccc9b",
+  "bf-25a395bf6345",
+  "bf-82fbddb05496",
+  "bf-e90074454ad2",
+  "bf-3850b4ab50f4",
+  "bf-4653096854a5",
+  "bf-80169cbbf292",
+  "bf-bfa956f572ba",
+  "bf-11218bde9102",
+  "bf-14b5548c85b0",
+  "bf-7ddfb8e4e643",
+  "bf-5819421ca5e0",
+  "bf-17b6f4dee273",
+  "bf-57a1dbcf9539",
+  "bf-6c762a8b8da1",
+  "bf-7258e2825460",
+  "bf-5457c66b588e",
+  "bf-6e6456631bd0",
+  "bf-ed1ccfab8cd8",
+  "bf-75699c016e93",
+  "bf-4a58e3268aa1"
+ ],
+ "sensitivity": {
+  "n": 300,
+  "seed": 20261015,
+  "spread": 0.5,
+  "top_k": 3,
+  "per_opportunity": {
+   "bf-0bf24f545bca": {
+    "base_rank": 11,
+    "min_rank": 7,
+    "max_rank": 20,
+    "top_k_freq": 0.0
+   },
+   "bf-0e1e8df132a5": {
+    "base_rank": 12,
+    "min_rank": 8,
+    "max_rank": 20,
+    "top_k_freq": 0.0
+   },
+   "bf-11218bde9102": {
+    "base_rank": 29,
+    "min_rank": 22,
+    "max_rank": 34,
+    "top_k_freq": 0.0
+   },
+   "bf-14b5548c85b0": {
+    "base_rank": 30,
+    "min_rank": 25,
+    "max_rank": 33,
+    "top_k_freq": 0.0
+   },
+   "bf-17b6f4dee273": {
+    "base_rank": 33,
+    "min_rank": 27,
+    "max_rank": 40,
+    "top_k_freq": 0.0
+   },
+   "bf-1ce9fa4d9f4b": {
+    "base_rank": 4,
+    "min_rank": 3,
+    "max_rank": 8,
+    "top_k_freq": 0.017
+   },
+   "bf-25a395bf6345": {
+    "base_rank": 22,
+    "min_rank": 12,
+    "max_rank": 26,
+    "top_k_freq": 0.0
+   },
+   "bf-3850b4ab50f4": {
+    "base_rank": 25,
+    "min_rank": 21,
+    "max_rank": 30,
+    "top_k_freq": 0.0
+   },
+   "bf-386e85150c60": {
+    "base_rank": 10,
+    "min_rank": 6,
+    "max_rank": 18,
+    "top_k_freq": 0.0
+   },
+   "bf-3ae6751abe20": {
+    "base_rank": 18,
+    "min_rank": 11,
+    "max_rank": 27,
+    "top_k_freq": 0.0
+   },
+   "bf-3debb835b042": {
+    "base_rank": 17,
+    "min_rank": 11,
+    "max_rank": 27,
+    "top_k_freq": 0.0
+   },
+   "bf-412652c6964d": {
+    "base_rank": 20,
+    "min_rank": 11,
+    "max_rank": 24,
+    "top_k_freq": 0.0
+   },
+   "bf-4653096854a5": {
+    "base_rank": 26,
+    "min_rank": 17,
+    "max_rank": 31,
+    "top_k_freq": 0.0
+   },
+   "bf-483e77e5c762": {
+    "base_rank": 5,
+    "min_rank": 2,
+    "max_rank": 11,
+    "top_k_freq": 0.187
+   },
+   "bf-4a58e3268aa1": {
+    "base_rank": 41,
+    "min_rank": 39,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-4c7ca6496ea3": {
+    "base_rank": 7,
+    "min_rank": 4,
+    "max_rank": 12,
+    "top_k_freq": 0.0
+   },
+   "bf-5457c66b588e": {
+    "base_rank": 37,
+    "min_rank": 33,
+    "max_rank": 38,
+    "top_k_freq": 0.0
+   },
+   "bf-57a1dbcf9539": {
+    "base_rank": 34,
+    "min_rank": 29,
+    "max_rank": 36,
+    "top_k_freq": 0.0
+   },
+   "bf-5819421ca5e0": {
+    "base_rank": 32,
+    "min_rank": 25,
+    "max_rank": 38,
+    "top_k_freq": 0.0
+   },
+   "bf-6097c7fccc9b": {
+    "base_rank": 21,
+    "min_rank": 13,
+    "max_rank": 28,
+    "top_k_freq": 0.0
+   },
+   "bf-6c762a8b8da1": {
+    "base_rank": 35,
+    "min_rank": 29,
+    "max_rank": 39,
+    "top_k_freq": 0.0
+   },
+   "bf-6e6456631bd0": {
+    "base_rank": 38,
+    "min_rank": 34,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-7258e2825460": {
+    "base_rank": 36,
+    "min_rank": 31,
+    "max_rank": 38,
+    "top_k_freq": 0.0
+   },
+   "bf-75699c016e93": {
+    "base_rank": 40,
+    "min_rank": 35,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-7ddfb8e4e643": {
+    "base_rank": 31,
+    "min_rank": 22,
+    "max_rank": 37,
+    "top_k_freq": 0.0
+   },
+   "bf-80169cbbf292": {
+    "base_rank": 27,
+    "min_rank": 19,
+    "max_rank": 32,
+    "top_k_freq": 0.0
+   },
+   "bf-82fbddb05496": {
+    "base_rank": 23,
+    "min_rank": 19,
+    "max_rank": 35,
+    "top_k_freq": 0.0
+   },
+   "bf-8e12ebe84c22": {
+    "base_rank": 2,
+    "min_rank": 1,
+    "max_rank": 3,
+    "top_k_freq": 1.0
+   },
+   "bf-951462298371": {
+    "base_rank": 13,
+    "min_rank": 7,
+    "max_rank": 22,
+    "top_k_freq": 0.0
+   },
+   "bf-a561896ee837": {
+    "base_rank": 9,
+    "min_rank": 7,
+    "max_rank": 16,
+    "top_k_freq": 0.0
+   },
+   "bf-a71bbfca935d": {
+    "base_rank": 3,
+    "min_rank": 3,
+    "max_rank": 6,
+    "top_k_freq": 0.523
+   },
+   "bf-b7fbfd0dfa31": {
+    "base_rank": 15,
+    "min_rank": 15,
+    "max_rank": 21,
+    "top_k_freq": 0.0
+   },
+   "bf-b880f5e2f403": {
+    "base_rank": 16,
+    "min_rank": 9,
+    "max_rank": 28,
+    "top_k_freq": 0.0
+   },
+   "bf-bfa956f572ba": {
+    "base_rank": 28,
+    "min_rank": 23,
+    "max_rank": 34,
+    "top_k_freq": 0.0
+   },
+   "bf-d6bf349cf3dc": {
+    "base_rank": 14,
+    "min_rank": 10,
+    "max_rank": 18,
+    "top_k_freq": 0.0
+   },
+   "bf-e39441c0eebb": {
+    "base_rank": 8,
+    "min_rank": 4,
+    "max_rank": 17,
+    "top_k_freq": 0.0
+   },
+   "bf-e7d0a9fdd733": {
+    "base_rank": 19,
+    "min_rank": 6,
+    "max_rank": 26,
+    "top_k_freq": 0.0
+   },
+   "bf-e90074454ad2": {
+    "base_rank": 24,
+    "min_rank": 15,
+    "max_rank": 30,
+    "top_k_freq": 0.0
+   },
+   "bf-ed1ccfab8cd8": {
+    "base_rank": 39,
+    "min_rank": 35,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-f12bf0989c3d": {
+    "base_rank": 1,
+    "min_rank": 1,
+    "max_rank": 2,
+    "top_k_freq": 1.0
+   },
+   "bf-fc666ecf625b": {
+    "base_rank": 6,
+    "min_rank": 2,
+    "max_rank": 8,
+    "top_k_freq": 0.273
+   }
+  },
+  "stable_top": [
+   "bf-8e12ebe84c22",
+   "bf-f12bf0989c3d"
+  ],
+  "unstable": [
+   "bf-a71bbfca935d",
+   "bf-fc666ecf625b"
+  ]
+ },
+ "a_vs_b": {
+  "kendall_tau": 0.5927,
+  "top_k": 5,
+  "top_k_overlap": 0.2
+ },
+ "weights": {
+  "reward_amount": 0.22,
+  "prize_count": 0.05,
+  "technical_fit": 0.17,
+  "estimated_time": 0.12,
+  "deadline_feasibility": 0.12,
+  "competition_intensity": 0.06,
+  "deliverable_complexity": 0.06,
+  "free_resources": 0.04,
+  "reusability": 0.06,
+  "requirements_quality": 0.04,
+  "human_involvement": 0.06
+ }
+}

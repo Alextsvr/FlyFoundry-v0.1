@@ -10,7 +10,7 @@ from pathlib import Path
 from . import detail as detail_mod
 from .feasibility import estimate
 from .gate import evaluate as gate_eval, load_reviews, deadline_status, ELIGIBLE, INELIGIBLE, NEEDS_REVIEW
-from .http import Fetcher, RobotsDenied, BudgetExceeded
+from .http import Fetcher, RobotsDenied, BudgetExceeded, HostBlocked
 from .scoring import criteria, score_b, baseline_a, rank, sensitivity, kendall_tau, prize_usd
 from .sources import SOURCES
 from .sources import devpost
@@ -88,21 +88,27 @@ def enrich_details(store: Store, cfg: dict, fetcher: Fetcher, now: datetime, log
             usd = prize_usd(o, cfg) or 0
             cands.append((-usd, o.fact("deadline_date").value or "9999", o.id, o))
     cands.sort(key=lambda x: x[:3])
-    done, errs = 0, []
+    done, errs, blocked = 0, [], False
     for _, _, _, o in cands[: cfg["detail_limit_per_run"]]:
+        if "devpost.com" in " ".join(fetcher.denied_hosts) or any(h.endswith("devpost.com") for h in fetcher.denied_hosts):
+            errs.append("detail pages blocked (HTTP 401/403) for this host; not retried, not bypassed. Eligibility must be checked by a human.")
+            blocked = True
+            break
         try:
             r = detail_mod.enrich(o, fetcher, now_s)
         except BudgetExceeded as e:
             errs.append(str(e))
             break
         errs += r["errors"]
+        if not r["pages_ok"]:
+            continue
         store.upsert(o, now_s)    # same record: facts diffed and persisted
         stored = store.get(o.id)
         stored.detail_fetched_at = o.detail_fetched_at
         store._write(stored)
         done += 1
-    log(f"detail pass: {done} pages-sets fetched, {len(errs)} issues")
-    return {"fetched": done, "issues": errs[:20]}
+    log(f"detail pass: {done} events with readable pages, {len(errs)} issues")
+    return {"pages_fetched_ok": done, "blocked": blocked, "issues": errs[:20]}
 
 
 def evaluate(store: Store, cfg: dict, reviews: dict, now: datetime) -> dict:

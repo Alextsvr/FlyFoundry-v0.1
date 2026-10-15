@@ -238,14 +238,14 @@ def test_unlisted_marking_only_on_complete_run():
 def test_detail_pass_and_blocked_robots():
     s, f, _ = build_store(PAGES)
     out = P.enrich_details(s, CFG, f, NOW, log=lambda *a: None)
-    assert out["fetched"] >= 1
+    assert out["pages_fetched_ok"] >= 1
     o = s.get(stable_id("https://h1.devpost.com/"))
     assert o.detail_fetched_at and "public_repository" in o.fact("deliverables").value
     assert not o.fact("fees_required").known()          # "Entry is free" is not proof either: stays unknown
     s2, _, _ = build_store(PAGES)
     f2 = fetcher(fake_transport(PAGES, robots="User-agent: *\nDisallow: /"))
     out2 = P.enrich_details(s2, CFG, f2, NOW, log=lambda *a: None)
-    assert out2["fetched"] >= 0 and not s2.get(stable_id("https://h1.devpost.com/")).detail_fetched_at
+    assert out2["pages_fetched_ok"] == 0 and not s2.get(stable_id("https://h1.devpost.com/")).detail_fetched_at
 
 
 def test_sensitivity_and_ranking_reproducible():
@@ -297,3 +297,30 @@ def test_workflow_file_has_required_controls():
     for needle in ("workflow_dispatch", "schedule:", "concurrency:", "timeout-minutes:", "flyfoundry-bounty-state", "if: always()"):
         assert needle in t
     assert "secrets." not in t.replace("secrets.GITHUB_TOKEN", "")
+
+
+def test_in_person_location_needs_review_and_403_stops_detail_pass():
+    o = devpost.to_opportunity(item(7, "On-site", displayed_location={"icon": "map-marker-alt", "location": "Fort Worth"}), "u")
+    assert o.fact("location").value == "Fort Worth"
+    g = gate(o, CFG, NOW)
+    assert "location_not_online" in {r["code"] for r in g["reasons"]}
+    n = {"c": 0}
+
+    def t(url, h):
+        if url.endswith("/robots.txt"):
+            return 200, "User-agent: *\nDisallow:\n"
+        if "/api/hackathons" in url:
+            return 200, json.dumps(PAGES)
+        n["c"] += 1
+        return 403, "forbidden"
+    s = Store(":memory:")
+    f = fetcher(t)
+    P.discover(s, CFG, f, NOW, manual_path="none.json", log=lambda *a: None)
+    out = P.enrich_details(s, CFG, f, NOW, log=lambda *a: None)
+    assert out["blocked"] and out["pages_fetched_ok"] == 0 and n["c"] == 1     # one 403, then no further attempts, no bypass
+
+
+def test_payments_domain_title_quarantined():
+    o = devpost.to_opportunity(item(8, "PayPal AI Hackathon"), "u")
+    codes = {r["code"] for r in gate(o, CFG, NOW)["reasons"]}
+    assert "possible_employer_conflict" in codes

@@ -75,7 +75,10 @@ def to_opportunity(item: dict, list_url: str) -> Opportunity | None:
     if dl:
         o.set("deadline_precision", "date", "inferred", "list gives a calendar date only; no time of day")
         o.set("deadline_tz", None)
-    o.set("location", item.get("displayed_location"), "source_claim", f"{ev}: displayed_location (format of participation, NOT an eligibility statement)")
+    loc = item.get("displayed_location")
+    if isinstance(loc, dict):
+        loc = loc.get("location")
+    o.set("location", loc, "source_claim", f"{ev}: displayed_location (format of participation, NOT an eligibility statement)")
     o.set("invite_only", item.get("invite_only"), "source_claim", f"{ev}: invite_only")
     o.set("themes", [t.get("name") if isinstance(t, dict) else str(t) for t in (item.get("themes") or [])], "source_claim", f"{ev}: themes")
     o.set("registrations_count", item.get("registrations_count"), "source_claim", f"{ev}: registrations_count at fetch time")

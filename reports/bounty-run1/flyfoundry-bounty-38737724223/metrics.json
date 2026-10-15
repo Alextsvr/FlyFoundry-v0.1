@@ -1,0 +1,167 @@
+{
+ "metrics": {
+  "valid_opportunities_found": 41,
+  "total_records": 48,
+  "decisions": {
+   "ELIGIBLE": 0,
+   "NEEDS_REVIEW": 41,
+   "INELIGIBLE": 7
+  },
+  "source_coverage": {
+   "sources_registered": 6,
+   "sources_ok_last_run": 2,
+   "supported": 2
+  },
+  "duplicate_rate": 0.0,
+  "duplicate_rate_note": "duplicates merged in THIS process run / records seen in this run",
+  "evidence_freshness_hours": {
+   "median": 0.0,
+   "max": 0.0
+  },
+  "eligibility_precision": null,
+  "eligibility_precision_n": 0,
+  "eligibility_precision_note": "agreement with human labels in data/bounty_reviews.json; n/a until labels exist. Small n: no significance claimed.",
+  "estimated_vs_actual_hours": null,
+  "human_review_minutes_total": null,
+  "ranking_stability_top3": [
+   "bf-8e12ebe84c22",
+   "bf-f12bf0989c3d"
+  ],
+  "ranking_a_vs_b": {
+   "kendall_tau": 0.5927,
+   "top_k": 5,
+   "top_k_overlap": 0.2
+  }
+ },
+ "discovery": {
+  "devpost": {
+   "status": "ok",
+   "records": 48,
+   "complete": true,
+   "error": ""
+  },
+  "manual": {
+   "status": "ok",
+   "records": 0,
+   "complete": true,
+   "error": ""
+  },
+  "superteam_earn": {
+   "status": "unsupported",
+   "records": 0,
+   "complete": false,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "detail": {
+   "fetched": 15,
+   "issues": [
+    "https://start-developer-competition-26.devpost.com/: HTTP 403",
+    "https://start-developer-competition-26.devpost.com/rules: HTTP 403",
+    "https://hackfest-season-1.devpost.com/: HTTP 403",
+    "https://hackfest-season-1.devpost.com/rules: HTTP 403",
+    "https://amazonappdev2026.devpost.com/: HTTP 403",
+    "https://amazonappdev2026.devpost.com/rules: HTTP 403",
+    "https://paypalaihackathon.devpost.com/: HTTP 403",
+    "https://paypalaihackathon.devpost.com/rules: HTTP 403",
+    "https://nebiusglobalaihackathon.devpost.com/: HTTP 403",
+    "https://nebiusglobalaihackathon.devpost.com/rules: HTTP 403",
+    "https://gitlab-transcend.devpost.com/: HTTP 403",
+    "https://gitlab-transcend.devpost.com/rules: HTTP 403",
+    "https://aws-cds-partner.devpost.com/: HTTP 403",
+    "https://aws-cds-partner.devpost.com/rules: HTTP 403",
+    "https://qloo.devpost.com/: HTTP 403",
+    "https://qloo.devpost.com/rules: HTTP 403",
+    "https://opencv26.devpost.com/: HTTP 403",
+    "https://opencv26.devpost.com/rules: HTTP 403",
+    "https://eurekadev.devpost.com/: HTTP 403",
+    "https://eurekadev.devpost.com/rules: HTTP 403"
+   ]
+  }
+ },
+ "sources": {
+  "devpost": {
+   "source": "devpost",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "ok",
+   "http_status": 200,
+   "n_records": 48,
+   "complete": 1,
+   "requests": 3,
+   "error": ""
+  },
+  "manual": {
+   "source": "manual",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "ok",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 1,
+   "requests": 0,
+   "error": ""
+  },
+  "superteam_earn": {
+   "source": "superteam_earn",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "unsupported",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "source": "dorahacks",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "source": "gitcoin",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "source": "colosseum",
+   "started_at": "2026-10-15T12:50:43Z",
+   "finished_at": "2026-10-15T12:50:43Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  }
+ }
+}

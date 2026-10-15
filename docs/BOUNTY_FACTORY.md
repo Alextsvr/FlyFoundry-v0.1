@@ -73,3 +73,12 @@ metrics (acceptance, prizes, revenue/hour, reuse %) start after real submissions
 * Effort estimates are keyword/template priors (confidence low without detail). Technical-fit is a keyword heuristic.
 * FX rates in config are static planning values; '$' is assumed USD.
 * Superteam Earn, DoraHacks, Gitcoin, Colosseum are not automated (see BOUNTY_SOURCES.md).
+
+## Live verification (run 38737724223, 2026-10-15, GitHub Actions)
+* Devpost list API: 3 requests, HTTP 200, 48 open hackathons, complete listing. All 48 carry prize, deadline date, registrations, themes.
+* Decisions: 0 ELIGIBLE, 41 NEEDS_REVIEW, 7 INELIGIBLE (all invite-only). 0 duplicates. Fees and geography are unknown for all 48 (the list has neither).
+* Event pages and /rules returned HTTP 403 to the Actions runner (the list API did not). They are not retried or bypassed; the detail pass now stops after the first 403.
+  Consequence: fees/geography/deliverables cannot be read automatically from Devpost, so human review is the only route to ELIGIBLE.
+* Defect found by this run and fixed afterwards: in-person events (e.g. location 'Fort Worth') were not flagged; the gate now raises `location_not_online`. Payments-domain titles
+  (e.g. payment providers as organizers) now quarantine as `possible_employer_conflict`.
+* Template matching is crude (keyword overlap): e.g. 'Robotic Process Automation' theme matched the scheduled-automation template. Treat suggestions as starting points.

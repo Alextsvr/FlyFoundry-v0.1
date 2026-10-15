@@ -2,25 +2,103 @@
   "_note": "User-editable planning configuration. Nothing here is a fact about any competition. Rates and hours are planning assumptions.",
   "participant": {
     "country_code": "LV",
-    "country_names": ["latvia", "latvian"],
-    "region_names": ["european union", "eu", "europe", "baltic", "baltics", "eea"],
+    "country_names": [
+      "latvia",
+      "latvian"
+    ],
+    "region_names": [
+      "european union",
+      "eu",
+      "europe",
+      "baltic",
+      "baltics",
+      "eea"
+    ],
     "geography_is_configured_not_inferred": true
   },
-  "available_hardware": ["cpu"],
+  "available_hardware": [
+    "cpu"
+  ],
   "hours_per_day_available": 3,
-  "fx_to_usd_planning": {"USD": 1.0, "EUR": 1.10, "GBP": 1.30, "INR": 0.012, "JPY": 0.0067},
+  "fx_to_usd_planning": {
+    "USD": 1.0,
+    "EUR": 1.1,
+    "GBP": 1.3,
+    "INR": 0.012,
+    "JPY": 0.0067
+  },
   "fx_note": "Static planning rates for ranking only; update manually. A '$' symbol is treated as USD (ambiguous: could be CAD/AUD).",
-  "tech_keywords": ["python", "data", "analytics", "dashboard", "streamlit", "api", "automation", "open source", "open-source", "developer tools",
-                     "web", "ai", "machine learning", "ml", "visualization", "scraping", "cli", "agent", "fintech", "devops", "productivity"],
-  "tech_negative_keywords": ["unity", "unreal", "hardware", "robotics", "ar/vr", "vr", "mobile app", "ios", "android", "game", "gaming", "design only", "music", "blockchain gaming"],
+  "tech_keywords": [
+    "python",
+    "data",
+    "analytics",
+    "dashboard",
+    "streamlit",
+    "api",
+    "automation",
+    "open source",
+    "open-source",
+    "developer tools",
+    "web",
+    "ai",
+    "machine learning",
+    "ml",
+    "visualization",
+    "scraping",
+    "cli",
+    "agent",
+    "fintech",
+    "devops",
+    "productivity"
+  ],
+  "tech_negative_keywords": [
+    "unity",
+    "unreal",
+    "hardware",
+    "robotics",
+    "ar/vr",
+    "vr",
+    "mobile app",
+    "ios",
+    "android",
+    "game",
+    "gaming",
+    "design only",
+    "music",
+    "blockchain gaming"
+  ],
   "weights": {
-    "reward_amount": 0.22, "prize_count": 0.05, "technical_fit": 0.17, "estimated_time": 0.12, "deadline_feasibility": 0.12,
-    "competition_intensity": 0.06, "deliverable_complexity": 0.06, "free_resources": 0.04, "reusability": 0.06,
-    "requirements_quality": 0.04, "human_involvement": 0.06
+    "reward_amount": 0.22,
+    "prize_count": 0.05,
+    "technical_fit": 0.17,
+    "estimated_time": 0.12,
+    "deadline_feasibility": 0.12,
+    "competition_intensity": 0.06,
+    "deliverable_complexity": 0.06,
+    "free_resources": 0.04,
+    "reusability": 0.06,
+    "requirements_quality": 0.04,
+    "human_involvement": 0.06
   },
   "min_priority_for_brief": 0.45,
   "detail_limit_per_run": 15,
   "max_list_pages": 5,
   "min_interval_seconds": 2.0,
-  "max_run_seconds": 900
+  "max_run_seconds": 900,
+  "payments_domain_keywords": [
+    "payment",
+    "payments",
+    "paypal",
+    "stripe",
+    "adyen",
+    "checkout.com",
+    "visa",
+    "mastercard",
+    "psp",
+    "merchant",
+    "acquir",
+    "igaming",
+    "fintech payments",
+    "settlement"
+  ]
 }
