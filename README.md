@@ -120,3 +120,10 @@ state-for-state (see `tests/test_shards.py`). `.github/workflows/swarm.yml` runs
 trigger only) and is disabled until the repository variable `SWARM_ENABLED` is `true`. Plan and pre-registered criteria: `docs/V0_2_SPEC.md`.
 
 E4 (drifting world): `drift_amp > 0` makes peak centres oscillate with the generation clock; arms additionally log `track_qd` (current population on held-out contexts). Verdict rules: `docs/V0_2_SPEC.md`, analysis: `scripts/analyze_e4.py`.
+
+
+## Bounty Factory (v0.2 extension)
+Discovers, gates, ranks and prepares hackathon/bounty opportunities with no paid APIs and no submissions (a human approves everything).
+Start with `docs/BOUNTY_FACTORY.md` (architecture, operation, manual review, limitations) and `docs/BOUNTY_SOURCES.md`.
+Run: `python -m flyfoundry bounty run --state-dir state_bounty --out out/bounty`. Workflow: `.github/workflows/bounty_discovery.yml`.
+Research experiments and results (E1-E4, Phase 1) are unchanged.

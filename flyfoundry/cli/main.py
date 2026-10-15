@@ -289,6 +289,8 @@ def build_parser():
     sp.add_argument("--facts", required=True); sp.add_argument("--compare", default=None)
     sp.add_argument("--reference", default="data/calibration_reference.csv"); sp.add_argument("--out", default="reports/phase1")
     sp.set_defaults(fn=cmd_calibrate)
+    from flyfoundry.bounty_factory.cli import add_parser as _bounty_parser
+    _bounty_parser(sub)
     sp = sub.add_parser("schedule-guard"); sp.add_argument("--state-dir", default="state")
     sp.add_argument("--tz", default="Europe/Riga"); sp.add_argument("--window", default="1-3"); sp.set_defaults(fn=cmd_guard)
     return p

@@ -3,7 +3,7 @@
 # Usage: state_save.sh <remote> <state_dir> <message>
 set -euo pipefail
 REMOTE="${1:-origin}"; DIR="${2:-state}"; MSG="${3:-state update}"
-BRANCH="flyfoundry-state"
+BRANCH="${STATE_BRANCH:-flyfoundry-state}"
 ROOT="$(git rev-parse --show-toplevel)"
 TMP="$(mktemp -d)"
 cp -a "$DIR"/. "$TMP"/

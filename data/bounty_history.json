@@ -1,0 +1,22 @@
+{
+  "_note": "Human-maintained record of projects, submissions and outcomes. Only confirmed facts. Update prize/outcome only when the organizer confirms.",
+  "projects": [
+    {
+      "name": "Panta Signal Radar",
+      "github": "https://github.com/Alextsvr/panta-signal-radar",
+      "website": "https://panta-signal-radar.streamlit.app/",
+      "founder_pitch": "https://youtu.be/eZYjY3zHxAY",
+      "product_demo": "https://youtu.be/vpDPSzhTLsk",
+      "competitions": ["Colosseum Crypto World's Fair", "Panta API Sidetrack"],
+      "status": "submitted",
+      "status_as_of": "2026-10-15",
+      "outcome": "unconfirmed",
+      "prize_received_eur_or_usd": null,
+      "estimated_hours": null,
+      "actual_hours": null,
+      "template": "streamlit_dashboard",
+      "reusable_components": ["Streamlit app structure and data layer", "README and demo-recording workflow", "signal/event normalization pipeline"],
+      "caveats": ["Prize outcomes not confirmed; no award is assumed.", "Historical replay does not establish a reliable trading advantage."]
+    }
+  ]
+}

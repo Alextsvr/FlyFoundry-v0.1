@@ -5,7 +5,7 @@
 # Network/auth errors abort (exit 1) so a transient failure can never be mistaken for "no state".
 set -uo pipefail
 REMOTE="${1:-origin}"; DIR="${2:-state}"
-BRANCH="flyfoundry-state"
+BRANCH="${STATE_BRANCH:-flyfoundry-state}"
 git ls-remote --exit-code --heads "$REMOTE" "$BRANCH" >/dev/null 2>&1
 rc=$?
 mkdir -p "$DIR"
