@@ -1,0 +1,847 @@
+{
+ "rank_a": [
+  "bf-0bf24f545bca",
+  "bf-b880f5e2f403",
+  "bf-951462298371",
+  "bf-4c7ca6496ea3",
+  "bf-483e77e5c762",
+  "bf-f12bf0989c3d",
+  "bf-1ce9fa4d9f4b",
+  "bf-a71bbfca935d",
+  "bf-fc666ecf625b",
+  "bf-a561896ee837",
+  "bf-3ae6751abe20",
+  "bf-82fbddb05496",
+  "bf-3debb835b042",
+  "bf-0e1e8df132a5",
+  "bf-d6bf349cf3dc",
+  "bf-ca7540f16fc9",
+  "bf-3c1ab601f061",
+  "bf-b7fbfd0dfa31",
+  "bf-8e12ebe84c22",
+  "bf-6097c7fccc9b",
+  "bf-e39441c0eebb",
+  "bf-bfa956f572ba",
+  "bf-386e85150c60",
+  "bf-17b6f4dee273",
+  "bf-7ddfb8e4e643",
+  "bf-e078b2654de3",
+  "bf-3850b4ab50f4",
+  "bf-25a395bf6345",
+  "bf-14b5548c85b0",
+  "bf-412652c6964d",
+  "bf-11218bde9102",
+  "bf-4653096854a5",
+  "bf-4a58e3268aa1",
+  "bf-5457c66b588e",
+  "bf-57a1dbcf9539",
+  "bf-5819421ca5e0",
+  "bf-6c762a8b8da1",
+  "bf-6e6456631bd0",
+  "bf-7258e2825460",
+  "bf-75699c016e93",
+  "bf-80169cbbf292",
+  "bf-e7d0a9fdd733",
+  "bf-e90074454ad2",
+  "bf-ed1ccfab8cd8"
+ ],
+ "rank_b": [
+  "bf-4c7ca6496ea3",
+  "bf-483e77e5c762",
+  "bf-a71bbfca935d",
+  "bf-8e12ebe84c22",
+  "bf-f12bf0989c3d",
+  "bf-1ce9fa4d9f4b",
+  "bf-b880f5e2f403",
+  "bf-0bf24f545bca",
+  "bf-951462298371",
+  "bf-3debb835b042",
+  "bf-3c1ab601f061",
+  "bf-d6bf349cf3dc",
+  "bf-3ae6751abe20",
+  "bf-a561896ee837",
+  "bf-0e1e8df132a5",
+  "bf-b7fbfd0dfa31",
+  "bf-ca7540f16fc9",
+  "bf-82fbddb05496",
+  "bf-fc666ecf625b",
+  "bf-6097c7fccc9b",
+  "bf-e39441c0eebb",
+  "bf-412652c6964d",
+  "bf-386e85150c60",
+  "bf-e7d0a9fdd733",
+  "bf-e078b2654de3",
+  "bf-80169cbbf292",
+  "bf-3850b4ab50f4",
+  "bf-e90074454ad2",
+  "bf-4653096854a5",
+  "bf-bfa956f572ba",
+  "bf-25a395bf6345",
+  "bf-17b6f4dee273",
+  "bf-5819421ca5e0",
+  "bf-14b5548c85b0",
+  "bf-7ddfb8e4e643",
+  "bf-6c762a8b8da1",
+  "bf-6e6456631bd0",
+  "bf-57a1dbcf9539",
+  "bf-7258e2825460",
+  "bf-4a58e3268aa1",
+  "bf-ed1ccfab8cd8",
+  "bf-75699c016e93",
+  "bf-5457c66b588e",
+  "bf-11218bde9102"
+ ],
+ "rank_review": [
+  "bf-3debb835b042",
+  "bf-a71bbfca935d",
+  "bf-f12bf0989c3d",
+  "bf-1ce9fa4d9f4b",
+  "bf-483e77e5c762",
+  "bf-a561896ee837",
+  "bf-951462298371",
+  "bf-b7fbfd0dfa31",
+  "bf-d6bf349cf3dc",
+  "bf-fc666ecf625b",
+  "bf-82fbddb05496",
+  "bf-3850b4ab50f4",
+  "bf-412652c6964d",
+  "bf-0bf24f545bca",
+  "bf-4c7ca6496ea3",
+  "bf-0e1e8df132a5",
+  "bf-3c1ab601f061",
+  "bf-8e12ebe84c22",
+  "bf-57a1dbcf9539",
+  "bf-7258e2825460",
+  "bf-80169cbbf292",
+  "bf-e7d0a9fdd733",
+  "bf-5457c66b588e",
+  "bf-17b6f4dee273",
+  "bf-b880f5e2f403",
+  "bf-e39441c0eebb",
+  "bf-ca7540f16fc9",
+  "bf-25a395bf6345",
+  "bf-386e85150c60",
+  "bf-3ae6751abe20",
+  "bf-14b5548c85b0",
+  "bf-6097c7fccc9b",
+  "bf-4653096854a5",
+  "bf-e90074454ad2",
+  "bf-ed1ccfab8cd8",
+  "bf-7ddfb8e4e643",
+  "bf-e078b2654de3",
+  "bf-6e6456631bd0",
+  "bf-bfa956f572ba",
+  "bf-11218bde9102",
+  "bf-6c762a8b8da1",
+  "bf-75699c016e93",
+  "bf-4a58e3268aa1",
+  "bf-5819421ca5e0"
+ ],
+ "a_definition": "declared prize pool (planning USD) divided by the mid effort estimate in hours; a ratio of claims, NOT expected income or win probability",
+ "sensitivity": {
+  "n": 300,
+  "seed": 20261015,
+  "spread": 0.5,
+  "top_k": 3,
+  "per_opportunity": {
+   "bf-0bf24f545bca": {
+    "base_rank": 8,
+    "min_rank": 2,
+    "max_rank": 18,
+    "top_k_freq": 0.167
+   },
+   "bf-0e1e8df132a5": {
+    "base_rank": 15,
+    "min_rank": 4,
+    "max_rank": 20,
+    "top_k_freq": 0.0
+   },
+   "bf-11218bde9102": {
+    "base_rank": 44,
+    "min_rank": 40,
+    "max_rank": 44,
+    "top_k_freq": 0.0
+   },
+   "bf-14b5548c85b0": {
+    "base_rank": 34,
+    "min_rank": 29,
+    "max_rank": 36,
+    "top_k_freq": 0.0
+   },
+   "bf-17b6f4dee273": {
+    "base_rank": 32,
+    "min_rank": 26,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-1ce9fa4d9f4b": {
+    "base_rank": 6,
+    "min_rank": 4,
+    "max_rank": 16,
+    "top_k_freq": 0.0
+   },
+   "bf-25a395bf6345": {
+    "base_rank": 31,
+    "min_rank": 25,
+    "max_rank": 36,
+    "top_k_freq": 0.0
+   },
+   "bf-3850b4ab50f4": {
+    "base_rank": 27,
+    "min_rank": 23,
+    "max_rank": 32,
+    "top_k_freq": 0.0
+   },
+   "bf-386e85150c60": {
+    "base_rank": 23,
+    "min_rank": 21,
+    "max_rank": 28,
+    "top_k_freq": 0.0
+   },
+   "bf-3ae6751abe20": {
+    "base_rank": 13,
+    "min_rank": 8,
+    "max_rank": 17,
+    "top_k_freq": 0.0
+   },
+   "bf-3c1ab601f061": {
+    "base_rank": 11,
+    "min_rank": 1,
+    "max_rank": 20,
+    "top_k_freq": 0.177
+   },
+   "bf-3debb835b042": {
+    "base_rank": 10,
+    "min_rank": 7,
+    "max_rank": 14,
+    "top_k_freq": 0.0
+   },
+   "bf-412652c6964d": {
+    "base_rank": 22,
+    "min_rank": 14,
+    "max_rank": 27,
+    "top_k_freq": 0.0
+   },
+   "bf-4653096854a5": {
+    "base_rank": 29,
+    "min_rank": 20,
+    "max_rank": 35,
+    "top_k_freq": 0.0
+   },
+   "bf-483e77e5c762": {
+    "base_rank": 2,
+    "min_rank": 1,
+    "max_rank": 10,
+    "top_k_freq": 0.7
+   },
+   "bf-4a58e3268aa1": {
+    "base_rank": 40,
+    "min_rank": 38,
+    "max_rank": 44,
+    "top_k_freq": 0.0
+   },
+   "bf-4c7ca6496ea3": {
+    "base_rank": 1,
+    "min_rank": 1,
+    "max_rank": 3,
+    "top_k_freq": 1.0
+   },
+   "bf-5457c66b588e": {
+    "base_rank": 43,
+    "min_rank": 40,
+    "max_rank": 44,
+    "top_k_freq": 0.0
+   },
+   "bf-57a1dbcf9539": {
+    "base_rank": 38,
+    "min_rank": 34,
+    "max_rank": 39,
+    "top_k_freq": 0.0
+   },
+   "bf-5819421ca5e0": {
+    "base_rank": 33,
+    "min_rank": 22,
+    "max_rank": 40,
+    "top_k_freq": 0.0
+   },
+   "bf-6097c7fccc9b": {
+    "base_rank": 20,
+    "min_rank": 10,
+    "max_rank": 30,
+    "top_k_freq": 0.0
+   },
+   "bf-6c762a8b8da1": {
+    "base_rank": 36,
+    "min_rank": 29,
+    "max_rank": 40,
+    "top_k_freq": 0.0
+   },
+   "bf-6e6456631bd0": {
+    "base_rank": 37,
+    "min_rank": 32,
+    "max_rank": 43,
+    "top_k_freq": 0.0
+   },
+   "bf-7258e2825460": {
+    "base_rank": 39,
+    "min_rank": 33,
+    "max_rank": 40,
+    "top_k_freq": 0.0
+   },
+   "bf-75699c016e93": {
+    "base_rank": 42,
+    "min_rank": 37,
+    "max_rank": 44,
+    "top_k_freq": 0.0
+   },
+   "bf-7ddfb8e4e643": {
+    "base_rank": 35,
+    "min_rank": 28,
+    "max_rank": 41,
+    "top_k_freq": 0.0
+   },
+   "bf-80169cbbf292": {
+    "base_rank": 26,
+    "min_rank": 16,
+    "max_rank": 34,
+    "top_k_freq": 0.0
+   },
+   "bf-82fbddb05496": {
+    "base_rank": 18,
+    "min_rank": 13,
+    "max_rank": 29,
+    "top_k_freq": 0.0
+   },
+   "bf-8e12ebe84c22": {
+    "base_rank": 4,
+    "min_rank": 1,
+    "max_rank": 11,
+    "top_k_freq": 0.407
+   },
+   "bf-951462298371": {
+    "base_rank": 9,
+    "min_rank": 5,
+    "max_rank": 19,
+    "top_k_freq": 0.0
+   },
+   "bf-a561896ee837": {
+    "base_rank": 14,
+    "min_rank": 7,
+    "max_rank": 21,
+    "top_k_freq": 0.0
+   },
+   "bf-a71bbfca935d": {
+    "base_rank": 3,
+    "min_rank": 2,
+    "max_rank": 8,
+    "top_k_freq": 0.44
+   },
+   "bf-b7fbfd0dfa31": {
+    "base_rank": 16,
+    "min_rank": 13,
+    "max_rank": 22,
+    "top_k_freq": 0.0
+   },
+   "bf-b880f5e2f403": {
+    "base_rank": 7,
+    "min_rank": 1,
+    "max_rank": 16,
+    "top_k_freq": 0.103
+   },
+   "bf-bfa956f572ba": {
+    "base_rank": 30,
+    "min_rank": 24,
+    "max_rank": 38,
+    "top_k_freq": 0.0
+   },
+   "bf-ca7540f16fc9": {
+    "base_rank": 17,
+    "min_rank": 14,
+    "max_rank": 21,
+    "top_k_freq": 0.0
+   },
+   "bf-d6bf349cf3dc": {
+    "base_rank": 12,
+    "min_rank": 7,
+    "max_rank": 17,
+    "top_k_freq": 0.0
+   },
+   "bf-e078b2654de3": {
+    "base_rank": 25,
+    "min_rank": 22,
+    "max_rank": 30,
+    "top_k_freq": 0.0
+   },
+   "bf-e39441c0eebb": {
+    "base_rank": 21,
+    "min_rank": 19,
+    "max_rank": 26,
+    "top_k_freq": 0.0
+   },
+   "bf-e7d0a9fdd733": {
+    "base_rank": 24,
+    "min_rank": 6,
+    "max_rank": 31,
+    "top_k_freq": 0.0
+   },
+   "bf-e90074454ad2": {
+    "base_rank": 28,
+    "min_rank": 15,
+    "max_rank": 33,
+    "top_k_freq": 0.0
+   },
+   "bf-ed1ccfab8cd8": {
+    "base_rank": 41,
+    "min_rank": 37,
+    "max_rank": 44,
+    "top_k_freq": 0.0
+   },
+   "bf-f12bf0989c3d": {
+    "base_rank": 5,
+    "min_rank": 3,
+    "max_rank": 11,
+    "top_k_freq": 0.007
+   },
+   "bf-fc666ecf625b": {
+    "base_rank": 19,
+    "min_rank": 14,
+    "max_rank": 25,
+    "top_k_freq": 0.0
+   }
+  },
+  "stable_top": [
+   "bf-4c7ca6496ea3"
+  ],
+  "unstable": [
+   "bf-483e77e5c762",
+   "bf-8e12ebe84c22",
+   "bf-a71bbfca935d"
+  ],
+  "scope": "weights only; does not validate ranking quality"
+ },
+ "effort_scenarios": {
+  "scenarios": [
+   "effort_low",
+   "effort_mid",
+   "effort_high"
+  ],
+  "per_opportunity": {
+   "bf-0bf24f545bca": {
+    "ranks": {
+     "effort_low": 16,
+     "effort_mid": 8,
+     "effort_high": 10
+    },
+    "min_rank": 8,
+    "max_rank": 16
+   },
+   "bf-0e1e8df132a5": {
+    "ranks": {
+     "effort_low": 17,
+     "effort_mid": 15,
+     "effort_high": 17
+    },
+    "min_rank": 15,
+    "max_rank": 17
+   },
+   "bf-11218bde9102": {
+    "ranks": {
+     "effort_low": 39,
+     "effort_mid": 44,
+     "effort_high": 43
+    },
+    "min_rank": 39,
+    "max_rank": 44
+   },
+   "bf-14b5548c85b0": {
+    "ranks": {
+     "effort_low": 32,
+     "effort_mid": 34,
+     "effort_high": 36
+    },
+    "min_rank": 32,
+    "max_rank": 36
+   },
+   "bf-17b6f4dee273": {
+    "ranks": {
+     "effort_low": 35,
+     "effort_mid": 32,
+     "effort_high": 28
+    },
+    "min_rank": 28,
+    "max_rank": 35
+   },
+   "bf-1ce9fa4d9f4b": {
+    "ranks": {
+     "effort_low": 8,
+     "effort_mid": 6,
+     "effort_high": 7
+    },
+    "min_rank": 6,
+    "max_rank": 8
+   },
+   "bf-25a395bf6345": {
+    "ranks": {
+     "effort_low": 29,
+     "effort_mid": 31,
+     "effort_high": 34
+    },
+    "min_rank": 29,
+    "max_rank": 34
+   },
+   "bf-3850b4ab50f4": {
+    "ranks": {
+     "effort_low": 26,
+     "effort_mid": 27,
+     "effort_high": 29
+    },
+    "min_rank": 26,
+    "max_rank": 29
+   },
+   "bf-386e85150c60": {
+    "ranks": {
+     "effort_low": 21,
+     "effort_mid": 23,
+     "effort_high": 22
+    },
+    "min_rank": 21,
+    "max_rank": 23
+   },
+   "bf-3ae6751abe20": {
+    "ranks": {
+     "effort_low": 19,
+     "effort_mid": 13,
+     "effort_high": 11
+    },
+    "min_rank": 11,
+    "max_rank": 19
+   },
+   "bf-3c1ab601f061": {
+    "ranks": {
+     "effort_low": 18,
+     "effort_mid": 11,
+     "effort_high": 14
+    },
+    "min_rank": 11,
+    "max_rank": 18
+   },
+   "bf-3debb835b042": {
+    "ranks": {
+     "effort_low": 4,
+     "effort_mid": 10,
+     "effort_high": 9
+    },
+    "min_rank": 4,
+    "max_rank": 10
+   },
+   "bf-412652c6964d": {
+    "ranks": {
+     "effort_low": 23,
+     "effort_mid": 22,
+     "effort_high": 25
+    },
+    "min_rank": 22,
+    "max_rank": 25
+   },
+   "bf-4653096854a5": {
+    "ranks": {
+     "effort_low": 30,
+     "effort_mid": 29,
+     "effort_high": 32
+    },
+    "min_rank": 29,
+    "max_rank": 32
+   },
+   "bf-483e77e5c762": {
+    "ranks": {
+     "effort_low": 1,
+     "effort_mid": 2,
+     "effort_high": 1
+    },
+    "min_rank": 1,
+    "max_rank": 2
+   },
+   "bf-4a58e3268aa1": {
+    "ranks": {
+     "effort_low": 40,
+     "effort_mid": 40,
+     "effort_high": 39
+    },
+    "min_rank": 39,
+    "max_rank": 40
+   },
+   "bf-4c7ca6496ea3": {
+    "ranks": {
+     "effort_low": 5,
+     "effort_mid": 1,
+     "effort_high": 2
+    },
+    "min_rank": 1,
+    "max_rank": 5
+   },
+   "bf-5457c66b588e": {
+    "ranks": {
+     "effort_low": 41,
+     "effort_mid": 43,
+     "effort_high": 44
+    },
+    "min_rank": 41,
+    "max_rank": 44
+   },
+   "bf-57a1dbcf9539": {
+    "ranks": {
+     "effort_low": 38,
+     "effort_mid": 38,
+     "effort_high": 40
+    },
+    "min_rank": 38,
+    "max_rank": 40
+   },
+   "bf-5819421ca5e0": {
+    "ranks": {
+     "effort_low": 36,
+     "effort_mid": 33,
+     "effort_high": 30
+    },
+    "min_rank": 30,
+    "max_rank": 36
+   },
+   "bf-6097c7fccc9b": {
+    "ranks": {
+     "effort_low": 22,
+     "effort_mid": 20,
+     "effort_high": 24
+    },
+    "min_rank": 20,
+    "max_rank": 24
+   },
+   "bf-6c762a8b8da1": {
+    "ranks": {
+     "effort_low": 34,
+     "effort_mid": 36,
+     "effort_high": 35
+    },
+    "min_rank": 34,
+    "max_rank": 36
+   },
+   "bf-6e6456631bd0": {
+    "ranks": {
+     "effort_low": 33,
+     "effort_mid": 37,
+     "effort_high": 37
+    },
+    "min_rank": 33,
+    "max_rank": 37
+   },
+   "bf-7258e2825460": {
+    "ranks": {
+     "effort_low": 42,
+     "effort_mid": 39,
+     "effort_high": 38
+    },
+    "min_rank": 38,
+    "max_rank": 42
+   },
+   "bf-75699c016e93": {
+    "ranks": {
+     "effort_low": 44,
+     "effort_mid": 42,
+     "effort_high": 42
+    },
+    "min_rank": 42,
+    "max_rank": 44
+   },
+   "bf-7ddfb8e4e643": {
+    "ranks": {
+     "effort_low": 37,
+     "effort_mid": 35,
+     "effort_high": 33
+    },
+    "min_rank": 33,
+    "max_rank": 37
+   },
+   "bf-80169cbbf292": {
+    "ranks": {
+     "effort_low": 31,
+     "effort_mid": 26,
+     "effort_high": 26
+    },
+    "min_rank": 26,
+    "max_rank": 31
+   },
+   "bf-82fbddb05496": {
+    "ranks": {
+     "effort_low": 14,
+     "effort_mid": 18,
+     "effort_high": 16
+    },
+    "min_rank": 14,
+    "max_rank": 18
+   },
+   "bf-8e12ebe84c22": {
+    "ranks": {
+     "effort_low": 7,
+     "effort_mid": 4,
+     "effort_high": 8
+    },
+    "min_rank": 4,
+    "max_rank": 8
+   },
+   "bf-951462298371": {
+    "ranks": {
+     "effort_low": 6,
+     "effort_mid": 9,
+     "effort_high": 6
+    },
+    "min_rank": 6,
+    "max_rank": 9
+   },
+   "bf-a561896ee837": {
+    "ranks": {
+     "effort_low": 11,
+     "effort_mid": 14,
+     "effort_high": 12
+    },
+    "min_rank": 11,
+    "max_rank": 14
+   },
+   "bf-a71bbfca935d": {
+    "ranks": {
+     "effort_low": 2,
+     "effort_mid": 3,
+     "effort_high": 3
+    },
+    "min_rank": 2,
+    "max_rank": 3
+   },
+   "bf-b7fbfd0dfa31": {
+    "ranks": {
+     "effort_low": 15,
+     "effort_mid": 16,
+     "effort_high": 19
+    },
+    "min_rank": 15,
+    "max_rank": 19
+   },
+   "bf-b880f5e2f403": {
+    "ranks": {
+     "effort_low": 9,
+     "effort_mid": 7,
+     "effort_high": 4
+    },
+    "min_rank": 4,
+    "max_rank": 9
+   },
+   "bf-bfa956f572ba": {
+    "ranks": {
+     "effort_low": 24,
+     "effort_mid": 30,
+     "effort_high": 27
+    },
+    "min_rank": 24,
+    "max_rank": 30
+   },
+   "bf-ca7540f16fc9": {
+    "ranks": {
+     "effort_low": 12,
+     "effort_mid": 17,
+     "effort_high": 15
+    },
+    "min_rank": 12,
+    "max_rank": 17
+   },
+   "bf-d6bf349cf3dc": {
+    "ranks": {
+     "effort_low": 10,
+     "effort_mid": 12,
+     "effort_high": 13
+    },
+    "min_rank": 10,
+    "max_rank": 13
+   },
+   "bf-e078b2654de3": {
+    "ranks": {
+     "effort_low": 27,
+     "effort_mid": 25,
+     "effort_high": 23
+    },
+    "min_rank": 23,
+    "max_rank": 27
+   },
+   "bf-e39441c0eebb": {
+    "ranks": {
+     "effort_low": 20,
+     "effort_mid": 21,
+     "effort_high": 20
+    },
+    "min_rank": 20,
+    "max_rank": 21
+   },
+   "bf-e7d0a9fdd733": {
+    "ranks": {
+     "effort_low": 25,
+     "effort_mid": 24,
+     "effort_high": 21
+    },
+    "min_rank": 21,
+    "max_rank": 25
+   },
+   "bf-e90074454ad2": {
+    "ranks": {
+     "effort_low": 28,
+     "effort_mid": 28,
+     "effort_high": 31
+    },
+    "min_rank": 28,
+    "max_rank": 31
+   },
+   "bf-ed1ccfab8cd8": {
+    "ranks": {
+     "effort_low": 43,
+     "effort_mid": 41,
+     "effort_high": 41
+    },
+    "min_rank": 41,
+    "max_rank": 43
+   },
+   "bf-f12bf0989c3d": {
+    "ranks": {
+     "effort_low": 3,
+     "effort_mid": 5,
+     "effort_high": 5
+    },
+    "min_rank": 3,
+    "max_rank": 5
+   },
+   "bf-fc666ecf625b": {
+    "ranks": {
+     "effort_low": 13,
+     "effort_mid": 19,
+     "effort_high": 18
+    },
+    "min_rank": 13,
+    "max_rank": 19
+   }
+  },
+  "top_k": 3,
+  "top_set_stable": false
+ },
+ "a_vs_b": {
+  "kendall_tau": 0.6617,
+  "top_k": 5,
+  "top_k_overlap": 0.4
+ },
+ "weights": {
+  "reward_amount": 0.22,
+  "prize_count": 0.05,
+  "technical_fit": 0.17,
+  "estimated_time": 0.08,
+  "deadline_feasibility": 0.08,
+  "competition_intensity": 0.08,
+  "deliverable_complexity": 0.06,
+  "free_resources": 0.0,
+  "reusability": 0.06,
+  "requirements_quality": 0.08,
+  "human_involvement": 0.04
+ }
+}

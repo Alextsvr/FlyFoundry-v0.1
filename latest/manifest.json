@@ -1,0 +1,171 @@
+{
+ "run_id": "38748908968",
+ "generated_at": "2026-10-15T14:10:08Z",
+ "evaluated_at": "2026-10-15T14:09:58Z",
+ "code_version": {
+  "git_sha": "1d045d8d350276702a7e6b6fc7326c6de08ab482",
+  "package": "0.2.2",
+  "parsers": {
+   "devpost_list": "devpost-list-2",
+   "detail": "detail-5"
+  }
+ },
+ "run_status": {
+  "run_status": "success",
+  "exit_code": 0,
+  "message": "all primary sources ok and complete",
+  "primary_sources": {
+   "devpost": "ok"
+  },
+  "last_complete_success": {
+   "devpost": "2026-10-15T14:09:58Z"
+  }
+ },
+ "briefs": [
+  "bf-3debb835b042",
+  "bf-a71bbfca935d",
+  "bf-f12bf0989c3d"
+ ],
+ "files": [
+  {
+   "path": "briefs/bf-3debb835b042.md",
+   "sha256": "efda95f42107e086efda8981107aa6128f539b56c9195448effa5eee195ab5ce",
+   "bytes": 5842
+  },
+  {
+   "path": "briefs/bf-a71bbfca935d.md",
+   "sha256": "6010c6ff246ca0dddedda1fe0de3393349f716d4b7ebfe65bce6467e59b94c11",
+   "bytes": 5876
+  },
+  {
+   "path": "briefs/bf-f12bf0989c3d.md",
+   "sha256": "1f0190d356a3b265672c2ddfba51ae1f48e1b59984d8f7984d6d9c0b3bc817f7",
+   "bytes": 6118
+  },
+  {
+   "path": "metrics.json",
+   "sha256": "2d29b4f8f2a3e3d792f7470795dbd344e7e83ab80c665008753e47e0ae8eb57d",
+   "bytes": 5501
+  },
+  {
+   "path": "opportunities.csv",
+   "sha256": "19b11857a692db145444ce5d9c27666ced53cdaabe3360357b8347ed1f7f786c",
+   "bytes": 12457
+  },
+  {
+   "path": "opportunities.json",
+   "sha256": "2a9c9da8d3e2926efca31323895b3f5bb09570f8df821788306b777cce1c5dfa",
+   "bytes": 507903
+  },
+  {
+   "path": "prompts/bf-3debb835b042.claude-prompt.md",
+   "sha256": "4e9e36a9d47ed690b790707ea522bfc0ed78d059618e862bfe25775114e5e244",
+   "bytes": 2322
+  },
+  {
+   "path": "prompts/bf-a71bbfca935d.claude-prompt.md",
+   "sha256": "de2aa24cf7064f3f0a2cadf6a4e9bfde9d1562d5e31182057bf15b17e04da6f9",
+   "bytes": 2278
+  },
+  {
+   "path": "prompts/bf-f12bf0989c3d.claude-prompt.md",
+   "sha256": "d04f64e38f3902bd67e327f5f26ae246d69a90a8fd30e70178c0996a435263ce",
+   "bytes": 2376
+  },
+  {
+   "path": "ranking.json",
+   "sha256": "323208310d56e9f8972eb61e97716eb2f4b85e5773489478fd85d1c9a1711026",
+   "bytes": 15809
+  },
+  {
+   "path": "report.html",
+   "sha256": "f6700bec339ec38ba0c99472667ba101d4ee1356d90b8f7a78873e760be2678d",
+   "bytes": 58574
+  },
+  {
+   "path": "status.json",
+   "sha256": "ee387fe0503839c5269a2eaf35e6cb35d3f5d99b0f2fd7c19bfae97806fe6b0f",
+   "bytes": 208
+  }
+ ],
+ "source_runs": {
+  "devpost": {
+   "source": "devpost",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "ok",
+   "http_status": 200,
+   "n_records": 51,
+   "complete": 1,
+   "requests": 4,
+   "error": ""
+  },
+  "manual": {
+   "source": "manual",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "ok",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 1,
+   "requests": 0,
+   "error": ""
+  },
+  "superteam_earn": {
+   "source": "superteam_earn",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "unsupported",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "source": "dorahacks",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "source": "gitcoin",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "source": "colosseum",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "devpost_detail": {
+   "source": "devpost_detail",
+   "started_at": "2026-10-15T14:09:58Z",
+   "finished_at": "2026-10-15T14:09:58Z",
+   "status": "blocked",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 6,
+   "error": "https://hackfest-season-1.devpost.com/: HTTP 403; https://hackfest-season-1.devpost.com/rules: HostBlocked; host answered 401/403 (or robots denied): remaining pages skipped this run, not bypassed"
+  }
+ },
+ "complete": true
+}

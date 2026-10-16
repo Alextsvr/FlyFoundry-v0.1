@@ -1,0 +1,11 @@
+{
+ "run_status": "success",
+ "exit_code": 0,
+ "message": "all primary sources ok and complete",
+ "primary_sources": {
+  "devpost": "ok"
+ },
+ "last_complete_success": {
+  "devpost": "2026-10-15T14:09:58Z"
+ }
+}
