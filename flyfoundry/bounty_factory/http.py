@@ -6,9 +6,22 @@ import urllib.parse
 import urllib.robotparser
 from typing import Callable
 
-from flyfoundry.phase1.probes import urllib_transport
+import urllib.error
+import urllib.request
 
 USER_AGENT = "flyfoundry-bounty/0.2 (+https://github.com/Alextsvr/FlyFoundry-v0.1; public pages only, rate-limited)"
+
+
+def urllib_transport(url: str, headers: dict, timeout: float = 30.0):
+    """stdlib transport (independent of the research package). Network failure is data: (0, message)."""
+    req = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status, r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8", "replace")
+    except Exception as e:  # noqa: BLE001
+        return 0, f"{type(e).__name__}: {e}"
 
 
 class BudgetExceeded(RuntimeError):

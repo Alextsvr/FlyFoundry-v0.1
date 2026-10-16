@@ -1,0 +1,50 @@
+[
+ {
+  "id": "P1-1a",
+  "result": "REPRODUCED",
+  "title": "0-byte bounty.sqlite3 accepted and rewritten by verify-state",
+  "evidence": "exit=0 size_after=32768"
+ },
+ {
+  "id": "P1-1b",
+  "result": "REPRODUCED",
+  "title": "foreign SQLite accepted (tables added) by verify-state",
+  "evidence": "exit=0 modified=True"
+ },
+ {
+  "id": "P1-1c",
+  "result": "REPRODUCED",
+  "title": "verify-state modifies (migrates) the checked v1 database",
+  "evidence": "exit=0 modified=True"
+ },
+ {
+  "id": "P1-2",
+  "result": "REPRODUCED",
+  "title": "after migration + update a vanished prize/deadline stays current",
+  "evidence": "old_prize=0.0 prize_known=True value=0.0 status=current origin=''; deadline_known=True"
+ },
+ {
+  "id": "P1-3a",
+  "result": "REPRODUCED",
+  "title": "No registration fee is required; prizes total $5000.",
+  "evidence": "decision=INELIGIBLE hard=['fee_required']"
+ },
+ {
+  "id": "P1-3b",
+  "result": "REPRODUCED",
+  "title": "Residents of Latvia are eligible; residents of Canada are not eligible.",
+  "evidence": "decision=INELIGIBLE hard=['geo_excluded']"
+ },
+ {
+  "id": "P1-3c",
+  "result": "REPRODUCED",
+  "title": "You must submit a video about how to connect a wallet.",
+  "evidence": "decision=INELIGIBLE hard=['wallet_or_token_required']"
+ },
+ {
+  "id": "P2",
+  "result": "REPRODUCED",
+  "title": "review dated 2099-01-01 gives ELIGIBLE on 2026-10-15",
+  "evidence": "decision=ELIGIBLE"
+ }
+]

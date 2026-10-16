@@ -23,8 +23,8 @@ def load_manual(path) -> list:
                         organizer=e.get("organizer", ""), kind=e.get("kind", "hackathon"))
         for k in ALLOWED:
             if k in e:
-                o.set(k, e[k], "human_entered", f"typed into manual intake (entered {e.get('entered_at', 'unknown date')})")
+                o.set(k, e[k], "human_entered", f"typed into manual intake (entered {e.get('entered_at', 'unknown date')})", origin="manual")
         if e.get("deadline_date"):
-            o.set("deadline_precision", "date" if len(str(e["deadline_date"])) == 10 else "datetime", "human_entered", "as typed")
+            o.set("deadline_precision", "date" if len(str(e["deadline_date"])) == 10 else "datetime", "human_entered", "as typed", origin="manual")
         out.append(o)
     return out

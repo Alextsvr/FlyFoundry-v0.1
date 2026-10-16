@@ -11,6 +11,29 @@ from ..http import Fetcher, RobotsDenied, BudgetExceeded
 from ..model import Opportunity, stable_id
 
 BASE = "https://devpost.com/api/hackathons"
+PARSER_VERSION = "devpost-list-2"
+
+
+class SchemaError(ValueError):
+    """The response is not a Devpost listing page (wrong shape): never treated as an empty listing."""
+
+
+def validate_page(data):
+    """-> (items, meta). A valid empty listing is {"hackathons": [], "meta": {...}}; anything else that is not a listing raises."""
+    if not isinstance(data, dict):
+        raise SchemaError(f"top level is {type(data).__name__}, expected object")
+    items, meta = data.get("hackathons"), data.get("meta")
+    if not isinstance(items, list):
+        raise SchemaError("missing or non-list 'hackathons'")
+    if not isinstance(meta, dict):
+        raise SchemaError("missing or non-object 'meta'")
+    total = meta.get("total_count")
+    if total is not None and (isinstance(total, bool) or not isinstance(total, int) or total < 0):
+        raise SchemaError(f"invalid meta.total_count={total!r}")
+    bad = [it for it in items if not (isinstance(it, dict) and it.get("title") and it.get("url"))]
+    if items and (len(bad) == len(items) or len(bad) / len(items) > 0.25):
+        raise SchemaError(f"{len(bad)} of {len(items)} items lack title/url")
+    return items, meta
 SYMBOLS = {"$": "USD", "€": "EUR", "£": "GBP", "₹": "INR", "¥": "JPY"}
 MONTHS = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
 
@@ -64,26 +87,26 @@ def to_opportunity(item: dict, list_url: str) -> Opportunity | None:
     o = Opportunity(id=stable_id(url), source="devpost", source_key=str(item.get("id", url)), url=url,
                     title=str(item["title"]).strip(), organizer=str(item.get("organization_name") or "").strip(), kind="hackathon")
     ev = f"Devpost list API {list_url}"
+    S = lambda name, value, basis="source_claim", evidence="": o.set(name, value, basis, evidence, origin="list", parser_version=PARSER_VERSION)
     amount, cur, raw = parse_prize(item.get("prize_amount"))
-    o.set("prize_amount", amount, "source_claim", f"{ev}: prize_amount={raw!r}")
-    o.set("prize_currency", cur, "source_claim", f"{ev}: symbol of prize_amount={raw!r} (symbol may be ambiguous)")
+    S("prize_amount", amount, "source_claim", f"{ev}: prize_amount={raw!r}")
+    S("prize_currency", cur, "source_claim", f"{ev}: symbol of prize_amount={raw!r} (symbol may be ambiguous)")
     pc = item.get("prizes_counts")
     cash = pc.get("cash") if isinstance(pc, dict) else (pc if isinstance(pc, int) else None)
-    o.set("prize_count", cash, "source_claim", f"{ev}: prizes_counts={pc!r} (cash prizes)")
+    S("prize_count", cash, "source_claim", f"{ev}: prizes_counts={pc!r} (cash prizes)")
     dl = parse_deadline(item.get("submission_period_dates"))
-    o.set("deadline_date", dl, "source_claim", f"{ev}: submission_period_dates={item.get('submission_period_dates')!r}")
+    S("deadline_date", dl, "source_claim", f"{ev}: submission_period_dates={item.get('submission_period_dates')!r}")
     if dl:
-        o.set("deadline_precision", "date", "inferred", "list gives a calendar date only; no time of day")
-        o.set("deadline_tz", None)
+        S("deadline_precision", "date", "inferred", "list gives a calendar date only; no time of day")
+        S("deadline_tz", None)
     loc = item.get("displayed_location")
     if isinstance(loc, dict):
         loc = loc.get("location")
-    o.set("location", loc, "source_claim", f"{ev}: displayed_location (format of participation, NOT an eligibility statement)")
-    o.set("invite_only", item.get("invite_only"), "source_claim", f"{ev}: invite_only")
-    o.set("themes", [t.get("name") if isinstance(t, dict) else str(t) for t in (item.get("themes") or [])], "source_claim", f"{ev}: themes")
-    o.set("registrations_count", item.get("registrations_count"), "source_claim", f"{ev}: registrations_count at fetch time")
-    if item.get("start_a_submission_url"):
-        o.set("submission_method", "devpost_submission_form", "source_claim", f"{ev}: start_a_submission_url present")
+    S("location", loc, "source_claim", f"{ev}: displayed_location (format of participation, NOT an eligibility statement)")
+    S("invite_only", item.get("invite_only"), "source_claim", f"{ev}: invite_only")
+    S("themes", [t.get("name") if isinstance(t, dict) else str(t) for t in (item.get("themes") or [])], "source_claim", f"{ev}: themes")
+    S("registrations_count", item.get("registrations_count"), "source_claim", f"{ev}: registrations_count at fetch time")
+    S("submission_method", "devpost_submission_form" if item.get("start_a_submission_url") else None, "source_claim", f"{ev}: start_a_submission_url present")
     return o
 
 

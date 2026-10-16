@@ -1,0 +1,16 @@
+P1-1a   NOT_REPRODUCED  0-byte bounty.sqlite3 accepted and rewritten by verify-state
+        evidence: exit=7 size_after=0
+P1-1b   NOT_REPRODUCED  foreign SQLite accepted (tables added) by verify-state
+        evidence: exit=7 modified=False
+P1-1c   NOT_REPRODUCED  verify-state modifies (migrates) the checked v1 database
+        evidence: exit=0 modified=False
+P1-2    NOT_REPRODUCED  after migration + update a vanished prize/deadline stays current
+        evidence: old_prize=0.0 prize_known=False value=None status=withdrawn origin='list'; deadline_known=False
+P1-3a   NOT_REPRODUCED  No registration fee is required; prizes total $5000.
+        evidence: decision=NEEDS_REVIEW hard=[]
+P1-3b   NOT_REPRODUCED  Residents of Latvia are eligible; residents of Canada are not eligible.
+        evidence: decision=NEEDS_REVIEW hard=[]
+P1-3c   NOT_REPRODUCED  You must submit a video about how to connect a wallet.
+        evidence: decision=NEEDS_REVIEW hard=[]
+P2      NOT_REPRODUCED  review dated 2099-01-01 gives ELIGIBLE on 2026-10-15
+        evidence: decision=NEEDS_REVIEW

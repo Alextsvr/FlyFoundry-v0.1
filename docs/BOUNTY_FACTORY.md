@@ -21,58 +21,69 @@ It is independent of the research code (`flyfoundry/bounty_factory/`); research 
 | `scoring.py` | Criteria, weights, sensitivity, Kendall tau. |
 | `report.py`, `brief.py`, `cli.py`, `pipeline.py` | Outputs and orchestration. |
 
-## Key rules
-* **Unknown stays unknown.** A missing field is `None` with basis `unknown`; it is excluded from scoring (and listed as unknown), never guessed.
-* **ELIGIBLE needs positive evidence**: deadline known and in the future in every time zone, fees confirmed absent, geography confirmed,
-  no unresolved employer-conflict signal. Today only a human record in `data/bounty_reviews.json` (or human-entered manual intake) supplies
-  that evidence, so list data alone yields NEEDS_REVIEW at best. This is intentional.
-* **Deadlines**: Devpost gives a calendar date with no time zone. The gate computes the window UTC+14..UTC-12: past the whole window = expired
-  (INELIGIBLE); inside it = `deadline_ambiguous` (NEEDS_REVIEW); before it = open.
-* **Hard rejects** (INELIGIBLE): expired, invite-only, fee/deposit/token purchase signal, paid tool required, wallet/on-chain spend, unavailable hardware,
-  exclusion wording that names the configured geography. Regex-detected signals are inferences; a human review can override with explicit fields.
-* **Employer safety**: payment/merchant keywords quarantine an item (`possible_employer_conflict`). The system uses no employer knowledge, data or code,
-  and the Claude prompt forbids it. Whether a given activity conflicts with an employment contract is NOT assessed here.
-* **Geography is configuration** (`data/bounty_config.json`, `participant`), never inferred from IP.
-* **No win probabilities.** Competition intensity is the registration count when present (a participant count, not a probability) or unknown.
+## Key rules (v0.2.1, after the independent audit)
+* **Unknown stays unknown.** A missing field is `None` with basis `unknown`; it is excluded from scoring and listed as unknown.
+* **ELIGIBLE requires positive, current evidence for ALL 10 mandatory conditions**: deadline, geography, participation_format, access, age_team, fees,
+  tools_and_costs, hardware, wallet, conflicts. Only deadline (future in every time zone), participation_format ("Online") and access (not invite-only) can be
+  confirmed from a source claim. The other seven need a schema-2 human review (or human-entered facts). `verified` means exactly this. A future deadline
+  plus "no fee" plus "geography ok" is NOT enough.
+* **Reviews are bound, not permanent** (`data/bounty_reviews.json`, schema 2): each review has `rules_ref` (rules hash or version/date read), `participant_hash`
+  (geography + hardware config), `evidence_url`, `reviewed_at` and per-condition status `ok | not_applicable (note >= 10 chars) | excluded`. It expires after
+  `review_valid_days` (14), is invalidated when the rules text hash or the participant config changes, and a newer contradicting source fact is never hidden: the
+  decision becomes NEEDS_REVIEW (`review_conflict:<condition>`) with both sides in the reasons. `acknowledged_signals` (fact + evidence hash) lets a human clear one specific signal.
+  Legacy reviews (`fees`/`geo` flags) are kept but give `review_legacy_incomplete`. `python -m flyfoundry bounty review-template --id <id>` prints a skeleton.
+* **Text analysis is sentence-level** (negation, zero amounts, alternatives, requirement cues, inclusion vs exclusion of the configured geography, hardware vs `available_hardware`).
+  Weak (heuristic) signals only trigger a review, never a hard reject. GPUs are always weak (often provided as credits).
+* **Hard rejects** (INELIGIBLE): expired, invite-only, firm fee / paid tool / wallet signal, firm unavailable hardware, firm exclusion naming the configured geography.
+* **Listing safety**: a response must pass schema validation (`{}` is an error, not an empty listing); a listing is complete only if the last page was reached and distinct
+  records >= `meta.total_count`; repeated pages stop the run; `unlisted` is set only after a complete listing and never for a suspicious shrink (> max(5, 50%)).
+* **Identity**: canonical URL is the strong key; title+organizer is only a candidate (merged only with the same known deadline, otherwise both kept and flagged `possible_duplicates`). Unicode-aware, empty keys are never created.
+* **Per-fact freshness**: each fact has `observed_at` (last confirmed), `changed_at`, `observation_id`, `parser_version`, `history`; a vanished value becomes `withdrawn` (with `last_value`), never "fresh".
+* **Evidence**: every list page, overview and rules fetch is stored as an observation (URL, time, HTTP status, hash, raw body, parser version); facts link to them. Retention: raw bodies dropped
+  after 30 days (latest 2 per URL and referenced ones kept), unreferenced metadata after 180 days, change log capped at 20000, VACUUM.
+* **Detail pass**: per-page schedule (200/404/410 -> 7 days, 401/403 -> 3 days, transient -> next run); one 401/403 stops requests to that host for the run; robots.txt is respected; nothing is bypassed.
+* **Employer safety, geography-as-configuration, no win probabilities**: unchanged.
 
-## Scoring
-Baseline A: planning-USD prize per estimated hour; unknown prize ranks last; ties by id. Experimental B: weighted mean of known criteria
-(weights in config: reward 0.22, technical fit 0.17, time 0.12, deadline 0.12, prize count 0.05, intensity 0.06, complexity 0.06, reusability 0.06,
-human involvement 0.06, free resources 0.04, requirements quality 0.04), multiplied by `0.5 + 0.5 * coverage` so thin evidence is visible, not hidden.
-Sensitivity: 300 seeded weight perturbations (x U(0.5,1.5)); reports rank ranges and top-3 frequency; items with 0.2 <= freq < 0.8 are marked unstable.
-GA / neural ranking is NOT used (no evidence of improvement over A/B yet; the research code is available for later comparison on the same set).
+## Scoring and effort
+* Effort: before the rules are read, a wide generic range (4-40 h, confidence very_low); a keyword template is only a hypothesis. After the rules are read: template range plus deliverable adders. Platform hints (AWS, Nebius, GitLab ...) add 3-10 h each and a risk line.
+* Baseline A = declared prize pool (planning USD) / mid hours; the pool is a total, NOT the attainable prize. Experimental B = weighted mean of known criteria x (0.5 + 0.5 x `criteria_fill`);
+  `criteria_fill` is the share of weight with a known value and says NOTHING about evidence completeness (that is `conditions_confirmed/10`). `free_resources` has weight 0 (never inferable).
+* Weight sensitivity covers weights only; `effort_scenarios` re-rank with low/mid/high hours. Neither proves the ranking is correct.
+* **Two priorities**: `review_priority` (which candidate deserves human reading time first; blockers halve it) and `development_priority` (ELIGIBLE only).
+
+## Run status, exit codes, outputs
+`success` 0 | `partial` 3 | `source_unavailable` 4 | `no_data` 5 | internal error 6 | `verify-state` invalid 7. Outputs are generated in `<out>.new`, verified against `manifest.json`
+(run id, times, code version, file list with SHA-256, source runs) and swapped in; on failure the last good set stays and `<out>-diagnostics/` is written. Stale briefs cannot survive. `state/latest` follows the same rule.
+
+## State safety and migration (v0.2.2)
+* `verify-state` is READ-ONLY (`store.inspect_db`): it never creates, migrates or repairs. It rejects a 0-byte file, a non-SQLite file, a foreign SQLite (no Bounty Factory tables), missing tables/columns, corrupt files, invalid records and a database newer than the code (exit 7). A valid older database is accepted with a warning. A confirmed-absent remote state branch still allows a first run (restore exits before verification).
+* `bounty run` inspects the database first and refuses a broken one (exit 7, nothing changed, no request made, `<out>-diagnostics/`). A legacy database is migrated by `migrate_file`: backup `bounty.sqlite3.premigration.bak`, migration of a COPY, integrity + record-count check, atomic replace; on failure the original is untouched. The backup is removed after the first successful run that did not migrate.
+* Schema 3 back-fills `origin` of legacy facts (list facts from their "Devpost list API" evidence, manual/human from their basis). A legacy detail-page value whose page/observation cannot be established becomes status `historical_unverified` (value kept in `last_value` + history); it is not a current fact, takes no part in eligibility or ranking, and no confirmation date or observation link is invented. Databases already migrated by 0.2.1 (user_version 2, empty origins) are repaired the same way.
+* Text signals are tied to their own object: an amount counts as a fee only if attached to the fee noun (not a prize pool); an inclusion/exclusion cue owns the place names of its own segment (reordered or "except" wording is weak); a requirement cue must directly govern the wallet/hardware/paid-tool action (a task that merely mentions a wallet is weak). If the link is not unambiguous the signal is weak and leads to NEEDS_REVIEW.
+* A review dated in the future is invalid (`review_future_dated`): tolerance 2 h for full timestamps (zone offsets honoured, no zone = UTC), 14 h for date-only values (a calendar day in any zone).
+
+## Windows boundary
+`bounty` CLI, tests for gate/data/state/parser/rank_report and the import isolation are meant to work on Windows. The bash state scripts and their git-based tests (`test_bounty_workflow.py` state tests, the refused-state publish test) are Linux/bash only (GitHub Actions) and are skipped on Windows on purpose; `.gitattributes` forces LF for `*.sh`/`*.yml`. No claim of Windows support is made for them.
 
 ## Operation
-Local (Windows PowerShell):
 ```
 cd C:\Extra\flyfoundry; python -m pip install -r requirements.lock; python -m pip install -e . --no-deps
 cd C:\Extra\flyfoundry; python -m pytest -q
 cd C:\Extra\flyfoundry; python -m flyfoundry bounty run --state-dir state_bounty --out out\bounty --provisional-briefs 3
-cd C:\Extra\flyfoundry; start out\bounty\report.html
 ```
-`evaluate` re-ranks from stored data without network (`--now 2026-10-15T12:00:00Z` for exact reproduction).
+`evaluate` re-ranks stored data without network (`--now` for exact reproduction). `bounty` is dispatched before the research CLI is imported, so it works on Windows (no `resource`, no numpy needed).
 
-GitHub: workflow `bounty-discovery` (daily 05:17 UTC, manual dispatch). State lives on orphan branch `flyfoundry-bounty-state` (sqlite + latest report);
-the report is also an artifact (30 days). Disable: `gh variable set BOUNTY_ENABLED --body false`. Concurrency group `flyfoundry-bounty`, 25 min timeout,
-in-run time budget 15 min, a failed source is recorded and skipped. No secrets are used.
+GitHub workflow `bounty-discovery` (daily 05:17 UTC, manual dispatch): job `discover` has a READ-ONLY token (restore with verification, offline tests, run, verify, upload artifacts); job `persist`
+has `contents: write` and only runs `scripts/state_save.sh` (verification + compare-and-swap push with `--force-with-lease` of the base commit read at restore). NOTE: `contents: write` is repository-wide;
+the narrowing comes from the job split. State branch: `flyfoundry-bounty-state`. Disable: `gh variable set BOUNTY_ENABLED --body false`. 4/5/6 fail the job (state and diagnostics are still saved), 3 warns.
 
 ## Manual review (the only route to ELIGIBLE)
-1. Open the official rules from the report. 2. Add to `data/bounty_reviews.json`:
-`{"id":"bf-...","fees":"none","geo":"ok","employer_conflict":"none","reviewed_at":"YYYY-MM-DD","minutes_spent":10,"evidence_url":"...","label":"ELIGIBLE"}`
-(`geo` may be `excluded`; `label` is your own verdict and feeds the precision metric). 3. Re-run `evaluate`. 4. Only then build; submit manually; record the outcome in `data/bounty_history.json`.
-Opportunities from sources the system cannot access go to `data/bounty_manual_intake.json`.
-
-## Metrics
-Valid opportunities, decisions, source coverage, duplicate rate (per process run), evidence freshness, eligibility precision (needs human labels; n/a until then),
-estimated vs actual hours (needs history), review minutes, ranking stability, A-vs-B agreement. No significance is claimed on small samples; submission-level
-metrics (acceptance, prizes, revenue/hour, reuse %) start after real submissions.
+Read the official rules, run `review-template`, fill every condition, commit to `data/bounty_reviews.json`, run `evaluate`. Only then build; submit manually; record outcomes in `data/bounty_history.json`.
 
 ## Limitations
-* Devpost is the only live automated source; its Terms of Service were not legally reviewed. Detail parsing is heuristic and was validated on synthetic HTML only until a live run exists.
-* The Devpost list has no eligibility, fee or time-zone data; those need the detail pass or a human.
-* Effort estimates are keyword/template priors (confidence low without detail). Technical-fit is a keyword heuristic.
-* FX rates in config are static planning values; '$' is assumed USD.
-* Superteam Earn, DoraHacks, Gitcoin, Colosseum are not automated (see BOUNTY_SOURCES.md).
+* The scheduled GitHub run of the hardened workflow has NOT been observed (only local/synthetic tests); Windows was simulated, not run on Windows.
+* Devpost is the only automated source; event pages/rules returned 403 to Actions earlier, so fees/geography etc. normally come from a human.
+* Effort and technical-fit are priors. FX rates are static. ToS of Devpost not legally reviewed.
 
 ## Live verification (run 38737724223, 2026-10-15, GitHub Actions)
 * Devpost list API: 3 requests, HTTP 200, 48 open hackathons, complete listing. All 48 carry prize, deadline date, registrations, themes.

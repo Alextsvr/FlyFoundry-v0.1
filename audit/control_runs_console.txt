@@ -1,0 +1,89 @@
+::warning::bounty run status=source_unavailable: primary source(s) unavailable: {'devpost': 'failed'}; report built from OLDER stored data
+::warning::bounty run status=source_unavailable: primary source(s) unavailable: {'devpost': 'schema_error'}; report built from OLDER stored data
+::warning::bounty run status=partial: primary source(s) returned a partial result: {'devpost': 'partial'}
+devpost: ok records=8 complete=True 
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=success
+RUN STATUS: success (exit 0): all primary sources ok and complete
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+devpost: ok records=8 complete=True 
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=success
+RUN STATUS: success (exit 0): all primary sources ok and complete
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+devpost: failed records=0 complete=False HTTP 503 at https://devpost.com/api/hackathons?status[]=open&order_by=deadline&page=1&per_page=24
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=source_unavailable
+RUN STATUS: source_unavailable (exit 4): primary source(s) unavailable: {'devpost': 'failed'}; report built from OLDER stored data
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+devpost: schema_error records=0 complete=False missing or non-list 'hackathons' (HTTP 200 at https://devpost.com/api/hackathons?status[]=open&order_by=deadline&page=1&per_page=24); not treated as an empty listing
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=source_unavailable
+RUN STATUS: source_unavailable (exit 4): primary source(s) unavailable: {'devpost': 'schema_error'}; report built from OLDER stored data
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+devpost: partial records=1 complete=False listing returned 1 distinct records but meta.total_count=60
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=partial
+RUN STATUS: partial (exit 3): primary source(s) returned a partial result: {'devpost': 'partial'}
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+devpost: ok records=8 complete=True 
+report generated; decisions={'ELIGIBLE': 0, 'NEEDS_REVIEW': 8, 'INELIGIBLE': 0}; briefs=2; run_status=success
+RUN STATUS: success (exit 0): all primary sources ok and complete
+{"raw_dropped": 0, "observations_deleted": 0, "changes_deleted": 0}
+[
+ {
+  "scenario": "01_first_run_no_state",
+  "exit_code": 0,
+  "expected": 0,
+  "run_status": "success",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261015T120000Z"
+ },
+ {
+  "scenario": "02_second_run_restored_state_prize_change",
+  "exit_code": 0,
+  "expected": 0,
+  "run_status": "success",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261016T120000Z"
+ },
+ {
+  "scenario": "03_source_http_503_prior_data",
+  "exit_code": 4,
+  "expected": 4,
+  "run_status": "source_unavailable",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261017T120000Z"
+ },
+ {
+  "scenario": "04_http200_wrong_schema_prior_data",
+  "exit_code": 4,
+  "expected": 4,
+  "run_status": "source_unavailable",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261018T120000Z"
+ },
+ {
+  "scenario": "05_partial_listing_total_mismatch",
+  "exit_code": 3,
+  "expected": 3,
+  "run_status": "partial",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261019T120000Z"
+ },
+ {
+  "scenario": "06_recovery_after_outage",
+  "exit_code": 0,
+  "expected": 0,
+  "run_status": "success",
+  "manifest_ok": true,
+  "files": 10,
+  "briefs": 2,
+  "run_id": "local-20261020T120000Z"
+ }
+]

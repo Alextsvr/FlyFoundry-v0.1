@@ -1,7 +1,10 @@
 """Experiment orchestration: lock-step advance of all (arm, seed) runners, checkpoint payloads, resume."""
 from __future__ import annotations
 
-import resource
+try:
+    import resource          # Unix only; the research code must stay importable on Windows (peak memory is then reported as 0)
+except ImportError:  # pragma: no cover
+    resource = None
 import time
 import tracemalloc
 import uuid
@@ -16,6 +19,8 @@ from .runner import ArmRunner
 
 
 def _rss_mb() -> float:
+    if resource is None:
+        return 0.0
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
 
 
