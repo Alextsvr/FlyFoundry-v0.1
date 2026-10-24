@@ -1,0 +1,1476 @@
+{
+ "generation": 300,
+ "total_evals": 900000,
+ "config": {
+  "name": "flyfoundry-v0.1-nightly",
+  "world_seed": 20261012,
+  "seed_base": 1000,
+  "n_seeds": 5,
+  "pop_size": 100,
+  "gens_per_run": 20,
+  "max_total_generations": 300,
+  "arms": [
+   "A_fly_plastic",
+   "A_fly_noplast",
+   "A_fly_shuffled",
+   "B_evolved_ann",
+   "C_genetic",
+   "D_random"
+  ],
+  "n_dims": 12,
+  "n_ctx": 4,
+  "n_peaks": 8,
+  "n_decoys": 2,
+  "n_train_scenarios": 16,
+  "n_heldout_scenarios": 16,
+  "shift_scale": 0.2,
+  "peak_length_scale": 0.5,
+  "discovery_radius": 0.35,
+  "obs_noise": 0.03,
+  "capital_penalty": 2.0,
+  "effort_penalty": 1.0,
+  "unsupported_penalty": 1.0,
+  "drift_amp": 0.0,
+  "drift_period": 40.0,
+  "archive_bins": 4,
+  "archive_dims": [
+   0,
+   1,
+   3
+  ],
+  "viable_threshold": 0.2,
+  "share_sigma": 0.35,
+  "survivors": 30,
+  "elites": 5,
+  "tournament": 3,
+  "p_archive_parent": 0.3,
+  "p_crossover": 0.5,
+  "mut_rate": 0.1,
+  "mut_sigma_rel": 0.3,
+  "ga_mut_rate": 0.2,
+  "ga_mut_sigma": 0.1,
+  "ga_immigrants": 0.05,
+  "explore_sigma": 0.4,
+  "pn_per_dim": 5,
+  "pn_width": 0.15,
+  "n_kc": 64,
+  "kc_active": 4,
+  "kc_claws": 4,
+  "kc_same_modality": 2,
+  "w_init_std": 0.5,
+  "eta": 0.5,
+  "eta_bias": 0.1,
+  "weight_decay": 0.01,
+  "baseline_beta": 0.8,
+  "weight_clip": 3.0,
+  "bootstrap_resamples": 2000,
+  "min_seeds_for_claim": 10,
+  "checkpoints_keep": 3,
+  "lineage_keep_generations": 50
+ },
+ "config_hash": "44bde0252a993a6596e03ea2ad50e3447fd876b1b475d25fc108cd17ddeb8db0",
+ "world_fingerprint": "e59b7c93fada16e117f2638d74af94079ddaa10dc4bc28b4893eed64658aebda",
+ "runs": [
+  {
+   "code_revision": "5a318a64909f54cd5e889567bcc27acc2e8afd0e",
+   "cpu_s": 10.77,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38224993495",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38224993495",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-12T08:40:45+00:00",
+   "gen_end": 20,
+   "gen_start": 0,
+   "gens_done": 20,
+   "mode": "fresh (explicitly allowed)",
+   "peak_rss_mb": 89.5,
+   "requested_gens": 20,
+   "run_id": "20261012T084034Z-add290",
+   "started_utc": "2026-10-12T08:40:34+00:00",
+   "status": "completed",
+   "wall_s": 10.772
+  },
+  {
+   "code_revision": "da24c994fbe5fa4b774fa15d9e6c1c3422ea7611",
+   "cpu_s": 10.722,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38225423603",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38225423603",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-12T08:44:54+00:00",
+   "gen_end": 40,
+   "gen_start": 20,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 129.6,
+   "requested_gens": 20,
+   "run_id": "20261012T084443Z-577bc6",
+   "started_utc": "2026-10-12T08:44:43+00:00",
+   "status": "completed",
+   "wall_s": 10.724
+  },
+  {
+   "code_revision": "c7564f749b801b58d65b2bff60b64f44d0ec44b5",
+   "cpu_s": 13.678,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38232023280",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38232023280",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-12T09:46:46+00:00",
+   "gen_end": 60,
+   "gen_start": 40,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 136.5,
+   "requested_gens": 20,
+   "run_id": "20261012T094632Z-7870b3",
+   "started_utc": "2026-10-12T09:46:32+00:00",
+   "status": "completed",
+   "wall_s": 13.681
+  },
+  {
+   "code_revision": "deaa3c367a4fa5bde3e25f33cba3efaa61677b24",
+   "cpu_s": 10.13,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38361197916",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38361197916",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-13T07:12:48+00:00",
+   "gen_end": 80,
+   "gen_start": 60,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 139.4,
+   "requested_gens": 20,
+   "run_id": "20261013T071238Z-f1093f",
+   "started_utc": "2026-10-13T07:12:38+00:00",
+   "status": "completed",
+   "wall_s": 10.133
+  },
+  {
+   "code_revision": "87d00e21a9accf1e0e1aed686845a57c4d76e842",
+   "cpu_s": 9.579,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38495242320",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38495242320",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-14T01:21:40+00:00",
+   "gen_end": 100,
+   "gen_start": 80,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 144.7,
+   "requested_gens": 20,
+   "run_id": "20261014T012131Z-d8efae",
+   "started_utc": "2026-10-14T01:21:31+00:00",
+   "status": "completed",
+   "wall_s": 9.58
+  },
+  {
+   "code_revision": "87d00e21a9accf1e0e1aed686845a57c4d76e842",
+   "cpu_s": 13.083,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38661915226",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38661915226",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-15T00:46:51+00:00",
+   "gen_end": 120,
+   "gen_start": 100,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 149.1,
+   "requested_gens": 20,
+   "run_id": "20261015T004638Z-250f05",
+   "started_utc": "2026-10-15T00:46:38+00:00",
+   "status": "completed",
+   "wall_s": 13.085
+  },
+  {
+   "code_revision": "c6ee7db58750a20fac59c3e1dc5642077c4953ba",
+   "cpu_s": 9.71,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38830716527",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38830716527",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-16T00:40:03+00:00",
+   "gen_end": 140,
+   "gen_start": 120,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 155.5,
+   "requested_gens": 20,
+   "run_id": "20261016T003953Z-8f8c9f",
+   "started_utc": "2026-10-16T00:39:53+00:00",
+   "status": "completed",
+   "wall_s": 9.712
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 13.587,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "38987668857",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/38987668857",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-17T00:43:51+00:00",
+   "gen_end": 160,
+   "gen_start": 140,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 160.1,
+   "requested_gens": 20,
+   "run_id": "20261017T004338Z-110c8c",
+   "started_utc": "2026-10-17T00:43:38+00:00",
+   "status": "completed",
+   "wall_s": 13.589
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 13.911,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39081941020",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39081941020",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-18T00:13:37+00:00",
+   "gen_end": 180,
+   "gen_start": 160,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 164.3,
+   "requested_gens": 20,
+   "run_id": "20261018T001323Z-aee335",
+   "started_utc": "2026-10-18T00:13:23+00:00",
+   "status": "completed",
+   "wall_s": 13.913
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 13.591,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39180664351",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39180664351",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-19T00:25:26+00:00",
+   "gen_end": 200,
+   "gen_start": 180,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 169.2,
+   "requested_gens": 20,
+   "run_id": "20261019T002512Z-dbf90f",
+   "started_utc": "2026-10-19T00:25:12+00:00",
+   "status": "completed",
+   "wall_s": 13.593
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 13.974,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39352056380",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39352056380",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-20T01:12:16+00:00",
+   "gen_end": 220,
+   "gen_start": 200,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 172.3,
+   "requested_gens": 20,
+   "run_id": "20261020T011202Z-b93c70",
+   "started_utc": "2026-10-20T01:12:02+00:00",
+   "status": "completed",
+   "wall_s": 13.976
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 8.748,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39523580755",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39523580755",
+    "numpy": "2.5.3",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-21T00:49:24+00:00",
+   "gen_end": 240,
+   "gen_start": 220,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 181.6,
+   "requested_gens": 20,
+   "run_id": "20261021T004915Z-306434",
+   "started_utc": "2026-10-21T00:49:15+00:00",
+   "status": "completed",
+   "wall_s": 8.749
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 11.081,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39702126141",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39702126141",
+    "numpy": "2.5.3",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-22T00:51:12+00:00",
+   "gen_end": 260,
+   "gen_start": 240,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 185.6,
+   "requested_gens": 20,
+   "run_id": "20261022T005101Z-21d029",
+   "started_utc": "2026-10-22T00:51:01+00:00",
+   "status": "completed",
+   "wall_s": 11.083
+  },
+  {
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "cpu_s": 14.512,
+   "environment": {
+    "cpu_count": 4,
+    "github_run_id": "39880640430",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/39880640430",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15"
+   },
+   "evals_added": 60000,
+   "finished_utc": "2026-10-23T00:52:30+00:00",
+   "gen_end": 280,
+   "gen_start": 260,
+   "gens_done": 20,
+   "mode": "resume",
+   "peak_rss_mb": 184.8,
+   "requested_gens": 20,
+   "run_id": "20261023T005215Z-116878",
+   "started_utc": "2026-10-23T00:52:15+00:00",
+   "status": "completed",
+   "wall_s": 14.515
+  },
+  {
+   "run_id": "20261024T005923Z-2e1eff",
+   "started_utc": "2026-10-24T00:59:23+00:00",
+   "gen_start": 280,
+   "requested_gens": 20,
+   "status": "completed",
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "environment": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu_count": 4,
+    "github_run_id": "40047637838",
+    "github_run_url": "https://github.com/Alextsvr/FlyFoundry-v0.1/actions/runs/40047637838"
+   },
+   "mode": "resume",
+   "gens_done": 20,
+   "gen_end": 300,
+   "evals_added": 60000,
+   "wall_s": 14.047,
+   "cpu_s": 14.045,
+   "peak_rss_mb": 205.7,
+   "finished_utc": "2026-10-24T00:59:37+00:00"
+  }
+ ],
+ "llm": {
+  "arm": "E_llm_baseline",
+  "reason": "NOT RUN: FLYFOUNDRY_LLM_ENDPOINT is not set (no free LLM endpoint configured in this environment)",
+  "status": "NOT RUN"
+ },
+ "checkpoint": {
+  "version": 15,
+  "sha256": "f7504a40b0d6bdc44dc1307a63ad46927b33c929e41e8ab4e535881cda11c206",
+  "file": "ckpt_000015.json.gz",
+  "bytes": 16527416,
+  "problems": []
+ },
+ "resume_test": {
+  "loaded_from_version": 14,
+  "gens_before": 280,
+  "saved_version": 15,
+  "reload_roundtrip_identical": true,
+  "generation_after_reload": 300
+ },
+ "analysis": {
+  "arms": {
+   "A_fly_plastic": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.19312850975172702,
+      "lo": 0.17621679438564877,
+      "hi": 0.2067329245738684,
+      "median": 0.19234434586885144,
+      "per_seed": [
+       0.19234434586885144,
+       0.20358115382949743,
+       0.19133619897523657,
+       0.16205553970783662,
+       0.2163253103772131
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.22404000761252876,
+      "lo": 0.19738313068419774,
+      "hi": 0.2449164473910153,
+      "median": 0.23070854243133104,
+      "per_seed": [
+       0.2334984832029466,
+       0.23070854243133104,
+       0.22347811331492648,
+       0.17664635230103853,
+       0.2558685468124011
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0125,
+      "lo": 0.00625,
+      "hi": 0.01875,
+      "median": 0.010416666666666666,
+      "per_seed": [
+       0.020833333333333332,
+       0.010416666666666666,
+       0.010416666666666666,
+       0.0,
+       0.020833333333333332
+      ]
+     },
+     "f_best": {
+      "mean": 0.4444574908005693,
+      "lo": 0.4206966187387785,
+      "hi": 0.4693045831292146,
+      "median": 0.4478157578557302,
+      "per_seed": [
+       0.4109631408049127,
+       0.41702928877249584,
+       0.4535643825066581,
+       0.4478157578557302,
+       0.4929148840630494
+      ]
+     },
+     "f_mean": {
+      "mean": -0.02127590716917034,
+      "lo": -0.06813074640432318,
+      "hi": 0.029250619891340274,
+      "median": -0.029980902436940758,
+      "per_seed": [
+       -0.09693738392162035,
+       -0.03490699041475059,
+       -0.029980902436940758,
+       -0.014934589842004234,
+       0.07038033076946425
+      ]
+     },
+     "discovered": {
+      "mean": 4.8,
+      "lo": 4.4,
+      "hi": 5.0,
+      "median": 5.0,
+      "per_seed": [
+       5.0,
+       5.0,
+       5.0,
+       5.0,
+       4.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 62.2,
+      "lo": 61.0,
+      "hi": 63.4,
+      "median": 62.0,
+      "per_seed": [
+       60.0,
+       63.0,
+       62.0,
+       64.0,
+       62.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.30152750534323053,
+      "lo": 0.2953443733623948,
+      "hi": 0.30744158543861716,
+      "median": 0.3009748899055714,
+      "per_seed": [
+       0.3087219444650672,
+       0.297206829160514,
+       0.3100672038923129,
+       0.3009748899055714,
+       0.2906666592926872
+      ]
+     },
+     "novelty": {
+      "mean": 0.16440127310243685,
+      "lo": 0.15688896215798284,
+      "hi": 0.17087014376940957,
+      "median": 0.16471332193786833,
+      "per_seed": [
+       0.17497469165710372,
+       0.1644611083185773,
+       0.16471332193786833,
+       0.16692012097192938,
+       0.1509371226267055
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 4.4913158936,
+    "cpu_monitor_s_mean": 2.609769838000006,
+    "mem_peak_kb_max": 2248.654296875,
+    "heldout_qd_per_1k_evals": 0.006437616991724234,
+    "heldout_qd_per_cpu_s": 0.04300042890034294,
+    "auc_heldout_qd": 0.19481450219280783
+   },
+   "A_fly_noplast": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.194341757392749,
+      "lo": 0.16160912753899628,
+      "hi": 0.22292010054273317,
+      "median": 0.20906995997055605,
+      "per_seed": [
+       0.2236521799485096,
+       0.1726136045592152,
+       0.20906995997055605,
+       0.1372599510624188,
+       0.22911309142304526
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.22576171130530734,
+      "lo": 0.19229387864080857,
+      "hi": 0.2536734971483838,
+      "median": 0.24801468038830682,
+      "per_seed": [
+       0.24990121573053337,
+       0.20014212145538082,
+       0.24801468038830682,
+       0.1704753520060429,
+       0.2602751869462727
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0020833333333333333,
+      "lo": 0.0,
+      "hi": 0.00625,
+      "median": 0.0,
+      "per_seed": [
+       0.010416666666666666,
+       0.0,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.46001780559692546,
+      "lo": 0.43249588288415464,
+      "hi": 0.48753972830969633,
+      "median": 0.45208239650548643,
+      "per_seed": [
+       0.4897838206727017,
+       0.45208239650548643,
+       0.503024301848796,
+       0.43225507374986494,
+       0.42294343520777844
+      ]
+     },
+     "f_mean": {
+      "mean": -0.061093677896034114,
+      "lo": -0.17822064961280745,
+      "hi": 0.056544922688660536,
+      "median": 0.00400165674981089,
+      "per_seed": [
+       0.0892266463879692,
+       -0.24620327772304332,
+       0.0501348319587767,
+       -0.20262824685368405,
+       0.00400165674981089
+      ]
+     },
+     "discovered": {
+      "mean": 4.2,
+      "lo": 3.0,
+      "hi": 5.0,
+      "median": 5.0,
+      "per_seed": [
+       5.0,
+       2.0,
+       5.0,
+       4.0,
+       5.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 60.8,
+      "lo": 59.2,
+      "hi": 62.2,
+      "median": 61.0,
+      "per_seed": [
+       61.0,
+       58.0,
+       62.0,
+       60.0,
+       63.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.30482686696031924,
+      "lo": 0.2944340452474558,
+      "hi": 0.31349819213981933,
+      "median": 0.30502412329627493,
+      "per_seed": [
+       0.2855646119428131,
+       0.31806920915366843,
+       0.3023121808610974,
+       0.3131642095477424,
+       0.30502412329627493
+      ]
+     },
+     "novelty": {
+      "mean": 0.16347380000411255,
+      "lo": 0.15707272692002708,
+      "hi": 0.16909271213896623,
+      "median": 0.16382157188669205,
+      "per_seed": [
+       0.15180508644715668,
+       0.17179396642804867,
+       0.1600137873918765,
+       0.16382157188669205,
+       0.16993458786678886
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 4.236765613199998,
+    "cpu_monitor_s_mean": 2.6057515441999977,
+    "mem_peak_kb_max": 971.96875,
+    "heldout_qd_per_1k_evals": 0.0064780585797583005,
+    "heldout_qd_per_cpu_s": 0.04587031125518509,
+    "auc_heldout_qd": 0.1952130958093298
+   },
+   "A_fly_shuffled": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.19109169323975492,
+      "lo": 0.17038821624084086,
+      "hi": 0.21179517023866898,
+      "median": 0.18213690160626034,
+      "per_seed": [
+       0.2250763736027573,
+       0.213343101190785,
+       0.17002066299416782,
+       0.18213690160626034,
+       0.16488142680480417
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.22184854393665926,
+      "lo": 0.1930135930309575,
+      "hi": 0.25259789123716514,
+      "median": 0.19660843494509714,
+      "per_seed": [
+       0.2701021782381002,
+       0.25830234139525377,
+       0.1898491850285735,
+       0.19438058007627163,
+       0.19660843494509714
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.00625,
+      "lo": 0.0,
+      "hi": 0.014583333333333332,
+      "median": 0.0,
+      "per_seed": [
+       0.010416666666666666,
+       0.020833333333333332,
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.4755875767102986,
+      "lo": 0.4592640002846357,
+      "hi": 0.4890527993899306,
+      "median": 0.4822718389135206,
+      "per_seed": [
+       0.49170953677912993,
+       0.49042754041900094,
+       0.4822718389135206,
+       0.46933092317623915,
+       0.4441980442636025
+      ]
+     },
+     "f_mean": {
+      "mean": -0.02234845234175812,
+      "lo": -0.08347771680696499,
+      "hi": 0.025565142205250968,
+      "median": -0.012581294954323757,
+      "per_seed": [
+       -0.012581294954323757,
+       0.05237260582613916,
+       -0.13292750572710946,
+       0.017830897164150133,
+       -0.03643696401764668
+      ]
+     },
+     "discovered": {
+      "mean": 4.2,
+      "lo": 3.6,
+      "hi": 4.8,
+      "median": 4.0,
+      "per_seed": [
+       5.0,
+       4.0,
+       4.0,
+       5.0,
+       3.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 61.2,
+      "lo": 59.0,
+      "hi": 62.8,
+      "median": 62.0,
+      "per_seed": [
+       63.0,
+       62.0,
+       57.0,
+       63.0,
+       61.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.3009490763254445,
+      "lo": 0.2976289249287104,
+      "hi": 0.30447016554878675,
+      "median": 0.3010677300063712,
+      "per_seed": [
+       0.3010677300063712,
+       0.30319538508072996,
+       0.2958804246950514,
+       0.2973250414360031,
+       0.3072768004090669
+      ]
+     },
+     "novelty": {
+      "mean": 0.15708100910196293,
+      "lo": 0.1532928816896868,
+      "hi": 0.16065519373558235,
+      "median": 0.15659383810974695,
+      "per_seed": [
+       0.1559970690196047,
+       0.16336276415280596,
+       0.15659383810974695,
+       0.158943391627071,
+       0.15050798260058607
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 4.399971753000004,
+    "cpu_monitor_s_mean": 2.6096057511999993,
+    "mem_peak_kb_max": 1277.5703125,
+    "heldout_qd_per_1k_evals": 0.006369723107991831,
+    "heldout_qd_per_cpu_s": 0.04343020909383432,
+    "auc_heldout_qd": 0.19046453405247152
+   },
+   "B_evolved_ann": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.3612894072187528,
+      "lo": 0.3575965791567849,
+      "hi": 0.36567398411933943,
+      "median": 0.35932650121707443,
+      "per_seed": [
+       0.35926652014153554,
+       0.36815553143094865,
+       0.364636806162316,
+       0.35932650121707443,
+       0.35506167714188946
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.48595836770476614,
+      "lo": 0.4733247720788586,
+      "hi": 0.4998178398778997,
+      "median": 0.4858990645631037,
+      "per_seed": [
+       0.46616923913479213,
+       0.5106828322817818,
+       0.4858990645631037,
+       0.4928475437633503,
+       0.4741931587808025
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.13958333333333334,
+      "lo": 0.11666666666666665,
+      "hi": 0.1708333333333333,
+      "median": 0.13541666666666666,
+      "per_seed": [
+       0.19791666666666666,
+       0.13541666666666666,
+       0.10416666666666666,
+       0.12499999999999997,
+       0.13541666666666666
+      ]
+     },
+     "f_best": {
+      "mean": 0.5268951784074936,
+      "lo": 0.5150592240629507,
+      "hi": 0.5359112739560045,
+      "median": 0.534153378161881,
+      "per_seed": [
+       0.5064752435719393,
+       0.5379768807047121,
+       0.5205745375520991,
+       0.534153378161881,
+       0.5352958520468359
+      ]
+     },
+     "f_mean": {
+      "mean": 0.2665121014777781,
+      "lo": 0.2578294518619108,
+      "hi": 0.2725057371797045,
+      "median": 0.270339581688534,
+      "per_seed": [
+       0.2737938508955931,
+       0.26576628134296665,
+       0.27230070120940125,
+       0.2503600922523954,
+       0.270339581688534
+      ]
+     },
+     "discovered": {
+      "mean": 3.6,
+      "lo": 3.0,
+      "hi": 4.4,
+      "median": 3.0,
+      "per_seed": [
+       3.0,
+       3.0,
+       3.0,
+       4.0,
+       5.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 53.32000000000001,
+      "lo": 50.959999999999994,
+      "hi": 55.2,
+      "median": 54.0,
+      "per_seed": [
+       48.6,
+       53.0,
+       54.0,
+       56.0,
+       55.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.18771921166773045,
+      "lo": 0.1838104551592356,
+      "hi": 0.19383505794328623,
+      "median": 0.18565496043050916,
+      "per_seed": [
+       0.182818849194786,
+       0.18384537485047117,
+       0.18565496043050916,
+       0.19952652050153702,
+       0.18675035336134893
+      ]
+     },
+     "novelty": {
+      "mean": 0.10957763148944503,
+      "lo": 0.10839012019487222,
+      "hi": 0.11149054830299401,
+      "median": 0.10902560016588392,
+      "per_seed": [
+       0.10794507758420016,
+       0.10856008073234986,
+       0.10908976805587675,
+       0.1132676309089145,
+       0.10902560016588392
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 4.216370501399995,
+    "cpu_monitor_s_mean": 2.1309314949999996,
+    "mem_peak_kb_max": 945.220703125,
+    "heldout_qd_per_1k_evals": 0.012042980240625093,
+    "heldout_qd_per_cpu_s": 0.08568730074807018,
+    "auc_heldout_qd": 0.34669719460138154
+   },
+   "C_genetic": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.38303120615555714,
+      "lo": 0.37446427264600674,
+      "hi": 0.3904047934805247,
+      "median": 0.38605676091769203,
+      "per_seed": [
+       0.3962697486469593,
+       0.38605676091769203,
+       0.3867138545955064,
+       0.36974592100844966,
+       0.37636974560917824
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.4953614824592947,
+      "lo": 0.4875845477052372,
+      "hi": 0.5027633273226955,
+      "median": 0.4979643590823571,
+      "per_seed": [
+       0.5096894007811182,
+       0.49798503419863954,
+       0.4867840751877651,
+       0.4979643590823571,
+       0.48438454304659373
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.2195833333333333,
+      "lo": 0.1870833333333333,
+      "hi": 0.24874999999999997,
+      "median": 0.21874999999999994,
+      "per_seed": [
+       0.2291666666666666,
+       0.21874999999999994,
+       0.16249999999999998,
+       0.26875,
+       0.21874999999999994
+      ]
+     },
+     "f_best": {
+      "mean": 0.48955005073528923,
+      "lo": 0.46893441520244245,
+      "hi": 0.5193672057592164,
+      "median": 0.4794425697221065,
+      "per_seed": [
+       0.4636650472472709,
+       0.4794425697221065,
+       0.548739025369762,
+       0.4869539054395247,
+       0.46894970589778184
+      ]
+     },
+     "f_mean": {
+      "mean": 0.22880691312881737,
+      "lo": 0.22360823081130382,
+      "hi": 0.23400559544633087,
+      "median": 0.2287189959122943,
+      "per_seed": [
+       0.2378841516968447,
+       0.2235147655452602,
+       0.22114631352685224,
+       0.23277033896283542,
+       0.2287189959122943
+      ]
+     },
+     "discovered": {
+      "mean": 3.2,
+      "lo": 2.6,
+      "hi": 3.8,
+      "median": 3.0,
+      "per_seed": [
+       4.0,
+       3.0,
+       4.0,
+       2.0,
+       3.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 45.760000000000005,
+      "lo": 43.36,
+      "hi": 48.2,
+      "median": 45.0,
+      "per_seed": [
+       43.0,
+       49.0,
+       49.0,
+       42.8,
+       45.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.21954270761181865,
+      "lo": 0.21550348656320223,
+      "hi": 0.22430590180438484,
+      "median": 0.2186356910283787,
+      "per_seed": [
+       0.2186356910283787,
+       0.22830706756754293,
+       0.22132990856935533,
+       0.2152783977499401,
+       0.2141624731438761
+      ]
+     },
+     "novelty": {
+      "mean": 0.12004328869302423,
+      "lo": 0.11897652506150724,
+      "hi": 0.12106299430118846,
+      "median": 0.12056306393661771,
+      "per_seed": [
+       0.11923519346503479,
+       0.12153824859101672,
+       0.12083770519364556,
+       0.11804223227880635,
+       0.12056306393661771
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 4.867149961799997,
+    "cpu_monitor_s_mean": 1.6561365488000046,
+    "mem_peak_kb_max": 1573.08984375,
+    "heldout_qd_per_1k_evals": 0.012767706871851905,
+    "heldout_qd_per_cpu_s": 0.07869722715794487,
+    "auc_heldout_qd": 0.36671120214147285
+   },
+   "D_random": {
+    "metrics": {
+     "heldout_qd": {
+      "mean": 0.3500425522430616,
+      "lo": 0.3429236895791902,
+      "hi": 0.3562088366468387,
+      "median": 0.35539921929571566,
+      "per_seed": [
+       0.3377089480349803,
+       0.3442821119153733,
+       0.35561299009360214,
+       0.35539921929571566,
+       0.35720949187563683
+      ]
+     },
+     "heldout_best": {
+      "mean": 0.33331577089714104,
+      "lo": 0.31985457536670137,
+      "hi": 0.35115215239041164,
+      "median": 0.3240743772149183,
+      "per_seed": [
+       0.31928020409645336,
+       0.3395981414562428,
+       0.31735788732922837,
+       0.3240743772149183,
+       0.3662682443888624
+      ]
+     },
+     "heldout_discovery": {
+      "mean": 0.0125,
+      "lo": 0.0020833333333333333,
+      "hi": 0.022916666666666665,
+      "median": 0.010416666666666666,
+      "per_seed": [
+       0.010416666666666666,
+       0.0,
+       0.020833333333333332,
+       0.03125,
+       0.0
+      ]
+     },
+     "f_best": {
+      "mean": 0.21353660239772973,
+      "lo": 0.2018002109984826,
+      "hi": 0.22620003527929017,
+      "median": 0.2135161201590298,
+      "per_seed": [
+       0.21489867144606922,
+       0.21054116451538865,
+       0.2135161201590298,
+       0.19354027572316337,
+       0.23518678014499766
+      ]
+     },
+     "f_mean": {
+      "mean": -0.5793362423734071,
+      "lo": -0.5901988176782517,
+      "hi": -0.5618103542656397,
+      "median": -0.5859549951878809,
+      "per_seed": [
+       -0.5929429945611137,
+       -0.5859549951878809,
+       -0.5898916173421935,
+       -0.545634274605079,
+       -0.5822573301707687
+      ]
+     },
+     "discovered": {
+      "mean": 0.6,
+      "lo": 0.2,
+      "hi": 1.0,
+      "median": 1.0,
+      "per_seed": [
+       1.0,
+       1.0,
+       0.0,
+       1.0,
+       0.0
+      ]
+     },
+     "niches_viable": {
+      "mean": 56.4,
+      "lo": 54.71999999999999,
+      "hi": 58.08,
+      "median": 56.4,
+      "per_seed": [
+       56.4,
+       53.2,
+       59.0,
+       55.4,
+       58.0
+      ]
+     },
+     "diversity": {
+      "mean": 0.40206538170077605,
+      "lo": 0.3999516992331366,
+      "hi": 0.40348779079272734,
+      "median": 0.4026715862129341,
+      "per_seed": [
+       0.4026715862129341,
+       0.40232447180284614,
+       0.4037344065432837,
+       0.40367765373580633,
+       0.39791879020901016
+      ]
+     },
+     "novelty": {
+      "mean": 0.25077652600992767,
+      "lo": 0.24968397304663226,
+      "hi": 0.2519880503713751,
+      "median": 0.24999377515061766,
+      "per_seed": [
+       0.2520021165790852,
+       0.24999377515061766,
+       0.25267369327866385,
+       0.24991705544179904,
+       0.24929598959947272
+      ]
+     }
+    },
+    "evals_per_seed": 30000,
+    "cpu_search_s_mean": 0.677704592999999,
+    "cpu_monitor_s_mean": 1.6256813852000076,
+    "mem_peak_kb_max": 255.890625,
+    "heldout_qd_per_1k_evals": 0.011668085074768719,
+    "heldout_qd_per_cpu_s": 0.5165119963161621,
+    "auc_heldout_qd": 0.3322350873979473
+   }
+  },
+  "paired": [
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_qd",
+    "diff": -0.16816089746702578,
+    "lo": -0.18466188728036975,
+    "hi": -0.15081681701651195
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_best",
+    "diff": -0.26191836009223735,
+    "lo": -0.29095438277474045,
+    "hi": -0.23288233740973419
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "B_evolved_ann",
+    "metric": "heldout_discovery",
+    "diff": -0.12708333333333333,
+    "lo": -0.15416666666666665,
+    "hi": -0.10624999999999998
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_qd",
+    "diff": -0.0012132476410219584,
+    "lo": -0.022174194239157497,
+    "hi": 0.01974769895711358
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_best",
+    "diff": -0.00172170369277857,
+    "lo": -0.01676828669054643,
+    "hi": 0.01466673922989319
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_noplast",
+    "metric": "heldout_discovery",
+    "diff": 0.010416666666666666,
+    "lo": 0.004166666666666667,
+    "hi": 0.016666666666666666
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_qd",
+    "diff": 0.0020368165119721005,
+    "lo": -0.022623151322011877,
+    "hi": 0.03111316495997436
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_best",
+    "diff": 0.002191463675869515,
+    "lo": -0.029055908131185377,
+    "hi": 0.03676309298486844
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "A_fly_shuffled",
+    "metric": "heldout_discovery",
+    "diff": 0.00625,
+    "lo": -0.0020833333333333333,
+    "hi": 0.014583333333333334
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_qd",
+    "diff": -0.1899026964038301,
+    "lo": -0.2037218447555423,
+    "hi": -0.17330686311243962
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_best",
+    "diff": -0.271321474846766,
+    "lo": -0.29890729479682054,
+    "hi": -0.24580307960961162
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "C_genetic",
+    "metric": "heldout_discovery",
+    "diff": -0.20708333333333329,
+    "lo": -0.2425,
+    "hi": -0.1745833333333333
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": -0.15691404249133462,
+    "lo": -0.17590354650617096,
+    "hi": -0.14170697626694562
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": -0.10927576328461228,
+    "lo": -0.12931270926648047,
+    "hi": -0.09232492685425668
+   },
+   {
+    "a": "A_fly_plastic",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": -6.938893903907229e-19,
+    "lo": -0.01666666666666667,
+    "hi": 0.014583333333333332
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_qd",
+    "diff": -0.021741798936804314,
+    "lo": -0.030197592687241016,
+    "hi": -0.014928675254920976
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_best",
+    "diff": -0.009403114754528652,
+    "lo": -0.028327375965886192,
+    "hi": 0.00455703893292575
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "C_genetic",
+    "metric": "heldout_discovery",
+    "diff": -0.07999999999999996,
+    "lo": -0.11458333333333333,
+    "hi": -0.04749999999999997
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": 0.011246854975691167,
+    "lo": 0.0025165500887873284,
+    "hi": 0.019977159862595007
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": 0.15264259680762504,
+    "lo": 0.1283496938079396,
+    "hi": 0.16960498053345216
+   },
+   {
+    "a": "B_evolved_ann",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": 0.1270833333333333,
+    "lo": 0.09791666666666664,
+    "hi": 0.15833333333333333
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_qd",
+    "diff": 0.03298865391249548,
+    "lo": 0.019622955078891013,
+    "hi": 0.047323460914359426
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_best",
+    "diff": 0.16204571156215372,
+    "lo": 0.13732515411660592,
+    "hi": 0.18070089293276603
+   },
+   {
+    "a": "C_genetic",
+    "b": "D_random",
+    "metric": "heldout_discovery",
+    "diff": 0.20708333333333329,
+    "lo": 0.17249999999999996,
+    "hi": 0.22999999999999998
+   }
+  ],
+  "conclusions": [
+   {
+    "title": "Scope",
+    "text": "Results cover 300 generations x 100 agents per arm and 5 paired seeds on a SYNTHETIC benchmark. Nothing here is evidence about real markets, customers or revenue (real revenue: EUR 0 / unknown). With n=5 < 10 seeds, no statistical-significance claim is made; intervals are indicative only."
+   },
+   {
+    "title": "Best arm per measured metric (mean of last 5 generations, across seeds)",
+    "list": [
+     "Held-out quality-diversity score: highest mean = C_genetic (0.383); lead over B_evolved_ann = +0.022; intervals do not overlap.",
+     "Held-out best candidate score: highest mean = C_genetic (0.495); lead over B_evolved_ann = +0.009; bootstrap intervals overlap (no clear separation).",
+     "Held-out peak discovery rate: highest mean = C_genetic (0.220); lead over B_evolved_ann = +0.080; intervals do not overlap.",
+     "Train best-of-generation fitness: highest mean = B_evolved_ann (0.527); lead over C_genetic = +0.037; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Train mean fitness: highest mean = B_evolved_ann (0.267); lead over C_genetic = +0.038; intervals do not overlap [training metric - not a basis for declaring a winner].",
+     "Distinct real peaks discovered (train): highest mean = A_fly_plastic (4.800); lead over A_fly_noplast = +0.600; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Viable niches (archive): highest mean = A_fly_plastic (62.200); lead over A_fly_shuffled = +1.000; bootstrap intervals overlap (no clear separation) [training metric - not a basis for declaring a winner].",
+     "Population diversity: highest mean = D_random (0.402); lead over A_fly_noplast = +0.097; intervals do not overlap.",
+     "Novelty: highest mean = D_random (0.251); lead over A_fly_plastic = +0.086; intervals do not overlap."
+    ]
+   },
+   {
+    "title": "Headline (held-out only)",
+    "text": "On the held-out quality-diversity score the highest-scoring arm is C_genetic (0.383) ahead of B_evolved_ann (0.361). Paired difference +0.022 (95% bootstrap CI +0.015 to +0.030, n=5). The CI excludes zero, but with this few seeds this is preliminary and is not declared a winner."
+   },
+   {
+    "title": "Did the biologically inspired architecture add measurable value?",
+    "list": [
+     "Mushroom-body-inspired controller with plasticity vs an evolved ANN with the same parameter budget and evolutionary engine: held-out QD diff -0.168 [-0.185, -0.151] - CI excludes zero (preliminary).",
+     "Mushroom-body-inspired controller with plasticity vs the same circuit without plasticity: held-out QD diff -0.001 [-0.022, +0.020] - CI includes zero: no measurable difference.",
+     "Mushroom-body-inspired controller with plasticity vs the same circuit with shuffled PN->KC wiring: held-out QD diff +0.002 [-0.023, +0.031] - CI includes zero: no measurable difference.",
+     "Even a positive difference would show value of a sparse, plastic architecture on THIS synthetic task, not of real Drosophila connectivity (none is used)."
+    ]
+   },
+   {
+    "title": "Uncertainty",
+    "text": "Intervals are percentile bootstrap CIs over 5 seeds (2000 resamples); a single world (fixed hidden landscape) is used, so results do not generalise across worlds. Metrics are averaged over the last 5 generations to reduce evaluation noise."
+   },
+   {
+    "title": "What remains unverified",
+    "list": [
+     "Any real-world validity: no public evidence dataset is wired in yet; all hypotheses are synthetic-tier.",
+     "Arm E (LLM baseline): NOT RUN - NOT RUN: FLYFOUNDRY_LLM_ENDPOINT is not set (no free LLM endpoint configured in this environment)",
+     "Biological fidelity: no FlyWire/hemibrain connectivity is used; the controller is a documented mushroom-body-inspired model.",
+     "Robustness across different hidden worlds and benchmark difficulty levels.",
+     "Seeds: n=5 is below the configured minimum of 10."
+    ]
+   },
+   {
+    "title": "Suggested next experiments",
+    "list": [
+     "Increase seeds to >= 10 (cheap: ~minutes of CPU) and re-test the paired differences.",
+     "Add a second, non-stationary benchmark world (peaks drift over generations) where lifetime plasticity should matter; the current stationary task gives plasticity little to exploit.",
+     "Wire in one public, legitimately accessible evidence dataset (evidence-tier fitness) with recorded provenance.",
+     "Run arm E when a free LLM endpoint is available, at a matched evaluation budget."
+    ]
+   }
+  ]
+ }
+}

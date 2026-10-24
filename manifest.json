@@ -1,0 +1,41 @@
+{
+ "checkpoints": [
+  {
+   "bytes": 16110352,
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "config_hash": "44bde0252a993a6596e03ea2ad50e3447fd876b1b475d25fc108cd17ddeb8db0",
+   "created_utc": "2026-10-22T00:51:14+00:00",
+   "file": "ckpt_000013.json.gz",
+   "generation": 260,
+   "sha256": "78c5f4e6ae9863d53fc5a9eb70165fb4348e51392b6b66acadb039525d32a477",
+   "total_evals": 780000,
+   "version": 13
+  },
+  {
+   "bytes": 16340292,
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "config_hash": "44bde0252a993a6596e03ea2ad50e3447fd876b1b475d25fc108cd17ddeb8db0",
+   "created_utc": "2026-10-23T00:52:32+00:00",
+   "file": "ckpt_000014.json.gz",
+   "generation": 280,
+   "sha256": "44a396c755d336e8151f18405a9fc36da3dcd5a72b1fd22023b972bf27b275d3",
+   "total_evals": 840000,
+   "version": 14
+  },
+  {
+   "bytes": 16527416,
+   "code_revision": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+   "config_hash": "44bde0252a993a6596e03ea2ad50e3447fd876b1b475d25fc108cd17ddeb8db0",
+   "created_utc": "2026-10-24T00:59:39+00:00",
+   "file": "ckpt_000015.json.gz",
+   "generation": 300,
+   "sha256": "f7504a40b0d6bdc44dc1307a63ad46927b33c929e41e8ab4e535881cda11c206",
+   "total_evals": 900000,
+   "version": 15
+  }
+ ],
+ "extra": {
+  "last_scheduled_local_date": "2026-10-24"
+ },
+ "manifest_sha256": "55fa9f57891781db5a37a461e420d6bd7abbf5bb4cb0203ee02cc6c3e073cc11"
+}
