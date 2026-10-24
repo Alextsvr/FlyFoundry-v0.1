@@ -1,0 +1,198 @@
+{
+ "metrics": {
+  "records_total": 97,
+  "decisions": {
+   "ELIGIBLE": 0,
+   "NEEDS_REVIEW": 67,
+   "INELIGIBLE": 30
+  },
+  "eligible_confirmed": 0,
+  "needs_review_candidates": 67,
+  "rejected": 30,
+  "candidates_note": "NEEDS_REVIEW candidates are NOT confirmed suitable opportunities; only eligible_confirmed counts as confirmed",
+  "source_coverage": {
+   "sources_registered": 6,
+   "sources_ok_last_run": 2,
+   "supported": 2
+  },
+  "duplicate_rate": 0.0,
+  "duplicate_rate_note": "merged duplicates in THIS process run / records seen in this run",
+  "possible_duplicates_flagged": 0,
+  "evidence_freshness_hours": {
+   "basis": "age of per-fact observation (prize, deadline)",
+   "median": 0.0,
+   "max": 211.45
+  },
+  "conditions_confirmed_distribution": {
+   "0": 4,
+   "1": 18,
+   "2": 31,
+   "3": 44,
+   "4": 0,
+   "5": 0,
+   "6": 0,
+   "7": 0,
+   "8": 0,
+   "9": 0,
+   "10": 0
+  },
+  "eligibility_precision": null,
+  "eligibility_precision_n": 0,
+  "eligibility_precision_note": "agreement with human labels in data/bounty_reviews.json; n/a until labels exist. Small n: no significance claimed.",
+  "estimated_vs_actual_hours": null,
+  "human_review_minutes_total": null,
+  "ranking_stability_top3_weights_only": [
+   "bf-4410f5ca8fca",
+   "bf-57715cb40d49"
+  ],
+  "effort_scenarios_top_set_stable": false,
+  "ranking_a_vs_b": {
+   "kendall_tau": 0.6644,
+   "top_k": 5,
+   "top_k_overlap": 0.0
+  }
+ },
+ "discovery": {
+  "devpost": {
+   "status": "ok",
+   "records": 65,
+   "complete": true,
+   "error": "",
+   "pages": 3,
+   "total_count_claimed": 65,
+   "duplicate_items_in_listing": 0,
+   "invalid_items": 0
+  },
+  "manual": {
+   "status": "ok",
+   "records": 0,
+   "complete": true,
+   "error": ""
+  },
+  "superteam_earn": {
+   "status": "unsupported",
+   "records": 0,
+   "complete": false,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "status": "manual_review",
+   "records": 0,
+   "complete": false,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "detail": {
+   "events_attempted": 1,
+   "pages_ok": 0,
+   "pages_failed": [
+    "https://cal-hacks-13-0.devpost.com/: HTTP 403",
+    "https://cal-hacks-13-0.devpost.com/rules: HostBlocked",
+    "host answered 401/403 (or robots denied): remaining pages skipped this run, not bypassed"
+   ],
+   "blocked": true,
+   "status": "blocked"
+  }
+ },
+ "status": {
+  "run_status": "success",
+  "exit_code": 0,
+  "message": "all primary sources ok and complete",
+  "primary_sources": {
+   "devpost": "ok"
+  },
+  "last_complete_success": {
+   "devpost": "2026-10-24T09:36:57Z"
+  }
+ },
+ "sources": {
+  "devpost": {
+   "source": "devpost",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "ok",
+   "http_status": 200,
+   "n_records": 65,
+   "complete": 1,
+   "requests": 4,
+   "error": ""
+  },
+  "manual": {
+   "source": "manual",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "ok",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 1,
+   "requests": 0,
+   "error": ""
+  },
+  "superteam_earn": {
+   "source": "superteam_earn",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "unsupported",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "source": "dorahacks",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "source": "gitcoin",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "source": "colosseum",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "devpost_detail": {
+   "source": "devpost_detail",
+   "started_at": "2026-10-24T09:36:57Z",
+   "finished_at": "2026-10-24T09:36:57Z",
+   "status": "blocked",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 6,
+   "error": "https://cal-hacks-13-0.devpost.com/: HTTP 403; https://cal-hacks-13-0.devpost.com/rules: HostBlocked; host answered 401/403 (or robots denied): remaining pages skipped this run, not bypassed"
+  }
+ }
+}
