@@ -1,0 +1,171 @@
+{
+ "run_id": "43431592980",
+ "generated_at": "2026-11-13T13:12:30Z",
+ "evaluated_at": "2026-11-13T13:12:19Z",
+ "code_version": {
+  "git_sha": "b4d4e5e213a52bdcfcc53aecd6a1a2e320d892ac",
+  "package": "0.2.2",
+  "parsers": {
+   "devpost_list": "devpost-list-2",
+   "detail": "detail-5"
+  }
+ },
+ "run_status": {
+  "run_status": "success",
+  "exit_code": 0,
+  "message": "all primary sources ok and complete",
+  "primary_sources": {
+   "devpost": "ok"
+  },
+  "last_complete_success": {
+   "devpost": "2026-11-13T13:12:19Z"
+  }
+ },
+ "briefs": [
+  "bf-1337bf33bd26",
+  "bf-1d0725981c69",
+  "bf-5248a09fb8e9"
+ ],
+ "files": [
+  {
+   "path": "briefs/bf-1337bf33bd26.md",
+   "sha256": "43faa61364f6ab444dd8a9dc5fd36895cdcbdd7f37033eee4dad3012f5bb63ec",
+   "bytes": 5906
+  },
+  {
+   "path": "briefs/bf-1d0725981c69.md",
+   "sha256": "f748690b2fb37a207037671ebfab31e3bde2812e8ef41d046a68e3d5655f3df4",
+   "bytes": 5612
+  },
+  {
+   "path": "briefs/bf-5248a09fb8e9.md",
+   "sha256": "3188cbe7c4274bfda0c9c82ab99d5c2975b01f2df3bab49d1bba4f92f4183da2",
+   "bytes": 5790
+  },
+  {
+   "path": "metrics.json",
+   "sha256": "d6e271a4f80e54fcb8d6c608675e5cda351682dbe6576934b5fbafcf749b6937",
+   "bytes": 5453
+  },
+  {
+   "path": "opportunities.csv",
+   "sha256": "ef82a722fee2b7b11aa16100d42cb2c5a22b495389ca67afd0e378f35b19bc49",
+   "bytes": 53711
+  },
+  {
+   "path": "opportunities.json",
+   "sha256": "3d651341d09eaaf9542a098688b6d80288f64d385f3db5ddafa8fbc281eba2fb",
+   "bytes": 2656730
+  },
+  {
+   "path": "prompts/bf-1337bf33bd26.claude-prompt.md",
+   "sha256": "a0bc1e29fbdc1a84368f447490afed957da9a5c720065f14010cf5e9b2dd6500",
+   "bytes": 2310
+  },
+  {
+   "path": "prompts/bf-1d0725981c69.claude-prompt.md",
+   "sha256": "1d45bb11e159b258cb1d7315618fa9d0d8d928e9d59cc37ca5ca925ac7d0a843",
+   "bytes": 2300
+  },
+  {
+   "path": "prompts/bf-5248a09fb8e9.claude-prompt.md",
+   "sha256": "d68b29a6e452c20fcd7ed3f6921cdeb18e260c81f5478a668700cc372994bf8e",
+   "bytes": 2320
+  },
+  {
+   "path": "ranking.json",
+   "sha256": "f6e90b619596bc27fb8c19d718a1bcb1e62a69ab13d7292daf8fc30b838bc95c",
+   "bytes": 20847
+  },
+  {
+   "path": "report.html",
+   "sha256": "49b71b7f2071e84149a9c74b18106ee83a563ce5393d0f49e37a643f23de30f5",
+   "bytes": 67495
+  },
+  {
+   "path": "status.json",
+   "sha256": "c8637cd4bf96286a17545f50b530b05769e07b07e33d0c92f5ee2e9e697bb770",
+   "bytes": 208
+  }
+ ],
+ "source_runs": {
+  "devpost": {
+   "source": "devpost",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "ok",
+   "http_status": 200,
+   "n_records": 70,
+   "complete": 1,
+   "requests": 4,
+   "error": ""
+  },
+  "manual": {
+   "source": "manual",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "ok",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 1,
+   "requests": 0,
+   "error": ""
+  },
+  "superteam_earn": {
+   "source": "superteam_earn",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "unsupported",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Account creation is forbidden by the task constraints; robots.txt allows page crawling but no public documented read API exists, and HTML scraping was not assessed. Use manual intake instead."
+  },
+  "dorahacks": {
+   "source": "dorahacks",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration: robots.txt/terms/API not verified. Add listings via manual intake."
+  },
+  "gitcoin": {
+   "source": "gitcoin",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "colosseum": {
+   "source": "colosseum",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "manual_review",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 0,
+   "error": "Not assessed in this iteration. Add listings via manual intake."
+  },
+  "devpost_detail": {
+   "source": "devpost_detail",
+   "started_at": "2026-11-13T13:12:19Z",
+   "finished_at": "2026-11-13T13:12:19Z",
+   "status": "blocked",
+   "http_status": null,
+   "n_records": 0,
+   "complete": 0,
+   "requests": 6,
+   "error": "https://start-developer-competition-26.devpost.com/rules: HTTP 403; host answered 401/403 (or robots denied): remaining pages skipped this run, not bypassed"
+  }
+ },
+ "complete": true
+}
